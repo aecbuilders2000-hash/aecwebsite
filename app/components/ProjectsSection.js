@@ -30,9 +30,6 @@ export default function ProjectsSection() {
       anticipatePin: 1,
       invalidateOnRefresh: true,
       scroller: document.body,
-      onUpdate: self => {
-        // nothing needed here, gsap.to handles it
-      },
     });
 
     gsap.to(container, {
@@ -58,24 +55,16 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
+      className="relative bg-gray-2 text-gray-9 overflow-hidden flex items-center justify-start border-t border-b border-gray-4"
       style={{
         height: "100vh",
         width: "100vw",
-        overflow: "hidden",
-        position: "relative",
-        background: "var(--gray-2)",
-        color: "var(--gray-9)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        borderTop: "1px solid var(--gray-4)",
-        borderBottom: "1px solid var(--gray-4)",
       }}
     >
       <div
         ref={containerRef}
+        className="flex"
         style={{
-          display: "flex",
           height: "100vh",
           width: `${NUM_PAGES * 100}vw`,
           willChange: "transform",
@@ -84,18 +73,12 @@ export default function ProjectsSection() {
         {Array.from({ length: NUM_PAGES }).map((_, i) => (
           <div
             key={i}
+            className={`flex items-center justify-center text-5xl font-bold text-gray-9 border-r-2 border-gray-4 ${
+              i % 2 === 0 ? "bg-gray-1" : "bg-gray-3"
+            } ${i === 0 ? "border-l-2" : ""}`}
             style={{
               minWidth: "100vw",
               height: "100vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 48,
-              fontWeight: 700,
-              background: i % 2 === 0 ? "var(--gray-1)" : "var(--gray-3)",
-              color: "var(--gray-9)",
-              borderRight: "2px solid var(--gray-4)",
-              borderLeft: i === 0 ? "2px solid var(--gray-4)" : undefined,
             }}
           >
             Project {i + 1}

@@ -46,26 +46,32 @@ export default function ClientsSection() {
   return (
     <section
       ref={sectionRef}
+      className="flex flex-col items-center justify-center bg-gray-50 text-gray-900 border-t border-b border-gray-300"
       style={{
         height: "100vh",
         width: "100vw",
-        background: "var(--gray-1)",
-        color: "var(--gray-9)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        borderTop: "1px solid var(--gray-3)",
-        borderBottom: "1px solid var(--gray-3)",
         padding: "32px 0",
       }}
     >
-      <h2 ref={titleRef} style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: 24 }}>
+      <h2 
+        ref={titleRef} 
+        className="font-bold text-gray-900"
+        style={{ 
+          fontSize: "2rem", 
+          marginBottom: 24 
+        }}
+      >
         Trusted by Clients
       </h2>
-      <div ref={contentRef} style={{ fontSize: 18, color: "var(--gray-6)" }}>
+      <div 
+        ref={contentRef} 
+        className="text-gray-600 italic"
+        style={{ 
+          fontSize: 18 
+        }}
+      >
         {/* Client logos or names will go here */}
-        <em>Client logos coming soon...</em>
+        Client logos coming soon...
       </div>
     </section>
   );

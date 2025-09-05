@@ -58,53 +58,69 @@ export default function ServicesSection() {
     const cards = cardRefs.current;
     if (!cards.length) return;
 
-    // Set initial positions
+    // Set initial positions - all cards stacked at the same position
     cards.forEach((card, index) => {
       gsap.set(card, {
-        y: index === 0 ? 0 : "100vh",
+        y: 0,
         scale: 1,
         opacity: 1,
-        zIndex: index + 1,
+        zIndex: services.length - index,
         transformOrigin: "center center"
       });
     });
 
-    // Create timeline
+    // Create the main timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: `+=${(services.length - 1) * window.innerHeight}`, // Exact scroll distance needed
+        end: "bottom bottom",
         scrub: 1,
         pin: true,
         anticipatePin: 1,
       }
     });
 
-    // Animate each card (except first)
-    services.forEach((_, index) => {
-      if (index === 0) return;
+    // Animate each card stacking effect
+    cards.forEach((card, index) => {
+      if (index === 0) return; // Skip first card as it's the base
+
+      // Calculate when this card should start its animation
+      const startProgress = (index - 1) / (services.length - 1);
       
-      // Simple linear distribution: card 1 at 0.2, card 2 at 0.4, etc.
-      const progress = index / services.length;
-      
-      // Current card slides up
-      tl.fromTo(cards[index], 
-        { y: "100vh" },
-        { y: 0, duration: 0.15, ease: "power2.out" },
-        progress
+      // Animate the current card coming in
+      tl.fromTo(card, 
+        { 
+          y: "100vh",
+          scale: 1,
+          opacity: 1
+        },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        },
+        startProgress
       );
 
-      // Previous cards shrink and fade
+      // Animate previous cards shrinking and fading
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
-        const depth = index - prevIndex;
-        tl.to(cards[prevIndex], {
-          scale: Math.max(0.95 - depth * 0.03, 0.8),
-          opacity: Math.max(1 - depth * 0.15, 0.2),
-          y: -depth * 8,
-          duration: 0.2,
-          ease: "power1.inOut"
-        }, progress);
+        const prevCard = cards[prevIndex];
+        const shrinkAmount = 0.95 - (index - prevIndex) * 0.05; // Progressive shrinking
+        const opacityAmount = 0.7 - (index - prevIndex) * 0.1; // Progressive fading
+        
+        tl.to(prevCard,
+          {
+            scale: shrinkAmount,
+            opacity: Math.max(opacityAmount, 0.2),
+            y: -(index - prevIndex) * 20, // Slight upward offset
+            duration: 0.3,
+            ease: "power2.out"
+          },
+          startProgress
+        );
       }
     });
 
@@ -118,7 +134,7 @@ export default function ServicesSection() {
       ref={sectionRef}
       className="relative bg-black overflow-hidden"
       style={{
-        height: "100vh", // Just one viewport height for the visual content
+        height: "700vh", // 7 cards * 100vh each
         width: "100vw",
       }}
     >

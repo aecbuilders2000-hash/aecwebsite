@@ -45,44 +45,28 @@ export default function ContentSection() {
   return (
     <section
       ref={contentRef}
+      className="relative bg-gray-1 text-gray-9 overflow-hidden border-t border-b border-gray-3"
       style={{
         minHeight: "100vh",
         width: "100vw",
-        position: "relative",
-        background: "var(--gray-1)",
-        color: "var(--gray-9)",
         zIndex: 10,
-        overflow: "hidden",
-        borderTop: "1px solid var(--gray-3)",
-        borderBottom: "1px solid var(--gray-3)",
       }}
     >
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
+        className="absolute top-0 left-0 bg-gray-8 flex items-end justify-center overflow-hidden"
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
           width: "100vw",
           height: "50vh",
-          background: "var(--gray-8)",
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "center",
-          overflow: "hidden",
           zIndex: 2,
         }}
       >
         <span
           ref={topTextRef}
+          className="text-2xl font-bold text-white opacity-0 transition-all duration-300"
           style={{
-            fontSize: "2rem",
-            fontWeight: "bold",
-            color: "var(--gray-0)",
-            opacity: 0,
             transform: "translateY(40px)",
-            transition: "opacity 0.3s, transform 0.3s",
             marginBottom: "32px",
           }}
         >
@@ -92,29 +76,18 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
+        className="absolute left-0 bottom-0 bg-gray-7 flex items-start justify-center overflow-hidden"
         style={{
-          position: "absolute",
-          left: 0,
-          bottom: 0,
           width: "100vw",
           height: "50vh",
-          background: "var(--gray-7)",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          overflow: "hidden",
           zIndex: 2,
         }}
       >
         <span
           ref={bottomTextRef}
+          className="text-2xl font-bold text-white opacity-0 transition-all duration-300"
           style={{
-            fontSize: "2rem",
-            fontWeight: "bold",
-            color: "var(--gray-0)",
-            opacity: 0,
             transform: "translateY(-40px)",
-            transition: "opacity 0.3s, transform 0.3s",
             marginTop: "32px",
           }}
         >
@@ -123,15 +96,13 @@ export default function ContentSection() {
       </div>
       {/* Main Content (centered) */}
       <div
+        className="flex items-center justify-center"
         style={{
           minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           zIndex: 1,
         }}
       >
-        <h2 style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
+        <h2 className="text-4xl font-bold">
           Content Section
         </h2>
       </div>

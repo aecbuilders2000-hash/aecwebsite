@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function TestimonialsSection() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
-  const testimonialsRef = useRef(null);
 
   const baseTestimonials = [
     { id: 1, text: "Amazing work!", width: "18vw", height: "38vh" },
@@ -66,38 +65,26 @@ export default function TestimonialsSection() {
   return (
     <section
       ref={sectionRef}
+      className="bg-white text-gray-9 flex flex-col items-center justify-center border-t border-b border-gray-3 overflow-hidden relative"
       style={{
         height: "100vh",
         width: "100vw",
-        background: "var(--gray-0)",
-        color: "var(--gray-9)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        borderTop: "1px solid var(--gray-3)",
-        borderBottom: "1px solid var(--gray-3)",
         padding: "48px 0 32px 0",
-        overflow: "hidden",
-        position: "relative",
       }}
     >
-      <h2 ref={titleRef} style={{ fontSize: "2.2rem", fontWeight: "bold", marginBottom: 32 }}>
+      <h2 ref={titleRef} className="text-4xl font-bold" style={{ marginBottom: 32 }}>
         Testimonials
       </h2>
       <div
+        className="overflow-x-auto overflow-y-hidden"
         style={{
           width: "100vw",
-          overflowX: "auto",
-          overflowY: "hidden",
           WebkitOverflowScrolling: "touch",
         }}
       >
         <div
-          className="testimonial-scroll-row"
+          className="testimonial-scroll-row flex items-center"
           style={{
-            display: "flex",
-            alignItems: "center",
             gap: 40,
             width: "max-content",
           }}
@@ -105,20 +92,10 @@ export default function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card"
+              className="testimonial-card flex-none bg-gray-2 border-2 border-gray-4 flex items-center justify-center text-lg font-medium text-gray-7 shadow-sm"
               style={{
-                flex: "0 0 auto",
                 width: t.width,
                 height: t.height,
-                background: "var(--gray-2)",
-                border: "2px solid var(--gray-4)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 18,
-                fontWeight: 500,
-                color: "var(--gray-7)",
-                boxShadow: "0 2px 8px 0 rgba(0,0,0,0.04)",
                 marginLeft: i === 0 ? 0 : 24,
                 marginRight: i === testimonials.length - 1 ? 0 : 24,
               }}

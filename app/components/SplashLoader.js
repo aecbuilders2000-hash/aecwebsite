@@ -40,58 +40,25 @@ export default function SplashLoader({ onComplete }) {
   if (isComplete) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      zIndex: 50,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'black',
-      overflow: 'hidden'
-    }}>
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden">
       {/* Subtle animated grain texture */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        opacity: 0.05
-      }}>
-        <div style={{
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(to bottom right, white, transparent, white)',
-          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-        }} />
+      <div className="absolute inset-0 opacity-5">
+        <div className="w-full h-full bg-gradient-to-br from-white via-transparent to-white animate-pulse" />
       </div>
 
       {/* Main content container */}
-      <div style={{
-        position: 'relative',
-        zIndex: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-      }}>
+      <div className="relative z-10 flex flex-col items-center">
         
         {/* Logo container with animations */}
-        <div style={{
-          marginBottom: '4rem',
-          position: 'relative'
-        }}>
+        <div className="relative" style={{ marginBottom: '4rem' }}>
           {/* Logo */}
-          <div style={{
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
+          <div className="relative overflow-hidden">
             <img 
               src="https://collectiveaec.com/wp-content/uploads/2025/01/logo-light.png"
               alt="Logo"
+              className="w-auto object-contain transition-all duration-1000 ease-out"
               style={{
                 height: '5rem',
-                width: 'auto',
-                objectFit: 'contain',
-                transition: 'all 1000ms ease-out',
                 opacity: progress > 5 ? 1 : 0,
                 transform: `translateY(${progress > 5 ? 0 : 30}px) scale(${progress > 5 ? 1 : 0.8})`,
               }}
@@ -102,43 +69,33 @@ export default function SplashLoader({ onComplete }) {
             />
             
             {/* Logo reveal animation */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: 'black',
-              transition: 'transform 1200ms ease-out',
-              transform: `translateY(${progress > 5 ? '-100%' : '0%'})`,
-            }} />
+            <div 
+              className="absolute inset-0 bg-black transition-transform duration-1200 ease-out"
+              style={{
+                transform: `translateY(${progress > 5 ? '-100%' : '0%'})`,
+              }}
+            />
           </div>
           
           {/* Subtle glow effect */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundColor: 'white',
-            filter: 'blur(3rem)',
-            opacity: progress > 5 ? 0.1 : 0,
-            transition: 'opacity 1000ms'
-          }} />
+          <div 
+            className="absolute inset-0 bg-white blur-3xl transition-opacity duration-1000"
+            style={{
+              opacity: progress > 5 ? 0.1 : 0,
+            }}
+          />
         </div>
 
         {/* Loading text */}
-        <div style={{
-          marginBottom: '3rem',
-          textAlign: 'center',
-          transition: 'all 800ms ease-out',
-          opacity: showText ? 1 : 0,
-          transform: `translateY(${showText ? 0 : 20}px)`,
-        }}>
-          <h2 style={{
-            color: 'white',
-            fontSize: '0.875rem',
-            fontWeight: 300,
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            marginBottom: '0.5rem',
-            margin: 0
-          }}>
+        <div 
+          className="text-center transition-all duration-800 ease-out"
+          style={{
+            marginBottom: '3rem',
+            opacity: showText ? 1 : 0,
+            transform: `translateY(${showText ? 0 : 20}px)`,
+          }}
+        >
+          <h2 className="text-white text-sm font-light uppercase tracking-wider m-0" style={{ letterSpacing: '0.3em' }}>
             {progress < 20 ? 'Initializing' : 
              progress < 50 ? 'Loading Experience' : 
              progress < 80 ? 'Preparing Content' : 
@@ -147,144 +104,54 @@ export default function SplashLoader({ onComplete }) {
         </div>
 
         {/* Elegant progress bar */}
-        <div style={{
-          width: '20rem',
-          position: 'relative'
-        }}>
+        <div className="relative" style={{ width: '20rem' }}>
           {/* Background line */}
-          <div style={{
-            height: '1px',
-            backgroundColor: 'white',
-            opacity: 0.2,
-            width: '100%'
-          }} />
+          <div className="w-full bg-white opacity-20" style={{ height: '1px' }} />
           
           {/* Progress line */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '1px',
-            backgroundColor: 'white',
-            transition: 'all 500ms ease-out',
-            width: `${progress}%`,
-            boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-          }} />
+          <div 
+            className="absolute top-0 left-0 bg-white transition-all duration-500 ease-out shadow-md shadow-white/30"
+            style={{
+              height: '1px',
+              width: `${progress}%`,
+            }}
+          />
           
           {/* Progress dot */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            width: '0.25rem',
-            height: '0.25rem',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            transition: 'all 500ms ease-out',
-            left: `${progress}%`,
-            transform: 'translate(-50%, -50%)',
-            boxShadow: '0 0 8px rgba(255, 255, 255, 0.6)',
-          }} />
+          <div 
+            className="absolute top-0 w-1 h-1 bg-white rounded-full transition-all duration-500 ease-out -translate-x-1/2 -translate-y-1/2 shadow-md shadow-white/60"
+            style={{
+              left: `${progress}%`,
+            }}
+          />
         </div>
 
         {/* Progress percentage */}
-        <div style={{
-          marginTop: '1.5rem',
-          color: 'white',
-          fontSize: '0.75rem',
-          fontWeight: 300,
-          letterSpacing: '0.1em',
-          transition: 'opacity 500ms',
-          opacity: showText ? 0.7 : 0
-        }}>
+        <div 
+          className="text-white text-xs font-light tracking-wider transition-opacity duration-500"
+          style={{
+            marginTop: '1.5rem',
+            opacity: showText ? 0.7 : 0
+          }}
+        >
           {Math.round(progress)}%
         </div>
       </div>
 
       {/* Completion fade effect */}
       {progress === 100 && (
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundColor: 'black',
-          transition: 'opacity 1000ms',
-          opacity: 0,
-          animation: 'fadeOut 1s ease-in-out forwards',
-        }} />
+        <div className="absolute inset-0 bg-black transition-opacity duration-1000 opacity-0 animate-fadeOut" />
       )}
 
       {/* Minimal corner details */}
-      <div style={{
-        position: 'absolute',
-        top: '2rem',
-        left: '2rem',
-        width: '2rem',
-        height: '1px',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: '2rem',
-        left: '2rem',
-        width: '1px',
-        height: '2rem',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: '2rem',
-        right: '2rem',
-        width: '2rem',
-        height: '1px',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: '2rem',
-        right: '2rem',
-        width: '1px',
-        height: '2rem',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '2rem',
-        left: '2rem',
-        width: '2rem',
-        height: '1px',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '2rem',
-        left: '2rem',
-        width: '1px',
-        height: '2rem',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '2rem',
-        right: '2rem',
-        width: '2rem',
-        height: '1px',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '2rem',
-        right: '2rem',
-        width: '1px',
-        height: '2rem',
-        backgroundColor: 'white',
-        opacity: 0.2
-      }} />
+      <div className="absolute top-8 left-8 w-8 bg-white opacity-20" style={{ height: '1px' }} />
+      <div className="absolute top-8 left-8 h-8 bg-white opacity-20" style={{ width: '1px' }} />
+      <div className="absolute top-8 right-8 w-8 bg-white opacity-20" style={{ height: '1px' }} />
+      <div className="absolute top-8 right-8 h-8 bg-white opacity-20" style={{ width: '1px' }} />
+      <div className="absolute bottom-8 left-8 w-8 bg-white opacity-20" style={{ height: '1px' }} />
+      <div className="absolute bottom-8 left-8 h-8 bg-white opacity-20" style={{ width: '1px' }} />
+      <div className="absolute bottom-8 right-8 w-8 bg-white opacity-20" style={{ height: '1px' }} />
+      <div className="absolute bottom-8 right-8 h-8 bg-white opacity-20" style={{ width: '1px' }} />
 
       <style jsx>{`
         @keyframes fadeOut {

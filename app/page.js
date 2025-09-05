@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import HeroSection from "./components/HeroSection";
 import { useLenis } from "../lib/lenis";
 import ServicesSection from "./components/ServicesSection";
@@ -7,21 +7,9 @@ import ProjectsSection from "./components/ProjectsSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
-import SplashLoader from "./components/SplashLoader";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  
   useLenis();
-
-  const handleLoaderComplete = () => {
-    setIsLoading(false);
-  };
-
-  // Show loader until complete
-//   if (isLoading) {
-//     return <SplashLoader onComplete={handleLoaderComplete} />;
-//   }
 
   return (
     <div>
@@ -45,36 +33,9 @@ export default function Home() {
         </h2>
       </section>
       <ServicesSection/>
-      {/* <section
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#3a7bd5",
-          color: "#fff",
-        }}
-      >
-        <h2 style={{ fontSize: "2.5rem", fontWeight: "bold" }}>Text Section</h2>
-      </section>
-      <section
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#00c6ff",
-          color: "#222",
-        }}
-      >
-        <h2 style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
-          Services Section
-        </h2>
-      </section> */}
-  {/* ProjectsSection restored below */}
-  <ClientsSection />
-  <ProjectsSection />
-  <TestimonialsSection />
+      <ClientsSection />
+      <ProjectsSection />
+      <TestimonialsSection />
       <footer
         style={{
           minHeight: "100vh",

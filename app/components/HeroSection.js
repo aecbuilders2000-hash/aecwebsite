@@ -11,13 +11,11 @@ export default function HeroSection() {
   const collectiveTextRef = useRef(null);
   const topLeftTextRef = useRef(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
     // Performance optimization: Pause video when out of view
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
         if (videoRef.current) {
           if (entry.isIntersecting) {
             videoRef.current.play().catch(console.log);
@@ -46,7 +44,7 @@ export default function HeroSection() {
     if (collectiveTextRef.current) {
       // Set initial state - bottom center, large size
       gsap.set(collectiveTextRef.current, {
-        fontSize: "clamp(3.8rem, 11.4vw, 15.2rem)",
+        fontSize: "clamp(2rem, 9vw, 15.2rem)",
         x: "-50%",
         y: "0%",
         left: "50%",
@@ -67,7 +65,7 @@ export default function HeroSection() {
           
           // Calculate positions and sizes based on scroll progress
           const fontSize = gsap.utils.interpolate(
-            "clamp(3.8rem, 11.4vw, 15.2rem)", 
+            "clamp(2rem, 9vw, 15.2rem)", 
             "clamp(1.2rem, 2.5vw, 2rem)", 
             progress
           );
@@ -93,30 +91,29 @@ export default function HeroSection() {
         trigger: "body",
         start: "300px top",
         end: "bottom bottom",
-        onToggle: (self) => {
-          if (self.isActive) {
-            // Stick to top-left corner
-            gsap.set(collectiveTextRef.current, {
-              position: "fixed",
-              top: "2vh",
-              left: "2vw",
-              bottom: "auto",
-              fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
-              x: "0%",
-              zIndex: 1000
-            });
-          } else {
-            // Reset to original bottom position when scrolling back up
-            gsap.set(collectiveTextRef.current, {
-              position: "fixed",
-              bottom: "2.5vh",
-              top: "auto",
-              left: "50%",
-              fontSize: "clamp(3.8rem, 11.4vw, 15.2rem)",
-              x: "-50%",
-              zIndex: 1000
-            });
-          }
+        onEnter: () => {
+          // Stick to top-left corner when entering this zone
+          gsap.set(collectiveTextRef.current, {
+            position: "fixed",
+            top: "2vh",
+            left: "2vw",
+            bottom: "auto",
+            fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
+            x: "0%",
+            zIndex: 1000
+          });
+        },
+        onLeaveBack: () => {
+          // Only reset to bottom when scrolling back up past 300px
+          gsap.set(collectiveTextRef.current, {
+            position: "fixed",
+            bottom: "2.5vh",
+            top: "auto",
+            left: "50%",
+            fontSize: "clamp(2rem, 9vw, 15.2rem)",
+            x: "-50%",
+            zIndex: 1000
+          });
         }
       });
     }
@@ -190,10 +187,16 @@ export default function HeroSection() {
           fontWeight: 400,
           color: '#fff',
           textShadow: '0 4px 20px rgba(0,0,0,0.8)',
-          letterSpacing: '0.1em',
+          letterSpacing: '0.05em',
           userSelect: 'none',
           pointerEvents: 'none',
           mixBlendMode: 'difference', // Cool effect over different backgrounds
+          padding: '0 4vw', // Increased horizontal padding
+          textAlign: 'center', // Center align the text
+          maxWidth: '92vw', // More conservative max width
+          overflow: 'hidden', // Hide any potential overflow
+          whiteSpace: 'nowrap', // Keep text on one line
+          boxSizing: 'border-box', // Include padding in width calculation
         }}
       >
         COLLECTIVE
@@ -258,7 +261,7 @@ export default function HeroSection() {
             whiteSpace: 'nowrap',
           }}
         >
-          Let's collaborate
+          Let&apos;s collaborate
         </span>
         
         {/* Circle inside the button */}
@@ -278,8 +281,8 @@ export default function HeroSection() {
         >
           <svg 
             className="arrow-icon"
-            width="clamp(10, 3vw, 16)" 
-            height="clamp(10, 3vw, 16)" 
+            width="16" 
+            height="16" 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="#fff" 
@@ -289,6 +292,8 @@ export default function HeroSection() {
             style={{
               transform: 'rotate(-45deg)', // Top-right diagonal initially
               transition: 'all 0.3s ease',
+              width: 'clamp(10px, 3vw, 16px)',
+              height: 'clamp(10px, 3vw, 16px)',
             }}
           >
             <path d="M7 7h10v10" />
