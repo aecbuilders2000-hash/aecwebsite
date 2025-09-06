@@ -45,26 +45,28 @@ export default function ContentSection() {
   return (
     <section
       ref={contentRef}
-      className="relative bg-gray-1 text-gray-9 overflow-hidden border-t border-b border-gray-3"
+      className="relative overflow-hidden border-t border-b border-gray-3"
       style={{
         minHeight: "100vh",
         width: "100vw",
+        background: "var(--gray-1)",
+        color: "var(--gray-9)",
         zIndex: 10,
       }}
     >
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
-        className="absolute top-0 left-0 bg-gray-8 flex items-end justify-center overflow-hidden"
+        className="absolute top-0 left-0 flex items-end justify-center overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
-          zIndex: 2,
+          background: "var(--gray-8)",
         }}
       >
         <span
           ref={topTextRef}
-          className="text-2xl font-bold text-white opacity-0 transition-all duration-300"
+          className="text-3xl font-bold text-white opacity-0"
           style={{
             transform: "translateY(40px)",
             marginBottom: "32px",
@@ -76,16 +78,16 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
-        className="absolute left-0 bottom-0 bg-gray-7 flex items-start justify-center overflow-hidden"
+        className="absolute left-0 bottom-0 flex items-start justify-center overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
-          zIndex: 2,
+          background: "var(--gray-7)",
         }}
       >
         <span
           ref={bottomTextRef}
-          className="text-2xl font-bold text-white opacity-0 transition-all duration-300"
+          className="text-3xl font-bold text-white opacity-0"
           style={{
             transform: "translateY(-40px)",
             marginTop: "32px",
@@ -96,10 +98,9 @@ export default function ContentSection() {
       </div>
       {/* Main Content (centered) */}
       <div
-        className="flex items-center justify-center"
+        className="flex items-center justify-center z-10"
         style={{
           minHeight: "100vh",
-          zIndex: 1,
         }}
       >
         <h2 className="text-4xl font-bold">
