@@ -229,7 +229,10 @@ export default function HeroSection() {
           const circle = e.target.querySelector('.arrow-circle');
           const arrow = e.target.querySelector('.arrow-icon');
           
-          if (textSpan) textSpan.style.color = '#fff';
+          if (textSpan) {
+            textSpan.style.color = '#fff';
+            textSpan.style.backgroundColor = 'transparent';
+          }
           if (circle) circle.style.backgroundColor = '#fff';
           if (arrow) {
             arrow.style.stroke = '#000';
@@ -255,6 +258,7 @@ export default function HeroSection() {
           className="button-text"
           style={{
             color: '#000',
+            backgroundColor: 'transparent',
             fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)',
             fontWeight: '500',
             transition: 'color 0.3s ease',
