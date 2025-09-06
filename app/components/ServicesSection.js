@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ArchitectureServices from "./ArchitectureServices";
+import CardServices from "./ServicesCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +12,7 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction."
       imageUrl="/SanBridge.png"
       serviceName="ARCHITECTURAL"
@@ -26,7 +26,7 @@ const services = [
     description: "Transforming spaces with creative interior concepts",
     color: "#2d3748",
     accent: "#4299e1",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Creating beautiful, functional interior spaces that reflect your style and enhance daily living experiences."
       imageUrl="/ModernVilla.png"
       serviceName="INTERIOR"
@@ -40,7 +40,7 @@ const services = [
     description: "End-to-end project coordination and delivery",
     color: "#1a202c",
     accent: "#38b2ac",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Comprehensive project oversight ensuring timely delivery, budget control, and quality standards throughout the construction process."
       imageUrl="/SanBridge.png"
       serviceName="PROJECT MANAGEMENT"
@@ -54,7 +54,7 @@ const services = [
     description: "Photorealistic renders and virtual walkthroughs",
     color: "#2c5282",
     accent: "#ed8936",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Bringing designs to life with stunning photorealistic visualizations and immersive virtual reality experiences."
       imageUrl="/ModernVilla.png"
       serviceName="3D VISUALIZATION"
@@ -68,7 +68,7 @@ const services = [
     description: "Harmonious outdoor spaces and garden planning",
     color: "#276749",
     accent: "#68d391",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Designing sustainable outdoor environments that complement architecture and enhance the natural landscape."
       imageUrl="/SanBridge.png"
       serviceName="LANDSCAPE"
@@ -82,7 +82,7 @@ const services = [
     description: "Quality assurance and construction oversight",
     color: "#744210",
     accent: "#f6e05e",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="On-site supervision ensuring construction quality, safety compliance, and adherence to architectural specifications."
       imageUrl="/ModernVilla.png"
       serviceName="CONSTRUCTION"
@@ -96,7 +96,7 @@ const services = [
     description: "Eco-friendly and energy-efficient building systems",
     color: "#553c9a",
     accent: "#b794f6",
-    content: <ArchitectureServices 
+    content: <CardServices 
       introText="Implementing green building technologies and sustainable design practices for environmentally responsible construction."
       imageUrl="/SanBridge.png"
       serviceName="SUSTAINABLE"

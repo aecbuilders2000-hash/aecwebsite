@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ArchitectureServices from "./ArchitectureServices";
+import CardServices from "./ServicesCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +12,7 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-    content: <ArchitectureServices />
+    content: <CardServices />
   },
   {
     title: "Interior Design",

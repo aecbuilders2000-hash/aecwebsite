@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Button from '../ui/Button';
 
-const ArchitectureServices = ({
+const CardServices = ({
     introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
     imageUrl = "/SanBridge.png",
     serviceName = "ARCHITECTURAL",
@@ -302,4 +302,4 @@ const ArchitectureServices = ({
     );
 };
 
-export default ArchitectureServices;
+export default CardServices;
