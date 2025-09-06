@@ -137,7 +137,7 @@ const ArchitectureServices = () => {
                     {/* Brand Description */}
                     <div className="pt-8">
                         <p className="text-lg text-gray-600 leading-relaxed">
-                            Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.
+                            Your brand&apos;s compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.
                         </p>
                     </div>
                 </div>

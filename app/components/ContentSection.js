@@ -81,7 +81,7 @@ export default function ContentSection() {
             marginBottom: "32px",
           }}
         >
-          The Architects'
+          The Architects&apos;
         </span>
       </div>
 
