@@ -70,17 +70,17 @@ export default function HeroSection() {
             progress
           );
           
-          // Move from center to left
+          // Move from center to position "C" exactly at 2.5vw
           const xPos = gsap.utils.interpolate(-50, 0, progress);
           
-          // Move from bottom to top
-          const bottomPos = gsap.utils.interpolate(2.5, 95, progress);
-          const leftPos = gsap.utils.interpolate(50, 2, progress);
+          // Move from bottom to final position - changed 95 to 87 so it doesn't touch the very top
+          const bottomPos = gsap.utils.interpolate(2.5, 87, progress); // Changed to 87 to align with 5vh from top
+          const leftPos = gsap.utils.interpolate(50, 2.5, progress); // Position directly at 2.5vw
           
           gsap.set(collectiveTextRef.current, {
             fontSize: fontSize,
             x: `${xPos}%`,
-            left: `${leftPos}%`,
+            left: `${leftPos}vw`, // Use vw instead of % so 2.5vw = 2.5% of viewport width
             bottom: `${bottomPos}vh`,
           });
         }
@@ -95,11 +95,11 @@ export default function HeroSection() {
           // Stick to top-left corner when entering this zone
           gsap.set(collectiveTextRef.current, {
             position: "fixed",
-            top: "2vh",
-            left: "2vw",
+            top: "5vh", // 5% from top
+            left: "2.5vw", // Position "C" exactly at 2.5% from left
             bottom: "auto",
             fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
-            x: "0%",
+            x: "0%", // No transform - text starts exactly at left position
             zIndex: 1000
           });
         },
@@ -187,16 +187,18 @@ export default function HeroSection() {
           fontWeight: 400,
           color: '#fff',
           textShadow: '0 4px 20px rgba(0,0,0,0.8)',
-          letterSpacing: '0.05em',
+          letterSpacing: '0.3em', // Increased to 0.3em for better width coverage
           userSelect: 'none',
           pointerEvents: 'none',
           mixBlendMode: 'difference', // Cool effect over different backgrounds
-          padding: '0 4vw', // Increased horizontal padding
-          textAlign: 'center', // Center align the text
-          maxWidth: '92vw', // More conservative max width
+          padding: '0', // Remove padding completely
+          textAlign: 'left', // Left align 
+          width: '95vw', // 95% width to align with navbar
           overflow: 'hidden', // Hide any potential overflow
           whiteSpace: 'nowrap', // Keep text on one line
           boxSizing: 'border-box', // Include padding in width calculation
+          paddingLeft: '0', // Explicitly no left padding
+          marginLeft: '0', // Explicitly no left margin
         }}
       >
         COLLECTIVE
@@ -206,8 +208,8 @@ export default function HeroSection() {
       <button
         style={{
           position: 'fixed',
-          top: '3vh',
-          right: '3vw',
+          top: '5vh', // Changed from 3vh to 5vh
+          right: '2.5vw', // Changed from 3vw to 2.5vw
           zIndex: 1001,
           display: 'flex',
           alignItems: 'center',
@@ -218,7 +220,7 @@ export default function HeroSection() {
           border: 'none',
           borderRadius: '50px',
           cursor: 'pointer',
-          fontFamily: 'var(--font-geist-sans), sans-serif',
+          fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
           transition: 'all 0.3s ease',
           boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
           gap: 'clamp(0.4rem, 1.5vw, 1rem)',
@@ -329,8 +331,8 @@ export default function HeroSection() {
           ref={topLeftTextRef}
           style={{
             position: 'absolute',
-            top: '3vh',
-            left: '3vw',
+            top: '5vh', // Changed from 3vh to 5vh
+            left: '2.5vw', // Changed from 3vw to 2.5vw
             zIndex: 2,
             color: '#fff',
             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
@@ -339,7 +341,7 @@ export default function HeroSection() {
             lineHeight: '1.2',
             textShadow: '0 2px 8px rgba(0,0,0,0.6)',
             userSelect: 'none',
-            letterSpacing: '0.05em',
+            letterSpacing: '0.3em', // Increased to 0.3em to match COLLECTIVE text
           }}
         >
           <div>Design more</div>

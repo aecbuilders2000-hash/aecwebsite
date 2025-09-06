@@ -4,158 +4,301 @@ import React from 'react';
 import Image from 'next/image';
 import Button from '../ui/Button';
 
-const ArchitectureServices = () => {
+const ArchitectureServices = ({
+    introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
+    imageUrl = "/SanBridge.png",
+    serviceName = "ARCHITECTURAL",
+    pageNumber = "001/007",
+    services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"],
+    bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
+}) => {
 
-    const options = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"]
-    const [selected, setSelected] = useState("AutoCAD");
+    const [selected, setSelected] = useState(services[1]); // Default to second service
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
     return (
-        <div className="bg-transparent md:px-[5%] py-24">
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-                {/* Left Column */}
-                <div className="space-y-12">
-                    {/* Description */}
-                    <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-md">
-                        Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.
+        <section 
+            style={{
+                width: "100vw",
+                minHeight: "100vh",
+                backgroundColor: "#E9ECEF", // Added requested background color
+                overflow: "hidden",
+                paddingTop: "5vh",
+                paddingLeft: "2.5vw",
+                paddingRight: "2.5vw",
+                boxSizing: "border-box",
+            }}
+        >
+            {/* Main Content Row */}
+            <div 
+                style={{
+                    display: "flex",
+                    width: "100%",
+                    minHeight: "80vh",
+                    gap: "clamp(2rem, 4vw, 4rem)",
+                }}
+            >
+                {/* Left Column - 40% */}
+                <div 
+                    style={{
+                        width: "40%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start", // Changed from center to start
+                        alignItems: "flex-start",
+                        position: "relative",
+                    }}
+                >
+                    {/* Intro Text */}
+                    <p 
+                        style={{
+                            position: "absolute",
+                            top: "8vh", // Reduced from 10vh for more space
+                            fontFamily: 'var(--font-poppins), sans-serif',
+                            fontSize: 'clamp(1.1rem, 2.2vw, 1.7rem)', // Slightly larger font
+                            lineHeight: '1.6',
+                            color: '#737272', // Requested color
+                            margin: 0,
+                            textAlign: 'left',
+                            width: "30vw", // Reduced from 100% to 30vw
+                        }}
+                    >
+                        {introText}
                     </p>
 
-                    {/* Bridge Image */}
-                    <div className="relative group cursor-pointer">
-                        <div className="overflow-hidden rounded-lg">
-                            <div className="w-full h-64 md:h-80 bg-gray-800 relative transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                                {/* Placeholder for bridge image - replace with actual image */}
-                                <Image
-                                    src="/SanBridge.png"
-                                    alt="Bridge"
-                                    layout="fill"
-                                    objectFit="cover"
-                                    className="rounded-lg"
-                                />
-                            </div>
-                        </div>
+                    {/* Image */}
+                    <div 
+                        style={{
+                            position: "absolute",
+                            top: "28vh", // Increased from 25vh for more space after intro text
+                            width: "18.75vw", // Reduced by 25% (was 25vw)
+                            height: "18.75vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
+                        }}
+                    >
+                        <Image
+                            src={imageUrl}
+                            alt="Architecture Service"
+                            fill
+                            sizes="18.75vw"
+                            style={{
+                                objectFit: "cover",
+                            }}
+                        />
                     </div>
 
-                    {/* Architectural Label */}
-                    <Button text={"ARCHITECTURAL"} fontFamily={"var(--font-bruno-ace-sc), sans-serif"} />
+                    {/* Service Name with Arrow - AFTER the image */}
+                    <div 
+                        style={{
+                            position: "absolute",
+                            top: "calc(28vh + 18.75vw + 10vh)", // Updated calculation: new image top + image height + larger gap
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "clamp(1rem, 2vw, 2rem)",
+                        }}
+                    >
+                        <span 
+                            style={{
+                                fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Same as COLLECTIVE in content section
+                                fontWeight: 'bold',
+                                letterSpacing: '0.3em', // 30% character spacing like COLLECTIVE
+                                color: '#000000',
+                                lineHeight: '1.2',
+                            }}
+                        >
+                            {serviceName}
+                        </span>
+                        
+                        {/* Arrow Circle */}
+                        <div
+                            style={{
+                                width: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
+                                height: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
+                                backgroundColor: '#000',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0,
+                            }}
+                        >
+                            <svg 
+                                width="20" // Increased from 16 (25% increase)
+                                height="20" // Increased from 16 (25% increase)
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke="#fff" 
+                                strokeWidth="2" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round"
+                                style={{
+                                    transform: 'rotate(-45deg)', // Top-right diagonal
+                                    width: 'clamp(12.5px, 3.75vw, 20px)', // Increased by 25% (was clamp(10px, 3vw, 16px))
+                                    height: 'clamp(12.5px, 3.75vw, 20px)', // Increased by 25% (was clamp(10px, 3vw, 16px))
+                                }}
+                            >
+                                <path d="M7 7h10v10" />
+                                <path d="M7 17L17 7" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="space-y-12">
+                {/* Right Column - 60% */}
+                <div 
+                    style={{
+                        width: "60%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        position: "relative",
+                    }}
+                >
+                    {/* White Box Container */}
+                    <div 
+                        style={{
+                            position: "absolute",
+                            top: "8vh", // Start from same level as intro text
+                            right: "1.25vw", // Align to the right
+                            width: "80%", // 60% of right side width
+                            height: "calc(100vh - 8vh)", // Extend till end of page
+                            backgroundColor: "#FFFFFF",
+                            borderTopLeftRadius: "2rem",
+                            borderTopRightRadius: "2rem",
+                            borderBottomLeftRadius: "0",
+                            borderBottomRightRadius: "0",
+                            padding: "clamp(4rem, 8vw, 6rem) clamp(4rem, 8vw, 6rem)", // Increased padding
+                            boxSizing: "border-box",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            gap: "clamp(2rem, 4vh, 3rem)",
+                        }}
+                    >
                     {/* Services Header */}
-                    <div className="flex justify-between items-start">
-                        <h3 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-gray-400">
+                    <div 
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "baseline", // Changed from flex-start to baseline for same baseline alignment
+                            marginBottom: "clamp(1rem, 2vh, 2rem)",
+                        }}
+                    >
+                        <h3 
+                            style={{
+                                fontFamily: 'var(--font-poppins), sans-serif',
+                                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                                fontWeight: '300',
+                                letterSpacing: '0.15em',
+                                color: '#737272',
+                                margin: 0,
+                            }}
+                        >
                             SERVICES
                         </h3>
-                        <span className="text-sm text-gray-400 tracking-wider">001/007</span>
+                        <span 
+                            style={{
+                                fontFamily: 'var(--font-poppins), sans-serif',
+                                fontSize: 'clamp(1rem, 1.6vw, 1.4rem)', // Increased size from clamp(0.8rem, 1.2vw, 1rem)
+                                color: '#737272',
+                                letterSpacing: '0.1em',
+                            }}
+                        >
+                            {pageNumber}
+                        </span>
                     </div>
 
                     {/* Software Stack */}
-                    <div className="space-y-8">
-                        {options.map((option, index) => {
-                            const isSelected = selected === option; // ✅ check if THIS option is selected
+                    <div 
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "clamp(0.5rem, 1vh, 0.8rem)", // Reduced gap between features
+                        }}
+                    >
+                        {services.map((option, index) => {
+                            const isHovered = hoveredIndex === index;
                             return (
                                 <button
                                     key={index}
                                     style={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        padding: 'clamp(0.3rem, 0.5vw, 0.6rem)',
-                                        paddingLeft: 'clamp(0.6rem, 2vw, 1.5rem)',
+                                        justifyContent: 'flex-start',
+                                        padding: 'clamp(0.5rem, 1vw, 0.8rem)',
+                                        paddingLeft: 'clamp(1rem, 2vw, 1.5rem)',
                                         border: 'none',
                                         cursor: 'pointer',
                                         backgroundColor: "transparent",
-                                        fontFamily: 'var(--font-geist-sans), sans-serif',
+                                        fontFamily: 'var(--font-poppins), sans-serif',
                                         transition: 'all 0.3s ease',
-                                        gap: 'clamp(0.4rem, 1.5vw, 1rem)',
+                                        width: '100%',
+                                        position: 'relative',
                                     }}
-                                    onClick={() => setSelected(isSelected ? null : option)} // toggle selection
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
+                                    onClick={() => setSelected(selected === option ? null : option)}
                                 >
+                                    {/* Bouncy Black Ball - appears on hover */}
+                                    <div
+                                        style={{
+                                            width: 'clamp(12px, 2.5vw, 20px)',
+                                            height: 'clamp(12px, 2.5vw, 20px)',
+                                            backgroundColor: '#000',
+                                            borderRadius: '50%',
+                                            position: 'absolute',
+                                            left: 'clamp(0.5rem, 1vw, 0.8rem)',
+                                            opacity: isHovered ? 1 : 0,
+                                            transform: isHovered ? 'scale(1)' : 'scale(0)',
+                                            transition: 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)', // Bouncy animation
+                                        }}
+                                    />
+
                                     {/* Text */}
                                     <span
-                                        className="button-text"
                                         style={{
-                                            color: isSelected ? '#000' : '#B9B9B9',
+                                            color: isHovered ? '#000000' : '#CED4DA', // All start as #CED4DA, turn black on hover
                                             backgroundColor: 'transparent',
-                                            fontFamily: 'var(--font-geist-sans), sans-serif',
-                                            fontSize: 'clamp(0.7rem, 2vw, 1.5rem)',
-                                            fontWeight: '500',
-                                            transition: 'color 0.3s ease',
+                                            fontFamily: 'var(--font-poppins), sans-serif',
+                                            fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                                            fontWeight: '300',
+                                            letterSpacing: '0.15em',
+                                            transition: 'all 0.3s ease',
                                             whiteSpace: 'nowrap',
+                                            transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)', // Text shifts right on hover
                                         }}
                                     >
                                         {option}
                                     </span>
-
-                                    {/* Circle inside the button */}
-                                    <div
-                                        className="arrow-circle"
-                                        style={{
-                                            width: 'clamp(20px, 6vw, 36px)',
-                                            height: 'clamp(20px, 6vw, 36px)',
-                                            backgroundColor: isSelected ? '#000' : 'transparent',
-                                            borderRadius: '50%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            flexShrink: 0,
-                                            transition: 'all 0.3s ease',
-                                            opacity: isSelected ? 1 : 0,
-                                            transform: isSelected ? 'scale(1)' : 'scale(0.5)',
-                                        }}
-                                    >
-                                        <svg
-                                            className="arrow-icon"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke={isSelected ? "#fff" : "#000"}
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            style={{
-                                                transform: isSelected ? 'rotate(0deg)' : 'rotate(-45deg)',
-                                                transition: 'all 0.3s ease',
-                                                width: 'clamp(10px, 3vw, 16px)',
-                                                height: 'clamp(10px, 3vw, 16px)',
-                                                opacity: isSelected ? 1 : 0,
-                                            }}
-                                        >
-                                            <path d="M7 7h10v10" />
-                                            <path d="M7 17L17 7" />
-                                        </svg>
-                                    </div>
-
                                 </button>
                             )
                         })}
-
                     </div>
 
                     {/* Brand Description */}
-                    <div className="pt-8">
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                            Your brand&apos;s compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.
+                    <div 
+                        style={{
+                            paddingTop: "clamp(1rem, 2vh, 2rem)",
+                            width: "70%", // Reduced width for the text area
+                        }}
+                    >
+                        <p 
+                            style={{
+                                fontFamily: 'var(--font-poppins), sans-serif',
+                                fontSize: 'clamp(1.1rem, 2.2vw, 1.7rem)', // Changed to match intro text
+                                lineHeight: '1.6',
+                                color: '#737272', // Changed to match intro text color
+                                margin: 0,
+                            }}
+                        >
+                            {bottomText}
                         </p>
                     </div>
+                    </div> {/* Close White Box Container */}
                 </div>
             </div>
 
-            {/* Custom CSS for additional styling */}
-            <style jsx>{`
-        .tracking-wider {
-          letter-spacing: 0.1em;
-        }
-        
-        @media (max-width: 768px) {
-          .tracking-wide {
-            letter-spacing: 0.05em;
-          }
-        }
-      `}</style>
-        </div>
+        </section>
     );
 };
 

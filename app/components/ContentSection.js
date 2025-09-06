@@ -53,11 +53,11 @@ export default function ContentSection() {
   return (
     <section
       ref={contentRef}
-      className="relative bg-gray-100 overflow-hidden border-t border-b border-gray-3"
+      className="relative overflow-hidden border-t border-b border-gray-3"
       style={{
         minHeight: "100vh",
         width: "100vw",
-        // background: "var(--gray-1)",
+        background: "var(--gray-2)", // Using E9ECEF from your color palette
         color: "var(--gray-9)",
         zIndex: 10,
       }}
@@ -65,20 +65,24 @@ export default function ContentSection() {
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
-        className="absolute top-0 left-0 pl-16 flex items-end items-center overflow-hidden z-20 bg-[#E9ECEF]"
+        className="absolute top-0 left-0 flex items-end overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
-          // background: "var(--gray-8)",
+          background: "var(--gray-2)", // Using E9ECEF from your color palette
+          borderBottom: "0.5vw solid white", // White center line
+          paddingLeft: "2.5vw", // 2.5% from left
+          paddingBottom: "2.5vh", // 2.5vh from the split line
         }}
       >
         <span
           ref={topTextRef}
-          className="text-4xl font-bold text-[#737272] text-left w-full opacity-0"
+          className="font-bold text-left opacity-0"
           style={{
-            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+            fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
+            color: "#737272",
+            fontSize: "clamp(2.5rem, 5vw, 5rem)", // Larger text size
             transform: "translateY(40px)",
-            marginBottom: "32px",
           }}
         >
           The Architects&apos;
@@ -88,140 +92,239 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
-        className="absolute left-0 bottom-0 flex items-start pr-16 overflow-hidden z-20 bg-[#E9ECEF]"
+        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
-          // background: "var(--gray-7)",
+          background: "var(--gray-2)", // Using E9ECEF from your color palette
+          borderTop: "0.5vw solid white", // White center line
+          paddingRight: "3.75vw", // 2.5vw + 1.25vw to align with navbar
+          paddingTop: "2.5vh", // 2.5vh from the split line
+          justifyContent: "flex-end", // Right align content
         }}
       >
         <span
           ref={bottomTextRef}
-          className="text-4xl font-bold text-[#737272] text-right w-full opacity-0"
+          className="font-bold text-right opacity-0"
           style={{
-            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+            fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
+            color: "#737272",
+            fontSize: "clamp(2.5rem, 5vw, 5rem)", // Larger text size
             transform: "translateY(-40px)",
-            marginTop: "32px",
           }}
         >
           Extended Studio.
         </span>
       </div>
       {/* Main Content (centered) */}
-      <section className="bg-gray-100 py-24 px-[5%]">
-        {/* Top Section */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
-          {/* Left Image */}
-          <div className="flex-1 overflow-hidden">
-            <div className="relative mt-5">
-              <Image
-                src="/ModernVilla.png"
-                alt="Collective Building"
-                width={300}   // required
-                height={300}  // required
-                className="rounded-lg shadow-lg object-cover"
-              />
-            </div>
-            <button
+      {/* Main Content Section */}
+      <section 
+        style={{
+          width: "100vw", // Full viewport width
+          minHeight: "100vh", // Full viewport height
+          backgroundColor: "#FFFFFF", // White background
+          overflow: "hidden", // No overflow
+          paddingTop: "5vh", // 5vh gap from navbar
+          paddingLeft: "2.5vw", // 2.5% from left
+          paddingRight: "2.5vw", // 2.5% from right
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Top Row - Left and Right Boxes */}
+        <div 
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "12.5vh", // 12.5% from top of screen
+            left: "0",
+            right: "0",
+            width: "100%",
+            height: "60vh", // 60% height
+            paddingLeft: "2.5vw", // Left padding instead of left margin
+            paddingRight: "2.5vw", // Right padding instead of right margin
+            boxSizing: "border-box",
+            gap: "clamp(1rem, 2.5vw, 2rem)", // Gap between left and right boxes
+            margin: 0, // Remove any default margin
+          }}
+        >
+          {/* Box 1: Left - Image and Learn More Button */}
+          <div 
+            style={{
+              width: "25vw", // Made smaller (was 30vw)
+              height: "100%",
+              position: "relative",
+              zIndex: 10, // Ensure button is clickable
+            }}
+          >
+            {/* Grouped Image and Button Container */}
+            <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: 'clamp(0.3rem, 0.5vw, 0.6rem)',
-                paddingLeft: 'clamp(0.6rem, 2vw, 1.5rem)',
-                border: 'none',
-                cursor: 'pointer',
-                backgroundColor: "transparent",
-                fontFamily: 'var(--font-geist-sans), sans-serif',
-                transition: 'all 0.3s ease',
-                gap: 'clamp(0.4rem, 1.5vw, 1rem)',
-              }}
-              onMouseEnter={(e) => {
-                const textSpan = e.target.querySelector('.button-text');
-                const circle = e.target.querySelector('.arrow-circle');
-                const arrow = e.target.querySelector('.arrow-icon');
-
-                if (textSpan) {
-                  textSpan.style.backgroundColor = 'transparent';
-                }
-                if (arrow) {
-                  arrow.style.transform = 'rotate(0deg)'; // Right arrow on hover
-                }
-              }}
-              onMouseLeave={(e) => {
-                // e.target.style.backgroundColor = '#fff';
-                const textSpan = e.target.querySelector('.button-text');
-                const circle = e.target.querySelector('.arrow-circle');
-                const arrow = e.target.querySelector('.arrow-icon');
-
-                if (textSpan) textSpan.style.color = '#000';
-                if (circle) {
-                  circle.style.backgroundColor = '#000';
-                }
-                if (arrow) {
-                  arrow.style.stroke = '#fff';
-                  arrow.style.backgroundColor = "transparent";
-                  arrow.style.transform = 'rotate(-45deg)'; // Top-right arrow initially
-                }
+                position: "absolute",
+                top: "5vh", // Start at 15vh from top
+                left: "0",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start", // Keep left alignment for content
+                gap: "clamp(1rem, 2vh, 1.5rem)", // Gap between image and button
               }}
             >
-              {/* Text */}
-              <span
-                className="button-text"
+              <div 
                 style={{
-                  color: '#000',
-                  backgroundColor: 'transparent',
-                  fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)',
-                  fontWeight: '500',
-                  transition: 'color 0.3s ease',
-                  whiteSpace: 'nowrap',
+                  position: "relative",
+                  width: "25vw", // Increased from 20vw
+                  height: "25vw", // Increased from 20vw for 1:1 ratio
                 }}
               >
-                Learn More
-              </span>
-
-              {/* Circle inside the button */}
-              <div
-                className="arrow-circle"
+                <Image
+                  src="/ModernVilla.png"
+                  alt="Collective Building"
+                  fill
+                  sizes="25vw"
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            
+              {/* Navbar-style button */}
+              <button
                 style={{
-                  width: 'clamp(20px, 6vw, 36px)',
-                  height: 'clamp(20px, 6vw, 36px)',
-                  backgroundColor: '#000',
-                  borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
+                  padding: 'clamp(0.5rem, 1.5vw, 1rem)', // Increased padding
+                  paddingLeft: 'clamp(1rem, 3vw, 2rem)', // Increased left padding
+                  backgroundColor: '#FFFFFF', // Transparent background
+                  border: 'none', // Removed border
+                  borderRadius: '50px',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
                   transition: 'all 0.3s ease',
-                  flexShrink: 0,
+                  gap: 'clamp(0.4rem, 1.5vw, 1rem)',
+                  width: 'fit-content', // Make button only as wide as needed
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#000';
+                  const textSpan = e.target.querySelector('.button-text');
+                  const circle = e.target.querySelector('.arrow-circle');
+                  const arrow = e.target.querySelector('.arrow-icon');
+                  
+                  if (textSpan) {
+                    textSpan.style.color = '#fff';
+                    textSpan.style.backgroundColor = 'transparent';
+                  }
+                  if (circle) circle.style.backgroundColor = '#fff';
+                  if (arrow) {
+                    arrow.style.stroke = '#000';
+                    arrow.style.transform = 'rotate(0deg)'; // Right arrow on hover
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'transparent';
+                  const textSpan = e.target.querySelector('.button-text');
+                  const circle = e.target.querySelector('.arrow-circle');
+                  const arrow = e.target.querySelector('.arrow-icon');
+                  
+                  if (textSpan) textSpan.style.color = '#000';
+                  if (circle){
+                    circle.style.backgroundColor = '#000';
+                  }
+                  if (arrow) {
+                    arrow.style.stroke = '#fff';
+                    arrow.style.backgroundColor = "transparent";
+                    arrow.style.transform = 'rotate(-45deg)'; // Top-right arrow initially
+                  }
                 }}
               >
-                <svg
-                  className="arrow-icon"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                {/* Text */}
+                <span
+                  className="button-text"
                   style={{
-                    transform: 'rotate(-45deg)', // Top-right diagonal initially
-                    transition: 'all 0.3s ease',
-                    width: 'clamp(10px, 3vw, 16px)',
-                    height: 'clamp(10px, 3vw, 16px)',
+                    color: '#000',
+                    backgroundColor: 'transparent',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.3rem)', // Increased font size
+                    fontWeight: '500',
+                    transition: 'color 0.3s ease',
+                    whiteSpace: 'nowrap',
                   }}
                 >
-                  <path d="M7 7h10v10" />
-                  <path d="M7 17L17 7" />
-                </svg>
-              </div>
-            </button>
+                  Learn More
+                </span>
+                
+                {/* Circle inside the button */}
+                <div
+                  className="arrow-circle"
+                  style={{
+                    width: 'clamp(28px, 8vw, 48px)', // Increased circle size
+                    height: 'clamp(28px, 8vw, 48px)', // Increased circle size
+                    backgroundColor: '#000',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s ease',
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg 
+                    className="arrow-icon"
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="#fff" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                    style={{
+                      transform: 'rotate(-45deg)', // Top-right diagonal initially
+                      transition: 'all 0.3s ease',
+                      width: 'clamp(10px, 3vw, 16px)',
+                      height: 'clamp(10px, 3vw, 16px)',
+                    }}
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17L17 7" />
+                  </svg>
+                </div>
+              </button>
+            </div>
           </div>
 
-          {/* Right Text */}
-          <div className="flex-1 text-center md:text-left my-auto">
-            <p className="text-gray-700 leading-relaxed text-right my-auto">
+          {/* Box 2: Right - Text Paragraph */}
+          <div 
+            style={{
+              width: "50vw", // Reduced to 50% of screen
+              height: "100%",
+              position: "absolute",
+              right: "2.5vw", // Position from right edge to align with navbar
+              top: "0", // Align with top of container
+              margin: 0, // Remove any default margin
+              padding: 0, // Remove any default padding
+              boxSizing: "border-box",
+              zIndex: 5, // Lower z-index than left box to avoid overlap
+            }}
+          >
+            <p 
+              style={{
+                position: "absolute",
+                top: "5vh", // Start at 5vh from top - same as image
+                right: "1.25vw", // Add 1.25vw to align with navbar button
+                left: "0", // Ensure it takes full width of container
+                fontFamily: 'var(--font-poppins), sans-serif',
+                fontSize: 'clamp(1.5rem, 3.2vw, 2.5rem)', // Increased font size
+                lineHeight: '1.6',
+                color: '#333333',
+                textAlign: 'right', // Right align text
+                margin: 0, // Remove all margins
+                padding: 0, // Remove all padding
+                border: 0, // Remove any border
+                boxSizing: "border-box",
+                outline: "none", // Remove any outline
+              }}
+            >
               Collective AEC is a specialized collaborative studio offering
               end-to-end backend support for design firms. We are not an
               outsourcing company. We are your extended in-house team of
@@ -234,24 +337,104 @@ export default function ContentSection() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mt-8 text-center">
-            <p className="text-gray-600">We are</p>
-            <h2 className="text-2xl font-bold tracking-widest"
+        {/* Box 3: Bottom - We are Collective and Stats */}
+        <div 
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            height: "calc(100vh - 12.5vh - 60vh)", // Remaining height after top position and middle height
+            width: "100%", // Full width
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between", // Space between left tagline and right metrics
+            paddingLeft: "2.5vw", // Left padding instead of left margin
+            paddingRight: "3.75vw", // Right padding (2.5vw + 1.25vw to align with navbar)
+            boxSizing: "border-box",
+            margin: 0, // Remove any default margin
+            zIndex: 1, // Lower z-index to stay below other content
+          }}
+        >
+          {/* We are Collective - Left side, stacked */}
+          <div 
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <span 
+              style={{
+                fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
+                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Increased to match current metrics size
+                color: '#000000',
+                fontWeight: 'normal',
+                lineHeight: '1.2',
+              }}
+            >
+              We are
+            </span>
+            <span 
               style={{
                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-              }}>COLLECTIVE</h2>
+                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Increased to match current metrics size
+                fontWeight: 'bold',
+                letterSpacing: '0.3em', // 30% character spacing
+                color: '#000000',
+                lineHeight: '1.2',
+              }}
+            >
+              COLLECTIVE
+            </span>
           </div>
 
-          {/* Stats Section */}
-          <div className="mt-8 flex flex-wrap justify-center gap-10 text-center">
+          {/* Stats Section - Right aligned to match navbar button */}
+          <div 
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "clamp(2rem, 4vw, 3rem)",
+              flexWrap: "nowrap", // Keep in single line for desktop
+              margin: 0, // Remove any default margin
+              padding: 0, // Remove any default padding
+              boxSizing: "border-box",
+            }}
+          >
             {stats.map((item, index) => (
-              <div key={index} className="min-w-[120px]">
-                <h2 className="text-3xl font-bold"
+              <div 
+                key={index} 
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  minWidth: 'clamp(6rem, 8vw, 8rem)',
+                }}
+              >
+                <h3 
                   style={{
                     fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                  }}>{item.number}</h2>
-                <p className="text-gray-600 text-sm">{item.label}</p>
+                    fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)', // Increased from previous size
+                    fontWeight: 'bold',
+                    marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)',
+                    color: '#000000',
+                    lineHeight: '1.2',
+                  }}
+                >
+                  {item.number}
+                </h3>
+                <p 
+                  style={{
+                    fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', // Same font as "We are"
+                    fontSize: 'clamp(1.2rem, 2.5vw, 2rem)', // Same size as "We are"
+                    color: '#666666',
+                    margin: 0,
+                    lineHeight: '1.2',
+                  }}
+                >
+                  {item.label}
+                </p>
               </div>
             ))}
           </div>

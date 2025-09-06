@@ -12,43 +12,98 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-    content: <ArchitectureServices />
+    content: <ArchitectureServices 
+      introText="Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction."
+      imageUrl="/SanBridge.png"
+      serviceName="ARCHITECTURAL"
+      pageNumber="001/007"
+      services={["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"]}
+      bottomText="Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
+    />
   },
   {
     title: "Interior Design",
     description: "Transforming spaces with creative interior concepts",
     color: "#2d3748",
-    accent: "#4299e1"
+    accent: "#4299e1",
+    content: <ArchitectureServices 
+      introText="Creating beautiful, functional interior spaces that reflect your style and enhance daily living experiences."
+      imageUrl="/ModernVilla.png"
+      serviceName="INTERIOR"
+      pageNumber="002/007"
+      services={["SketchUp", "3ds Max", "V-Ray", "AutoCAD"]}
+      bottomText="Interior design transforms spaces into personalized environments that inspire comfort and productivity while reflecting your unique aesthetic."
+    />
   },
   {
     title: "Project Management",
     description: "End-to-end project coordination and delivery",
     color: "#1a202c",
-    accent: "#38b2ac"
+    accent: "#38b2ac",
+    content: <ArchitectureServices 
+      introText="Comprehensive project oversight ensuring timely delivery, budget control, and quality standards throughout the construction process."
+      imageUrl="/SanBridge.png"
+      serviceName="PROJECT MANAGEMENT"
+      pageNumber="003/007"
+      services={["Primavera P6", "MS Project", "Procore", "Bluebeam"]}
+      bottomText="Effective project management coordinates all stakeholders, resources, and timelines to deliver successful construction projects on time and within budget."
+    />
   },
   {
     title: "3D Visualization",
     description: "Photorealistic renders and virtual walkthroughs",
     color: "#2c5282",
-    accent: "#ed8936"
+    accent: "#ed8936",
+    content: <ArchitectureServices 
+      introText="Bringing designs to life with stunning photorealistic visualizations and immersive virtual reality experiences."
+      imageUrl="/ModernVilla.png"
+      serviceName="3D VISUALIZATION"
+      pageNumber="004/007"
+      services={["3ds Max", "V-Ray", "Unreal Engine", "Lumion"]}
+      bottomText="3D visualization bridges the gap between concept and reality, allowing clients to experience spaces before they're built."
+    />
   },
   {
     title: "Landscape Design",
     description: "Harmonious outdoor spaces and garden planning",
     color: "#276749",
-    accent: "#68d391"
+    accent: "#68d391",
+    content: <ArchitectureServices 
+      introText="Designing sustainable outdoor environments that complement architecture and enhance the natural landscape."
+      imageUrl="/SanBridge.png"
+      serviceName="LANDSCAPE"
+      pageNumber="005/007"
+      services={["AutoCAD", "SketchUp", "Lumion", "Adobe Creative"]}
+      bottomText="Landscape design creates outdoor spaces that harmonize with architecture while promoting environmental sustainability and human well-being."
+    />
   },
   {
     title: "Construction Supervision",
     description: "Quality assurance and construction oversight",
     color: "#744210",
-    accent: "#f6e05e"
+    accent: "#f6e05e",
+    content: <ArchitectureServices 
+      introText="On-site supervision ensuring construction quality, safety compliance, and adherence to architectural specifications."
+      imageUrl="/ModernVilla.png"
+      serviceName="CONSTRUCTION"
+      pageNumber="006/007"
+      services={["Procore", "PlanGrid", "Safety Software", "Quality Control"]}
+      bottomText="Construction supervision ensures projects meet design intent, quality standards, and safety regulations throughout the building process."
+    />
   },
   {
     title: "Sustainable Solutions",
     description: "Eco-friendly and energy-efficient building systems",
     color: "#553c9a",
-    accent: "#b794f6"
+    accent: "#b794f6",
+    content: <ArchitectureServices 
+      introText="Implementing green building technologies and sustainable design practices for environmentally responsible construction."
+      imageUrl="/SanBridge.png"
+      serviceName="SUSTAINABLE"
+      pageNumber="007/007"
+      services={["Green Building", "LEED Certification", "Energy Modeling", "Renewable Systems"]}
+      bottomText="Sustainable solutions reduce environmental impact while creating healthier, more efficient buildings for future generations."
+    />
   },
 ];
 
@@ -128,7 +183,11 @@ export default function ServicesSection() {
       {services.map((service, index) => {
         return (
           service.content ? (
-            <div key={index} ref={el => cardRefs.current[index] = el}>
+            <div 
+              key={index} 
+              ref={el => cardRefs.current[index] = el}
+              className="absolute top-0 left-0 w-full h-screen"
+            >
               {service.content}
             </div>
           ) : (
