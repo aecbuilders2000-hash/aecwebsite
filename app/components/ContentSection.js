@@ -81,7 +81,7 @@ export default function ContentSection() {
           style={{
             fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
             color: "#737272",
-            fontSize: "clamp(2.5rem, 5vw, 5rem)", // Larger text size
+            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)", // Reduced by ~33% from clamp(2.5rem, 5vw, 5rem)
             transform: "translateY(40px)",
           }}
         >
@@ -109,7 +109,7 @@ export default function ContentSection() {
           style={{
             fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
             color: "#737272",
-            fontSize: "clamp(2.5rem, 5vw, 5rem)", // Larger text size
+            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)", // Reduced by ~33% from clamp(2.5rem, 5vw, 5rem)
             transform: "translateY(-40px)",
           }}
         >
@@ -194,15 +194,15 @@ export default function ContentSection() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: 'clamp(0.5rem, 1.5vw, 1rem)', // Increased padding
-                  paddingLeft: 'clamp(1rem, 3vw, 2rem)', // Increased left padding
+                  padding: 'clamp(0.3rem, 1vw, 0.6rem)', // Reduced padding to make it sleeker
+                  paddingLeft: 'clamp(0.8rem, 2vw, 1.2rem)', // Reduced left padding
                   backgroundColor: '#FFFFFF', // Transparent background
                   border: 'none', // Removed border
                   borderRadius: '50px',
                   cursor: 'pointer',
                   fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
                   transition: 'all 0.3s ease',
-                  gap: 'clamp(0.4rem, 1.5vw, 1rem)',
+                  gap: 'clamp(0.3rem, 1vw, 0.8rem)', // Reduced gap
                   width: 'fit-content', // Make button only as wide as needed
                 }}
                 onMouseEnter={(e) => {
@@ -244,7 +244,7 @@ export default function ContentSection() {
                   style={{
                     color: '#000',
                     backgroundColor: 'transparent',
-                    fontSize: 'clamp(1rem, 2.5vw, 1.3rem)', // Increased font size
+                    fontSize: 'clamp(0.67rem, 1.7vw, 0.87rem)', // Reduced by ~33% from clamp(1rem, 2.5vw, 1.3rem)
                     fontWeight: '500',
                     transition: 'color 0.3s ease',
                     whiteSpace: 'nowrap',
@@ -257,8 +257,8 @@ export default function ContentSection() {
                 <div
                   className="arrow-circle"
                   style={{
-                    width: 'clamp(28px, 8vw, 48px)', // Increased circle size
-                    height: 'clamp(28px, 8vw, 48px)', // Increased circle size
+                    width: 'clamp(24px, 6vw, 40px)', // Reduced circle size to match sleeker button
+                    height: 'clamp(24px, 6vw, 40px)', // Reduced circle size to match sleeker button
                     backgroundColor: '#000',
                     borderRadius: '50%',
                     display: 'flex',
@@ -314,7 +314,7 @@ export default function ContentSection() {
                 right: "1.25vw", // Add 1.25vw to align with navbar button
                 left: "0", // Ensure it takes full width of container
                 fontFamily: 'var(--font-poppins), sans-serif',
-                fontSize: 'clamp(1.5rem, 3.2vw, 2.5rem)', // Increased font size
+                fontSize: 'clamp(1rem, 2.1vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3.2vw, 2.5rem)
                 lineHeight: '1.6',
                 color: '#333333',
                 textAlign: 'right', // Right align text
@@ -367,7 +367,7 @@ export default function ContentSection() {
             <span 
               style={{
                 fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Increased to match current metrics size
+                fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
                 color: '#000000',
                 fontWeight: 'normal',
                 lineHeight: '1.2',
@@ -378,7 +378,7 @@ export default function ContentSection() {
             <span 
               style={{
                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Increased to match current metrics size
+                fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
                 fontWeight: 'bold',
                 letterSpacing: '0.3em', // 30% character spacing
                 color: '#000000',
@@ -415,7 +415,7 @@ export default function ContentSection() {
                 <h3 
                   style={{
                     fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                    fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)', // Increased from previous size
+                    fontSize: 'clamp(1.67rem, 3.67vw, 3rem)', // Reduced by ~33% from clamp(2.5rem, 5.5vw, 4.5rem)
                     fontWeight: 'bold',
                     marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)',
                     color: '#000000',
@@ -427,7 +427,7 @@ export default function ContentSection() {
                 <p 
                   style={{
                     fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', // Same font as "We are"
-                    fontSize: 'clamp(1.2rem, 2.5vw, 2rem)', // Same size as "We are"
+                    fontSize: 'clamp(0.8rem, 1.67vw, 1.33rem)', // Reduced by ~33% from clamp(1.2rem, 2.5vw, 2rem)
                     color: '#666666',
                     margin: 0,
                     lineHeight: '1.2',

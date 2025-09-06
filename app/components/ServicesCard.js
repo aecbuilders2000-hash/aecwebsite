@@ -55,7 +55,7 @@ const CardServices = ({
                             position: "absolute",
                             top: "8vh", // Reduced from 10vh for more space
                             fontFamily: 'var(--font-poppins), sans-serif',
-                            fontSize: 'clamp(1.1rem, 2.2vw, 1.7rem)', // Slightly larger font
+                            fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
                             lineHeight: '1.6',
                             color: '#737272', // Requested color
                             margin: 0,
@@ -99,7 +99,7 @@ const CardServices = ({
                         <span 
                             style={{
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                                fontSize: 'clamp(1.92rem, 4vw, 3.2rem)', // Same as COLLECTIVE in content section
+                                fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
                                 fontWeight: 'bold',
                                 letterSpacing: '0.3em', // 30% character spacing like COLLECTIVE
                                 color: '#000000',
@@ -167,7 +167,7 @@ const CardServices = ({
                             borderTopRightRadius: "2rem",
                             borderBottomLeftRadius: "0",
                             borderBottomRightRadius: "0",
-                            padding: "clamp(4rem, 8vw, 6rem) clamp(4rem, 8vw, 6rem)", // Increased padding
+                            padding: "clamp(3rem, 6vw, 4rem) clamp(3rem, 6vw, 4rem)", // Reduced padding to prevent bottom text touching
                             boxSizing: "border-box",
                             display: "flex",
                             flexDirection: "column",
@@ -187,7 +187,7 @@ const CardServices = ({
                         <h3 
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                                fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
                                 fontWeight: '300',
                                 letterSpacing: '0.15em',
                                 color: '#737272',
@@ -199,7 +199,7 @@ const CardServices = ({
                         <span 
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                fontSize: 'clamp(1rem, 1.6vw, 1.4rem)', // Increased size from clamp(0.8rem, 1.2vw, 1rem)
+                                fontSize: 'clamp(0.67rem, 1.07vw, 0.93rem)', // Reduced by ~33% from clamp(1rem, 1.6vw, 1.4rem)
                                 color: '#737272',
                                 letterSpacing: '0.1em',
                             }}
@@ -260,7 +260,7 @@ const CardServices = ({
                                             color: isHovered ? '#000000' : '#CED4DA', // All start as #CED4DA, turn black on hover
                                             backgroundColor: 'transparent',
                                             fontFamily: 'var(--font-poppins), sans-serif',
-                                            fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                                            fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
                                             fontWeight: '300',
                                             letterSpacing: '0.15em',
                                             transition: 'all 0.3s ease',
@@ -279,13 +279,13 @@ const CardServices = ({
                     <div 
                         style={{
                             paddingTop: "clamp(1rem, 2vh, 2rem)",
-                            width: "70%", // Reduced width for the text area
+                            width: "85%", // Increased from 70% to 85% to give more space
                         }}
                     >
                         <p 
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                fontSize: 'clamp(1.1rem, 2.2vw, 1.7rem)', // Changed to match intro text
+                                fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
                                 lineHeight: '1.6',
                                 color: '#737272', // Changed to match intro text color
                                 margin: 0,
