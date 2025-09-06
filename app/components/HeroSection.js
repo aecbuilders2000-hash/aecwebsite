@@ -182,21 +182,13 @@ export default function HeroSection() {
       {/* COLLECTIVE text - positioned outside hero section for global scroll effect */}
       <div
         ref={collectiveTextRef}
+        className="font-bruno-ace-sc font-normal text-white select-none pointer-events-none text-left overflow-hidden whitespace-nowrap box-border p-0 m-0"
         style={{
           fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-          fontWeight: 400,
-          color: '#fff',
           textShadow: '0 4px 20px rgba(0,0,0,0.8)',
           letterSpacing: '0.3em', // Increased to 0.3em for better width coverage
-          userSelect: 'none',
-          pointerEvents: 'none',
           mixBlendMode: 'difference', // Cool effect over different backgrounds
-          padding: '0', // Remove padding completely
-          textAlign: 'left', // Left align 
           width: '95vw', // 95% width to align with navbar
-          overflow: 'hidden', // Hide any potential overflow
-          whiteSpace: 'nowrap', // Keep text on one line
-          boxSizing: 'border-box', // Include padding in width calculation
           paddingLeft: '0', // Explicitly no left padding
           marginLeft: '0', // Explicitly no left margin
         }}
@@ -206,24 +198,16 @@ export default function HeroSection() {
 
       {/* Top Right Collaboration Button */}
       <button
+        className="fixed flex items-center justify-between bg-white border-none rounded-full cursor-pointer font-century-gothic transition-all duration-300 ease-in-out shadow-lg"
         style={{
-          position: 'fixed',
+          fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
           top: '5vh', // Changed from 3vh to 5vh
           right: '2.5vw', // Changed from 3vw to 2.5vw
           zIndex: 1001,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           padding: 'clamp(0.3rem, 1vw, 0.6rem)',
           paddingLeft: 'clamp(0.6rem, 2vw, 1.5rem)',
-          backgroundColor: '#fff',
-          border: 'none',
-          borderRadius: '50px',
-          cursor: 'pointer',
-          fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
           gap: 'clamp(0.4rem, 1.5vw, 1rem)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
         }}
         onMouseEnter={(e) => {
           e.target.style.backgroundColor = '#000';
@@ -260,14 +244,9 @@ export default function HeroSection() {
       >
         {/* Text */}
         <span
-          className="button-text"
+          className="button-text bg-transparent text-black font-medium whitespace-nowrap transition-colors duration-300 ease-in-out"
           style={{
-            color: '#000',
-            backgroundColor: 'transparent',
             fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)',
-            fontWeight: '500',
-            transition: 'color 0.3s ease',
-            whiteSpace: 'nowrap',
           }}
         >
           Let&apos;s collaborate
@@ -275,32 +254,23 @@ export default function HeroSection() {
         
         {/* Circle inside the button */}
         <div
-          className="arrow-circle"
+          className="arrow-circle bg-black rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-in-out"
           style={{
             width: 'clamp(20px, 6vw, 36px)',
             height: 'clamp(20px, 6vw, 36px)',
-            backgroundColor: '#000',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'all 0.3s ease',
-            flexShrink: 0,
           }}
         >
           <svg 
-            className="arrow-icon"
+            className="arrow-icon stroke-white transition-all duration-300 ease-in-out"
             width="16" 
             height="16" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="#fff" 
             strokeWidth="2" 
             strokeLinecap="round" 
             strokeLinejoin="round"
             style={{
               transform: 'rotate(-45deg)', // Top-right diagonal initially
-              transition: 'all 0.3s ease',
               width: 'clamp(10px, 3vw, 16px)',
               height: 'clamp(10px, 3vw, 16px)',
             }}
@@ -313,34 +283,24 @@ export default function HeroSection() {
 
       <section
         ref={heroRef}
+        className="relative flex items-center justify-center overflow-hidden bg-black text-white"
         style={{
           minHeight: "100vh",
           width: "100vw",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          backgroundColor: "#000", // Fallback background
-          color: "#fff",
           borderBottom: "1px solid var(--gray-3)",
         }}
       >
         {/* Top Left Text - Part of hero section */}
         <div
           ref={topLeftTextRef}
+          className="absolute text-white font-bruno-ace-sc font-normal leading-tight select-none"
           style={{
-            position: 'absolute',
+            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
             top: '5vh', // Changed from 3vh to 5vh
             left: '2.5vw', // Changed from 3vw to 2.5vw
             zIndex: 2,
-            color: '#fff',
-            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
             fontSize: 'clamp(1.2rem, 2.5vw, 2rem)',
-            fontWeight: 400,
-            lineHeight: '1.2',
             textShadow: '0 2px 8px rgba(0,0,0,0.6)',
-            userSelect: 'none',
             letterSpacing: '0.3em', // Increased to 0.3em to match COLLECTIVE text
           }}
         >

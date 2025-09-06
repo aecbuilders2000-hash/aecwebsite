@@ -18,48 +18,36 @@ const CardServices = ({
 
     return (
         <section 
+            className="w-screen overflow-hidden bg-gray-100 box-border"
             style={{
-                width: "100vw",
                 minHeight: "100vh",
-                backgroundColor: "#E9ECEF", // Added requested background color
-                overflow: "hidden",
                 paddingTop: "5vh",
                 paddingLeft: "2.5vw",
                 paddingRight: "2.5vw",
-                boxSizing: "border-box",
             }}
         >
             {/* Main Content Row */}
             <div 
+                className="flex w-full"
                 style={{
-                    display: "flex",
-                    width: "100%",
                     minHeight: "80vh",
                     gap: "clamp(2rem, 4vw, 4rem)",
                 }}
             >
                 {/* Left Column - 40% */}
                 <div 
+                    className="flex flex-col justify-start items-start relative"
                     style={{
                         width: "40%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-start", // Changed from center to start
-                        alignItems: "flex-start",
-                        position: "relative",
                     }}
                 >
                     {/* Intro Text */}
                     <p 
+                        className="absolute font-poppins leading-relaxed text-gray-500 m-0 text-left"
                         style={{
-                            position: "absolute",
-                            top: "8vh", // Reduced from 10vh for more space
                             fontFamily: 'var(--font-poppins), sans-serif',
+                            top: "8vh", // Reduced from 10vh for more space
                             fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
-                            lineHeight: '1.6',
-                            color: '#737272', // Requested color
-                            margin: 0,
-                            textAlign: 'left',
                             width: "30vw", // Reduced from 100% to 30vw
                         }}
                     >
@@ -68,8 +56,8 @@ const CardServices = ({
 
                     {/* Image */}
                     <div 
+                        className="absolute"
                         style={{
-                            position: "absolute",
                             top: "28vh", // Increased from 25vh for more space after intro text
                             width: "18.75vw", // Reduced by 25% (was 25vw)
                             height: "18.75vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
@@ -88,22 +76,18 @@ const CardServices = ({
 
                     {/* Service Name with Arrow - AFTER the image */}
                     <div 
+                        className="absolute flex items-center"
                         style={{
-                            position: "absolute",
                             top: "calc(28vh + 18.75vw + 10vh)", // Updated calculation: new image top + image height + larger gap
-                            display: "flex",
-                            alignItems: "center",
                             gap: "clamp(1rem, 2vw, 2rem)",
                         }}
                     >
                         <span 
+                            className="font-bruno-ace-sc font-bold text-black leading-tight"
                             style={{
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
-                                fontWeight: 'bold',
                                 letterSpacing: '0.3em', // 30% character spacing like COLLECTIVE
-                                color: '#000000',
-                                lineHeight: '1.2',
                             }}
                         >
                             {serviceName}
@@ -111,15 +95,10 @@ const CardServices = ({
                         
                         {/* Arrow Circle */}
                         <div
+                            className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
                             style={{
                                 width: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
                                 height: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
-                                backgroundColor: '#000',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0,
                             }}
                         >
                             <svg 
@@ -146,61 +125,45 @@ const CardServices = ({
 
                 {/* Right Column - 60% */}
                 <div 
+                    className="flex flex-col justify-center relative"
                     style={{
                         width: "60%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        position: "relative",
                     }}
                 >
                     {/* White Box Container */}
                     <div 
+                        className="absolute bg-white rounded-t-3xl rounded-b-none box-border flex flex-col justify-start"
                         style={{
-                            position: "absolute",
                             top: "8vh", // Start from same level as intro text
                             right: "1.25vw", // Align to the right
                             width: "80%", // 60% of right side width
                             height: "calc(100vh - 8vh)", // Extend till end of page
-                            backgroundColor: "#FFFFFF",
-                            borderTopLeftRadius: "2rem",
-                            borderTopRightRadius: "2rem",
-                            borderBottomLeftRadius: "0",
-                            borderBottomRightRadius: "0",
                             padding: "clamp(3rem, 6vw, 4rem) clamp(3rem, 6vw, 4rem)", // Reduced padding to prevent bottom text touching
-                            boxSizing: "border-box",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "flex-start",
                             gap: "clamp(2rem, 4vh, 3rem)",
                         }}
                     >
                     {/* Services Header */}
                     <div 
+                        className="flex justify-between items-baseline"
                         style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "baseline", // Changed from flex-start to baseline for same baseline alignment
                             marginBottom: "clamp(1rem, 2vh, 2rem)",
                         }}
                     >
                         <h3 
+                            className="font-poppins font-light text-gray-500 m-0"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
-                                fontWeight: '300',
                                 letterSpacing: '0.15em',
-                                color: '#737272',
-                                margin: 0,
                             }}
                         >
                             SERVICES
                         </h3>
                         <span 
+                            className="font-poppins text-gray-500"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 fontSize: 'clamp(0.67rem, 1.07vw, 0.93rem)', // Reduced by ~33% from clamp(1rem, 1.6vw, 1.4rem)
-                                color: '#737272',
                                 letterSpacing: '0.1em',
                             }}
                         >
@@ -210,9 +173,8 @@ const CardServices = ({
 
                     {/* Software Stack */}
                     <div 
+                        className="flex flex-col"
                         style={{
-                            display: "flex",
-                            flexDirection: "column",
                             gap: "clamp(0.5rem, 1vh, 0.8rem)", // Reduced gap between features
                         }}
                     >
@@ -221,19 +183,10 @@ const CardServices = ({
                             return (
                                 <button
                                     key={index}
+                                    className="flex items-center justify-start border-none cursor-pointer bg-transparent font-poppins w-full relative transition-all duration-300 ease-in-out"
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-start',
                                         padding: 'clamp(0.5rem, 1vw, 0.8rem)',
                                         paddingLeft: 'clamp(1rem, 2vw, 1.5rem)',
-                                        border: 'none',
-                                        cursor: 'pointer',
-                                        backgroundColor: "transparent",
-                                        fontFamily: 'var(--font-poppins), sans-serif',
-                                        transition: 'all 0.3s ease',
-                                        width: '100%',
-                                        position: 'relative',
                                     }}
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
@@ -241,12 +194,10 @@ const CardServices = ({
                                 >
                                     {/* Bouncy Black Ball - appears on hover */}
                                     <div
+                                        className="bg-black rounded-full absolute"
                                         style={{
                                             width: 'clamp(12px, 2.5vw, 20px)',
                                             height: 'clamp(12px, 2.5vw, 20px)',
-                                            backgroundColor: '#000',
-                                            borderRadius: '50%',
-                                            position: 'absolute',
                                             left: 'clamp(0.5rem, 1vw, 0.8rem)',
                                             opacity: isHovered ? 1 : 0,
                                             transform: isHovered ? 'scale(1)' : 'scale(0)',
@@ -256,15 +207,12 @@ const CardServices = ({
 
                                     {/* Text */}
                                     <span
+                                        className="bg-transparent font-poppins font-light whitespace-nowrap transition-all duration-300 ease-in-out"
                                         style={{
-                                            color: isHovered ? '#000000' : '#CED4DA', // All start as #CED4DA, turn black on hover
-                                            backgroundColor: 'transparent',
                                             fontFamily: 'var(--font-poppins), sans-serif',
+                                            color: isHovered ? '#000000' : '#CED4DA', // All start as #CED4DA, turn black on hover
                                             fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
-                                            fontWeight: '300',
                                             letterSpacing: '0.15em',
-                                            transition: 'all 0.3s ease',
-                                            whiteSpace: 'nowrap',
                                             transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)', // Text shifts right on hover
                                         }}
                                     >
@@ -283,12 +231,10 @@ const CardServices = ({
                         }}
                     >
                         <p 
+                            className="font-poppins leading-relaxed text-gray-500 m-0"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
-                                lineHeight: '1.6',
-                                color: '#737272', // Changed to match intro text color
-                                margin: 0,
                             }}
                         >
                             {bottomText}

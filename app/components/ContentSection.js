@@ -65,23 +65,21 @@ export default function ContentSection() {
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
-        className="absolute top-0 left-0 flex items-end overflow-hidden z-20"
+        className="absolute top-0 left-0 flex items-end overflow-hidden z-20 bg-gray-2 border-b border-white"
         style={{
           width: "100vw",
           height: "50vh",
-          background: "var(--gray-2)", // Using E9ECEF from your color palette
-          borderBottom: "0.5vw solid white", // White center line
+          borderBottomWidth: "0.5vw",
           paddingLeft: "2.5vw", // 2.5% from left
           paddingBottom: "2.5vh", // 2.5vh from the split line
         }}
       >
         <span
           ref={topTextRef}
-          className="font-bold text-left opacity-0"
+          className="font-bold text-left opacity-0 text-gray-7"
           style={{
-            fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
-            color: "#737272",
-            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)", // Reduced by ~33% from clamp(2.5rem, 5vw, 5rem)
+            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)",
             transform: "translateY(40px)",
           }}
         >
@@ -92,12 +90,11 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
-        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20"
+        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20 bg-gray-2 border-t border-white"
         style={{
           width: "100vw",
           height: "50vh",
-          background: "var(--gray-2)", // Using E9ECEF from your color palette
-          borderTop: "0.5vw solid white", // White center line
+          borderTopWidth: "0.5vw",
           paddingRight: "3.75vw", // 2.5vw + 1.25vw to align with navbar
           paddingTop: "2.5vh", // 2.5vh from the split line
           justifyContent: "flex-end", // Right align content
@@ -105,11 +102,10 @@ export default function ContentSection() {
       >
         <span
           ref={bottomTextRef}
-          className="font-bold text-right opacity-0"
+          className="font-bold text-right opacity-0 text-gray-7"
           style={{
-            fontFamily: 'Bruno Ace, monospace', // Changed to Bruno Ace
-            color: "#737272",
-            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)", // Reduced by ~33% from clamp(2.5rem, 5vw, 5rem)
+            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+            fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)",
             transform: "translateY(-40px)",
           }}
         >
@@ -119,43 +115,31 @@ export default function ContentSection() {
       {/* Main Content (centered) */}
       {/* Main Content Section */}
       <section 
+        className="w-full min-h-screen bg-white overflow-hidden flex flex-col box-border"
         style={{
-          width: "100vw", // Full viewport width
-          minHeight: "100vh", // Full viewport height
-          backgroundColor: "#FFFFFF", // White background
-          overflow: "hidden", // No overflow
           paddingTop: "5vh", // 5vh gap from navbar
           paddingLeft: "2.5vw", // 2.5% from left
           paddingRight: "2.5vw", // 2.5% from right
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
         }}
       >
         {/* Top Row - Left and Right Boxes */}
         <div 
+          className="flex absolute left-0 right-0 box-border m-0"
           style={{
-            display: "flex",
-            position: "absolute",
             top: "12.5vh", // 12.5% from top of screen
-            left: "0",
-            right: "0",
             width: "100%",
             height: "60vh", // 60% height
             paddingLeft: "2.5vw", // Left padding instead of left margin
             paddingRight: "2.5vw", // Right padding instead of right margin
-            boxSizing: "border-box",
             gap: "clamp(1rem, 2.5vw, 2rem)", // Gap between left and right boxes
-            margin: 0, // Remove any default margin
           }}
         >
           {/* Box 1: Left - Image and Learn More Button */}
           <div 
+            className="relative z-10"
             style={{
               width: "25vw", // Made smaller (was 30vw)
               height: "100%",
-              position: "relative",
-              zIndex: 10, // Ensure button is clickable
             }}
           >
             {/* Grouped Image and Button Container */}
@@ -190,18 +174,11 @@ export default function ContentSection() {
             
               {/* Navbar-style button */}
               <button
+                className="flex items-center justify-between bg-white border-none rounded-full cursor-pointer transition-all duration-300"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
                   padding: 'clamp(0.3rem, 1vw, 0.6rem)', // Reduced padding to make it sleeker
                   paddingLeft: 'clamp(0.8rem, 2vw, 1.2rem)', // Reduced left padding
-                  backgroundColor: '#FFFFFF', // Transparent background
-                  border: 'none', // Removed border
-                  borderRadius: '50px',
-                  cursor: 'pointer',
                   fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-                  transition: 'all 0.3s ease',
                   gap: 'clamp(0.3rem, 1vw, 0.8rem)', // Reduced gap
                   width: 'fit-content', // Make button only as wide as needed
                 }}
@@ -240,14 +217,9 @@ export default function ContentSection() {
               >
                 {/* Text */}
                 <span
-                  className="button-text"
+                  className="button-text bg-transparent text-black font-medium transition-colors duration-300 whitespace-nowrap"
                   style={{
-                    color: '#000',
-                    backgroundColor: 'transparent',
                     fontSize: 'clamp(0.67rem, 1.7vw, 0.87rem)', // Reduced by ~33% from clamp(1rem, 2.5vw, 1.3rem)
-                    fontWeight: '500',
-                    transition: 'color 0.3s ease',
-                    whiteSpace: 'nowrap',
                   }}
                 >
                   Learn More
@@ -255,17 +227,10 @@ export default function ContentSection() {
                 
                 {/* Circle inside the button */}
                 <div
-                  className="arrow-circle"
+                  className="arrow-circle bg-black rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0"
                   style={{
                     width: 'clamp(24px, 6vw, 40px)', // Reduced circle size to match sleeker button
                     height: 'clamp(24px, 6vw, 40px)', // Reduced circle size to match sleeker button
-                    backgroundColor: '#000',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease',
-                    flexShrink: 0,
                   }}
                 >
                   <svg 
@@ -308,21 +273,13 @@ export default function ContentSection() {
             }}
           >
             <p 
+              className="absolute font-poppins text-gray-700 text-right leading-relaxed m-0 p-0 border-0 box-border outline-none"
               style={{
-                position: "absolute",
+                fontFamily: 'var(--font-poppins), sans-serif',
                 top: "5vh", // Start at 5vh from top - same as image
                 right: "1.25vw", // Add 1.25vw to align with navbar button
                 left: "0", // Ensure it takes full width of container
-                fontFamily: 'var(--font-poppins), sans-serif',
                 fontSize: 'clamp(1rem, 2.1vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3.2vw, 2.5rem)
-                lineHeight: '1.6',
-                color: '#333333',
-                textAlign: 'right', // Right align text
-                margin: 0, // Remove all margins
-                padding: 0, // Remove all padding
-                border: 0, // Remove any border
-                boxSizing: "border-box",
-                outline: "none", // Remove any outline
               }}
             >
               Collective AEC is a specialized collaborative studio offering
@@ -365,24 +322,20 @@ export default function ContentSection() {
             }}
           >
             <span 
+              className="font-century-gothic text-black font-normal leading-tight"
               style={{
                 fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
-                color: '#000000',
-                fontWeight: 'normal',
-                lineHeight: '1.2',
               }}
             >
               We are
             </span>
             <span 
+              className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
               style={{
                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
-                fontWeight: 'bold',
                 letterSpacing: '0.3em', // 30% character spacing
-                color: '#000000',
-                lineHeight: '1.2',
               }}
             >
               COLLECTIVE
@@ -391,46 +344,34 @@ export default function ContentSection() {
 
           {/* Stats Section - Right aligned to match navbar button */}
           <div 
+            className="flex items-center flex-nowrap m-0 p-0 box-border"
             style={{
-              display: "flex",
-              alignItems: "center",
               gap: "clamp(2rem, 4vw, 3rem)",
-              flexWrap: "nowrap", // Keep in single line for desktop
-              margin: 0, // Remove any default margin
-              padding: 0, // Remove any default padding
-              boxSizing: "border-box",
             }}
           >
             {stats.map((item, index) => (
               <div 
                 key={index} 
+                className="flex flex-col items-center text-center"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
                   minWidth: 'clamp(6rem, 8vw, 8rem)',
                 }}
               >
                 <h3 
+                  className="font-bruno-ace-sc font-bold text-black leading-tight"
                   style={{
                     fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                     fontSize: 'clamp(1.67rem, 3.67vw, 3rem)', // Reduced by ~33% from clamp(2.5rem, 5.5vw, 4.5rem)
-                    fontWeight: 'bold',
                     marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)',
-                    color: '#000000',
-                    lineHeight: '1.2',
                   }}
                 >
                   {item.number}
                 </h3>
                 <p 
+                  className="font-century-gothic text-gray-600 m-0 leading-tight"
                   style={{
-                    fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', // Same font as "We are"
+                    fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
                     fontSize: 'clamp(0.8rem, 1.67vw, 1.33rem)', // Reduced by ~33% from clamp(1.2rem, 2.5vw, 2rem)
-                    color: '#666666',
-                    margin: 0,
-                    lineHeight: '1.2',
                   }}
                 >
                   {item.label}

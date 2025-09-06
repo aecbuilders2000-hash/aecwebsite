@@ -173,11 +173,9 @@ export default function ServicesSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-gray-100"
+      className="relative overflow-hidden bg-gray-100 w-screen"
       style={{
         height: "100vh", // Just one viewport height for the visual content
-        width: "100vw",
-        backgroundColor: "#f7f7f7",
       }}
     >
       {services.map((service, index) => {
@@ -207,7 +205,7 @@ export default function ServicesSection() {
                 />
 
                 <h2
-                  className="text-6xl md:text-8xl font-bold mb-6 leading-tight"
+                  className="font-bruno-ace-sc font-bold mb-6 leading-tight text-6xl md:text-8xl"
                   style={{
                     fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                     color: service.accent
