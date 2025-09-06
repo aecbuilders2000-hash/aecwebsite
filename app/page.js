@@ -7,6 +7,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
+import ArchitectureServices from "./components/ArchitectureServices";
 
 export default function Home() {
   useLenis();
@@ -32,6 +33,7 @@ export default function Home() {
           Buffer Section
         </h2>
       </section>
+      {/* <ArchitectureServices /> */}
       <ServicesSection/>
       <ClientsSection />
       <ProjectsSection />

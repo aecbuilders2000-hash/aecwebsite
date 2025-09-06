@@ -118,11 +118,10 @@ export default function ServicesSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-gray-100"
+      className="relative bg-black overflow-hidden"
       style={{
         height: "100vh", // Just one viewport height for the visual content
         width: "100vw",
-        backgroundColor: "#f7f7f7",
       }}
     >
       {services.map((service, index) => {

@@ -246,9 +246,12 @@ export default function HeroSection() {
           const arrow = e.target.querySelector('.arrow-icon');
           
           if (textSpan) textSpan.style.color = '#000';
-          if (circle) circle.style.backgroundColor = '#000';
+          if (circle){
+            circle.style.backgroundColor = '#000';
+          }
           if (arrow) {
             arrow.style.stroke = '#fff';
+            arrow.style.backgroundColor = "transparent";
             arrow.style.transform = 'rotate(-45deg)'; // Top-right arrow initially
           }
         }}
