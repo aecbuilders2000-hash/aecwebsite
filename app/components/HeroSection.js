@@ -14,19 +14,108 @@ export default function HeroSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
+    // Enhanced video management with power-saving workaround
+    const startVideo = async () => {
+      if (videoRef.current) {
+        try {
+          console.log('Loading new video...');
+          const video = videoRef.current;
+          
+          // Reset video properties to bypass power-saving restrictions
+          video.load(); // Force reload of new video
+          
+          // Add a small delay to ensure video is ready
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+          // Try to play with retry mechanism
+          let retryCount = 0;
+          const maxRetries = 3;
+          
+          const attemptPlay = async () => {
+            try {
+              // Ensure video is ready before playing
+              if (video.readyState >= 2) { // HAVE_CURRENT_DATA or higher
+                await video.play();
+                console.log('New video playing successfully');
+                return true;
+              } else {
+                // Wait for video to be ready
+                return new Promise((resolve, reject) => {
+                  const onCanPlay = () => {
+                    video.removeEventListener('canplay', onCanPlay);
+                    video.play().then(() => {
+                      console.log('New video playing successfully after waiting');
+                      resolve(true);
+                    }).catch(reject);
+                  };
+                  video.addEventListener('canplay', onCanPlay);
+                  
+                  // Timeout after 2 seconds
+                  setTimeout(() => {
+                    video.removeEventListener('canplay', onCanPlay);
+                    reject(new Error('Video ready timeout'));
+                  }, 2000);
+                });
+              }
+            } catch (error) {
+              if (retryCount < maxRetries) {
+                retryCount++;
+                console.log(`Video play attempt ${retryCount} failed, retrying...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                return attemptPlay();
+              }
+              throw error;
+            }
+          };
+          
+          await attemptPlay();
+          
+        } catch (error) {
+          console.error('Video autoplay failed after retries:', error);
+          // Fallback: show the background image
+          setIsVideoLoaded(false);
+        }
+      }
+    };
+
+    // Start video after component mounts with longer delay for stability
+    const timer = setTimeout(startVideo, 500);
+
     // Performance optimization: Pause video when out of view
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (videoRef.current) {
           if (entry.isIntersecting) {
-            videoRef.current.play().catch(console.log);
+            console.log('Hero in view - starting video');
+            videoRef.current.play().catch((error) => {
+              console.log('Video play from intersection failed:', error);
+            });
           } else {
+            console.log('Hero out of view - pausing video');
             videoRef.current.pause();
           }
         }
       },
       { threshold: 0.1 }
     );
+
+    // User interaction handler to ensure video plays (similar to audio)
+    const handleUserInteraction = async () => {
+      if (videoRef.current && videoRef.current.paused) {
+        try {
+          console.log('User interaction detected, attempting to start video');
+          await videoRef.current.play();
+          console.log('Video started successfully after user interaction');
+        } catch (error) {
+          console.log('Video play after interaction failed:', error);
+        }
+      }
+    };
+
+    // Add interaction listeners to overcome power-saving restrictions
+    document.addEventListener('click', handleUserInteraction, { once: true });
+    document.addEventListener('touchstart', handleUserInteraction, { once: true });
+    document.addEventListener('keydown', handleUserInteraction, { once: true });
 
     if (heroRef.current) {
       observer.observe(heroRef.current);
@@ -153,7 +242,12 @@ export default function HeroSection() {
     }
 
     return () => {
+      clearTimeout(timer);
       observer.disconnect();
+      // Remove user interaction listeners
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -234,14 +328,14 @@ export default function HeroSection() {
             left: '2.5vw', // Changed from 3vw to 2.5vw
             zIndex: 2,
             fontSize: 'clamp(1.2rem, 2.5vw, 2rem)',
-            textShadow: '0 2px 8px rgba(0,0,0,0.6)',
+            mixBlendMode: 'difference', // Cool effect over different backgrounds - same as COLLECTIVE
             letterSpacing: '0.3em', // Increased to 0.3em to match COLLECTIVE text
           }}
         >          <div>DESIGN MORE</div>
           <div>MANAGE LESS</div>
 
         </div>
-      {/* Hero Video Background with Awwwards-level optimizations */}
+      {/* Hero Video Background with power-saving optimizations */}
       <video
         ref={videoRef}
         autoPlay
@@ -252,6 +346,9 @@ export default function HeroSection() {
         onLoadedData={handleVideoLoad}
         onCanPlay={handleCanPlay}
         onError={handleVideoError}
+        // Additional attributes to prevent power-saving interruptions
+        webkit-playsinline="true"
+        x-webkit-airplay="allow"
         style={{
           position: "absolute",
           top: "50%",
@@ -269,15 +366,19 @@ export default function HeroSection() {
           willChange: "transform",
           // Show video by default
           opacity: 1,
+          // Prevent power-saving interference
+          pointerEvents: "none", // Ensures it's treated as background
         }}
         // Accessibility
         aria-label="Hero background video"
         // Additional performance attributes
         disablePictureInPicture
         disableRemotePlayback
+        // Prevent browser from pausing for power saving
+        controlsList="nodownload nofullscreen noremoteplayback"
       >
         {/* MP4 - Your specific video file */}
-        <source src="/CollectiveAEC_Hero_Video.mp4" type="video/mp4" />
+        <source src="/9150545-hd_1920_1080_24fps.mp4" type="video/mp4" />
         {/* Fallback text */}
         Your browser does not support the video tag.
       </video>
@@ -291,26 +392,11 @@ export default function HeroSection() {
             left: 0,
             width: "100%",
             height: "100%",
-            background: `url('/Gemini_Generated_Image_yba538yba538yba5 1.png') center/cover no-repeat`,
+            background: `url('/image.png') center/cover no-repeat`,
             zIndex: -1, // Behind video
           }}
         />
       )}
-
-      {/* Enhanced video overlay for better text readability */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          // Gradient overlay for better text contrast
-          background: "rgba(0,0,0,0.4)",
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      />
 
       {/* GSAP Reveal Columns */}
       <div

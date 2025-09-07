@@ -79,7 +79,7 @@ export default function ServicesOverview() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup - softer initial states for seamless reveal
-      gsap.set([titleRef.current, textRef.current], { 
+      gsap.set(textRef.current, { 
         opacity: 0, 
         y: 20
       });
@@ -96,6 +96,16 @@ export default function ServicesOverview() {
         scale: 0.98
       });
 
+      // Set up letter reveal animation
+      const titleLetters = titleRef.current?.querySelectorAll('.letter');
+      if (titleLetters) {
+        gsap.set(titleLetters, {
+          rotationX: -90,
+          transformOrigin: "50% 100%",
+          opacity: 0
+        });
+      }
+
       // Main timeline with improved sequencing
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -106,32 +116,37 @@ export default function ServicesOverview() {
         }
       });
 
-      // Animate title and text first
-      tl.to(titleRef.current, {
+      // Animate title letters first
+      if (titleLetters) {
+        tl.to(titleLetters, {
+          rotationX: 0,
+          opacity: 1,
+          duration: 0.4, // Reduced from 0.6 to 0.4
+          stagger: 0.03, // Reduced from 0.05 to 0.03 for faster reveal
+          ease: "back.out(1.7)"
+        });
+      }
+
+      // Then animate text
+      tl.to(textRef.current, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.4, // Reduced from 0.6 to 0.4
         ease: "power2.out"
-      })
-      .to(textRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out"
-      }, "-=0.4")
+      }, "-=0.3") // Increased overlap from -=0.4 to -=0.3
       // Then animate all 7 service cards as a unified group
       .to([...topCardsRef.current, ...bottomCardsRef.current], {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 1,
+        duration: 0.4, // Reduced from 1 to 0.4 (60% faster)
         stagger: {
-          amount: 0.4,
+          amount: 0.15, // Reduced from 0.4 to 0.15 (62.5% faster)
           from: "start",
           ease: "power2.inOut"
         },
-        ease: "power2.out"
-      }, "-=0.2");
+        ease: "back.out(1.4)" // Changed to back.out for snappier feel
+      }, "-=0.1"); // Reduced overlap from -=0.2 to -=0.1
 
     }, sectionRef);
 
@@ -168,13 +183,35 @@ export default function ServicesOverview() {
               style={{
                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                 fontSize: 'clamp(1.7rem, 3.3vw, 3.3rem)',
-                letterSpacing: '0.3em'
+                letterSpacing: '0.3em',
+                transformStyle: 'preserve-3d',
+                perspective: '1000px'
               }}
             >
-              OUR SERVICES
+              {"OUR SERVICES".split(' ').map((word, wordIndex) => (
+                <div key={wordIndex} className="word" style={{ 
+                  display: wordIndex === 0 ? 'block' : 'block',
+                  overflow: 'hidden',
+                  height: '1.2em',
+                  marginBottom: wordIndex < 1 ? '0.1em' : '0'
+                }}>
+                  {word.split('').map((letter, letterIndex) => (
+                    <span 
+                      key={letterIndex} 
+                      className="letter" 
+                      style={{ 
+                        display: 'inline-block',
+                        transformStyle: 'preserve-3d'
+                      }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </div>
+              ))}
             </h2>
 
-            <p 
+            {/* <p 
               ref={textRef}
               className="font-poppins text-gray-700 leading-relaxed mb-4"
               style={{
@@ -184,8 +221,8 @@ export default function ServicesOverview() {
                 maxWidth: '90%'
               }}
             >
-              What we can do for you
-            </p>
+              What we can do for you?
+            </p> */}
 
             <p 
               className="font-poppins text-gray-700 leading-relaxed"

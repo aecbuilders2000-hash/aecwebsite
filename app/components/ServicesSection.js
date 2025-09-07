@@ -122,7 +122,9 @@ export default function ServicesSection() {
         scale: 1,
         opacity: 1,
         zIndex: index + 1,
-        transformOrigin: "center center"
+        transformOrigin: "center bottom",
+        perspective: "1000px",
+        transformStyle: "preserve-3d"
       });
     });
 
@@ -156,9 +158,12 @@ export default function ServicesSection() {
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
         const depth = index - prevIndex;
         tl.to(cards[prevIndex], {
-          scale: Math.max(0.95 - depth * 0.03, 0.8),
-          opacity: Math.max(1 - depth * 0.15, 0.2),
-          y: -depth * 8,
+          scale: Math.max(0.85 - depth * 0.08, 0.6), // More aggressive scaling
+          opacity: Math.max(1 - depth * 0.25, 0.15), // More aggressive fading
+          y: -depth * 15, // More vertical displacement
+          z: -depth * 30, // Add Z-depth for 3D effect
+          rotationX: depth * 2, // Slight 3D rotation
+          transformOrigin: "center bottom",
           duration: 0.2,
           ease: "power1.inOut"
         }, progress);
@@ -176,6 +181,8 @@ export default function ServicesSection() {
       className="relative overflow-hidden bg-gray-100 w-screen"
       style={{
         height: "100vh", // Just one viewport height for the visual content
+        perspective: "1200px",
+        transformStyle: "preserve-3d"
       }}
     >
       {services.map((service, index) => {

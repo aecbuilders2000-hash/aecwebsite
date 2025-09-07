@@ -1,8 +1,12 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import React from 'react';
 import Image from 'next/image';
 import Button from '../ui/Button';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CardServices = ({
     introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
@@ -15,6 +19,53 @@ const CardServices = ({
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const titleRef = useRef(null);
+    const cardRef = useRef(null); // Add ref for the entire card
+
+    useEffect(() => {
+        if (!titleRef.current || !cardRef.current) return;
+
+        const ctx = gsap.context(() => {
+            // Get all letters in this specific title instance
+            const titleLetters = titleRef.current.querySelectorAll('.letter');
+            
+            if (titleLetters.length > 0) {
+                // Set initial state for letters
+                gsap.set(titleLetters, {
+                    rotationX: -90,
+                    transformOrigin: "50% 100%",
+                    opacity: 0
+                });
+
+                // Create a more robust scroll trigger tied to the card
+                ScrollTrigger.create({
+                    trigger: cardRef.current, // Use entire card as trigger
+                    start: "top 70%", // More generous trigger area
+                    end: "bottom 30%",
+                    onEnter: () => {
+                        // Add a small delay to ensure proper sequencing
+                        gsap.delayedCall(0.1, () => {
+                            gsap.to(titleLetters, {
+                                rotationX: 0,
+                                opacity: 1,
+                                duration: 0.8,
+                                stagger: 0.06,
+                                ease: "back.out(1.7)"
+                            });
+                        });
+                    },
+                    once: true,
+                    // Add markers for debugging (remove in production)
+                    // markers: true,
+                    id: `card-${Date.now()}-${Math.random()}` // Unique ID for each instance
+                });
+            }
+        }, cardRef);
+
+        return () => {
+            ctx.revert();
+        };
+    }, []);
 
     return (
         <section 
@@ -51,14 +102,30 @@ const CardServices = ({
                         }}
                     >
                         <span 
+                            ref={titleRef}
                             className="font-bruno-ace-sc font-bold text-black leading-tight"
                             style={{
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                                fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)', // Reduced by ~33% from clamp(1.92rem, 4vw, 3.2rem)
-                                letterSpacing: '0.3em', // 30% character spacing like COLLECTIVE
+                                fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)',
+                                letterSpacing: '0.3em',
+                                transformStyle: 'preserve-3d',
+                                perspective: '1000px',
+                                display: 'inline-block',
+                                whiteSpace: 'nowrap'
                             }}
                         >
-                            {serviceName}
+                            {serviceName.split('').map((letter, index) => (
+                                <span 
+                                    key={index} 
+                                    className="letter" 
+                                    style={{ 
+                                        display: 'inline-block',
+                                        transformStyle: 'preserve-3d'
+                                    }}
+                                >
+                                    {letter === ' ' ? '\u00A0' : letter}
+                                </span>
+                            ))}
                         </span>
                         
                         {/* Arrow Circle */}
