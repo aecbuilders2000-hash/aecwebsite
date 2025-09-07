@@ -13,96 +13,82 @@ const services = [
     color: "#1a1a1a",
     accent: "#ff6b35",
     content: <CardServices 
-      introText="Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction."
+      introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
       imageUrl="/SanBridge.png"
       serviceName="ARCHITECTURAL"
-      pageNumber="001/007"
-      services={["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"]}
-      bottomText="Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
+      pageNumber="001/006"
+      services={["Architectural Design Services", "Architectural BIM Services", "Architectural CAD Drafting", "Construction Drawings"]}
+      bottomText="We transform your vision into buildable reality through detailed architectural solutions that meet both creative aspirations and technical requirements."
     />
   },
   {
-    title: "Interior Design",
-    description: "Transforming spaces with creative interior concepts",
+    title: "Engineering Design",
+    description: "Precise engineering solutions for complex projects",
     color: "#2d3748",
     accent: "#4299e1",
     content: <CardServices 
-      introText="Creating beautiful, functional interior spaces that reflect your style and enhance daily living experiences."
+      introText="Advanced engineering design services combining technical expertise with innovative solutions for mechanical, product, and sheet metal applications."
       imageUrl="/ModernVilla.png"
-      serviceName="INTERIOR"
-      pageNumber="002/007"
-      services={["SketchUp", "3ds Max", "V-Ray", "AutoCAD"]}
-      bottomText="Interior design transforms spaces into personalized environments that inspire comfort and productivity while reflecting your unique aesthetic."
+      serviceName="ENGINEERING"
+      pageNumber="002/006"
+      services={["Mechanical Drafting Services", "Product Design Services", "Sheet Metal Design Services", "Engineering Analysis Services"]}
+      bottomText="Our engineering expertise ensures optimal performance, safety, and efficiency in every project we undertake."
     />
   },
   {
-    title: "Project Management",
-    description: "End-to-end project coordination and delivery",
+    title: "Structural Design",
+    description: "Robust structural engineering and detailing",
     color: "#1a202c",
     accent: "#38b2ac",
     content: <CardServices 
-      introText="Comprehensive project oversight ensuring timely delivery, budget control, and quality standards throughout the construction process."
+      introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
       imageUrl="/SanBridge.png"
-      serviceName="PROJECT MANAGEMENT"
-      pageNumber="003/007"
-      services={["Primavera P6", "MS Project", "Procore", "Bluebeam"]}
-      bottomText="Effective project management coordinates all stakeholders, resources, and timelines to deliver successful construction projects on time and within budget."
+      serviceName="STRUCTURAL"
+      pageNumber="003/006"
+      services={["Structural Steel Detailing", "Rebar Detailing Services", "Structural CAD Drafting", "Steel Shop Drawings", "Structural BIM Services", "Connection Design"]}
+      bottomText=""
+    />
+  },
+  {
+    title: "MEP Design",
+    description: "Integrated mechanical, electrical, and plumbing solutions",
+    color: "#2c5282",
+    accent: "#ed8936",
+    content: <CardServices 
+      introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
+      imageUrl="/ModernVilla.png"
+      serviceName="MEP"
+      pageNumber="004/006"
+      services={["MEP BIM Services", "MEP BIM Coordination", "Clash Detection", "MEP Shop Drawings", "MEP CAD Drafting", "HVAC Design"]}
+      bottomText=""
     />
   },
   {
     title: "3D Visualization",
-    description: "Photorealistic renders and virtual walkthroughs",
-    color: "#2c5282",
-    accent: "#ed8936",
-    content: <CardServices 
-      introText="Bringing designs to life with stunning photorealistic visualizations and immersive virtual reality experiences."
-      imageUrl="/ModernVilla.png"
-      serviceName="3D VISUALIZATION"
-      pageNumber="004/007"
-      services={["3ds Max", "V-Ray", "Unreal Engine", "Lumion"]}
-      bottomText="3D visualization bridges the gap between concept and reality, allowing clients to experience spaces before they're built."
-    />
-  },
-  {
-    title: "Landscape Design",
-    description: "Harmonious outdoor spaces and garden planning",
+    description: "Photorealistic renders and virtual experiences",
     color: "#276749",
     accent: "#68d391",
     content: <CardServices 
-      introText="Designing sustainable outdoor environments that complement architecture and enhance the natural landscape."
+      introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
       imageUrl="/SanBridge.png"
-      serviceName="LANDSCAPE"
-      pageNumber="005/007"
-      services={["AutoCAD", "SketchUp", "Lumion", "Adobe Creative"]}
-      bottomText="Landscape design creates outdoor spaces that harmonize with architecture while promoting environmental sustainability and human well-being."
+      serviceName="3D VISUALIZATION"
+      pageNumber="005/006"
+      services={["3D Rendering", "3D Floor Plan Services"]}
+      bottomText="Our visualization services bridge the gap between imagination and reality, making complex designs accessible to all stakeholders."
     />
   },
   {
-    title: "Construction Supervision",
-    description: "Quality assurance and construction oversight",
+    title: "BIM Services",
+    description: "Advanced Building Information Modeling solutions",
     color: "#744210",
     accent: "#f6e05e",
     content: <CardServices 
-      introText="On-site supervision ensuring construction quality, safety compliance, and adherence to architectural specifications."
+      introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
       imageUrl="/ModernVilla.png"
-      serviceName="CONSTRUCTION"
-      pageNumber="006/007"
-      services={["Procore", "PlanGrid", "Safety Software", "Quality Control"]}
-      bottomText="Construction supervision ensures projects meet design intent, quality standards, and safety regulations throughout the building process."
-    />
-  },
-  {
-    title: "Sustainable Solutions",
-    description: "Eco-friendly and energy-efficient building systems",
-    color: "#553c9a",
-    accent: "#b794f6",
-    content: <CardServices 
-      introText="Implementing green building technologies and sustainable design practices for environmentally responsible construction."
-      imageUrl="/SanBridge.png"
-      serviceName="SUSTAINABLE"
-      pageNumber="007/007"
-      services={["Green Building", "LEED Certification", "Energy Modeling", "Renewable Systems"]}
-      bottomText="Sustainable solutions reduce environmental impact while creating healthier, more efficient buildings for future generations."
+      serviceName="BIM"
+      pageNumber="006/006"
+      services={["BIM Consulting Services", "Scan to BIM", "BIM Coordination", "BIM Clash Detection", "4D BIM Services", "Quantity Takeoff"]}
+      bottomText=""
     />
   },
 ];
