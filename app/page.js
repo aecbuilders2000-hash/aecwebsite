@@ -8,11 +8,8 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
 import CardServices from "./components/ServicesCard";
-<<<<<<< HEAD
 import ServicesOverview from "./components/ServicesOverview";
-=======
 import ContactUs from "./components/ContactUs";
->>>>>>> 9a76a83 (Add Contact Us form component and Updated Home Page)
 
 export default function Home() {
   useLenis();
