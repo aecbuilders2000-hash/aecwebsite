@@ -9,6 +9,7 @@ import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
 import CardServices from "./components/ServicesCard";
 import ServicesOverview from "./components/ServicesOverview";
+import ContactUs from "./components/ContactUs";
 
 export default function Home() {
   useLenis();
@@ -39,6 +40,7 @@ export default function Home() {
       <ServicesSection/>
       <ClientsSection />
       <ProjectsSection />
+      <ContactUs />
       <TestimonialsSection />
       <footer
         style={{
