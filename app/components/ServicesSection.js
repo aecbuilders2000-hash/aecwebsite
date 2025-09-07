@@ -86,9 +86,23 @@ const services = [
       introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
       imageUrl="/ModernVilla.png"
       serviceName="BIM"
-      pageNumber="006/006"
+      pageNumber="006/007"
       services={["BIM Consulting Services", "Scan to BIM", "BIM Coordination", "BIM Clash Detection", "4D BIM Services", "Quantity Takeoff"]}
       bottomText=""
+    />
+  },
+  {
+    title: "CAD Drafting",
+    description: "Precise technical drawings and documentation",
+    color: "#553c9a",
+    accent: "#b794f6",
+    content: <CardServices 
+      introText="Professional CAD drafting services providing accurate technical drawings and comprehensive construction documentation for all project phases."
+      imageUrl="/SanBridge.png"
+      serviceName="CAD DRAFTING"
+      pageNumber="007/007"
+      services={["CAD Drafting Services", "Technical Drawing Services", "Construction Documentation", "As-Built Drawings"]}
+      bottomText="Our CAD expertise ensures precision in every line, delivering clear, accurate documentation that facilitates smooth construction processes."
     />
   },
 ];
