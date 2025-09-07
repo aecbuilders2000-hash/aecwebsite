@@ -304,8 +304,8 @@ export default function HeroSection() {
             letterSpacing: '0.3em', // Increased to 0.3em to match COLLECTIVE text
           }}
         >
-          <div>Design more</div>
-          <div>Manage Less</div>
+          <div>DESIGN MORE</div>
+          <div>MANAGE LESS</div>
         </div>
       {/* Hero Video Background with Awwwards-level optimizations */}
       <video

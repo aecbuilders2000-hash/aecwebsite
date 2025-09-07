@@ -101,7 +101,7 @@ export default function ProjectsSection() {
                   letterSpacing: "0.3em",
                 }}
               >
-                Our <br /> Projects
+                OUR <br /> PROJECTS
               </h2>
             </div>
 

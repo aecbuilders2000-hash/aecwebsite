@@ -16,7 +16,7 @@ const services = [
       introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
       imageUrl="/SanBridge.png"
       serviceName="ARCHITECTURAL"
-      pageNumber="001/006"
+      pageNumber="001/007"
       services={["Architectural Design Services", "Architectural BIM Services", "Architectural CAD Drafting", "Construction Drawings"]}
       bottomText="We transform your vision into buildable reality through detailed architectural solutions that meet both creative aspirations and technical requirements."
     />
@@ -30,7 +30,7 @@ const services = [
       introText="Advanced engineering design services combining technical expertise with innovative solutions for mechanical, product, and sheet metal applications."
       imageUrl="/ModernVilla.png"
       serviceName="ENGINEERING"
-      pageNumber="002/006"
+      pageNumber="002/007"
       services={["Mechanical Drafting Services", "Product Design Services", "Sheet Metal Design Services", "Engineering Analysis Services"]}
       bottomText="Our engineering expertise ensures optimal performance, safety, and efficiency in every project we undertake."
     />
@@ -44,7 +44,7 @@ const services = [
       introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
       imageUrl="/SanBridge.png"
       serviceName="STRUCTURAL"
-      pageNumber="003/006"
+      pageNumber="003/007"
       services={["Structural Steel Detailing", "Rebar Detailing Services", "Structural CAD Drafting", "Steel Shop Drawings", "Structural BIM Services", "Connection Design"]}
       bottomText=""
     />
@@ -58,7 +58,7 @@ const services = [
       introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
       imageUrl="/ModernVilla.png"
       serviceName="MEP"
-      pageNumber="004/006"
+      pageNumber="004/007"
       services={["MEP BIM Services", "MEP BIM Coordination", "Clash Detection", "MEP Shop Drawings", "MEP CAD Drafting", "HVAC Design"]}
       bottomText=""
     />
@@ -72,7 +72,7 @@ const services = [
       introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
       imageUrl="/SanBridge.png"
       serviceName="3D VISUALIZATION"
-      pageNumber="005/006"
+      pageNumber="005/007"
       services={["3D Rendering", "3D Floor Plan Services"]}
       bottomText="Our visualization services bridge the gap between imagination and reality, making complex designs accessible to all stakeholders."
     />
@@ -85,7 +85,7 @@ const services = [
     content: <CardServices 
       introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
       imageUrl="/ModernVilla.png"
-      serviceName="BIM"
+      serviceName="BIM SERVICES"
       pageNumber="006/007"
       services={["BIM Consulting Services", "Scan to BIM", "BIM Coordination", "BIM Clash Detection", "4D BIM Services", "Quantity Takeoff"]}
       bottomText=""

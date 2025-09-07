@@ -39,46 +39,14 @@ const CardServices = ({
                     className="flex flex-col justify-start items-start relative"
                     style={{
                         width: "40%",
+                        marginTop: "5%"
                     }}
                 >
-                    {/* Intro Text */}
-                    <p 
-                        className="absolute font-poppins leading-relaxed text-gray-500 m-0 text-left"
-                        style={{
-                            fontFamily: 'var(--font-poppins), sans-serif',
-                            top: "8vh", // Reduced from 10vh for more space
-                            fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
-                            width: "30vw", // Reduced from 100% to 30vw
-                        }}
-                    >
-                        {introText}
-                    </p>
-
-                    {/* Image */}
-                    <div 
-                        className="absolute"
-                        style={{
-                            top: "28vh", // Increased from 25vh for more space after intro text
-                            width: "18.75vw", // Reduced by 25% (was 25vw)
-                            height: "18.75vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
-                        }}
-                    >
-                        <Image
-                            src={imageUrl}
-                            alt="Architecture Service"
-                            fill
-                            sizes="18.75vw"
-                            style={{
-                                objectFit: "cover",
-                            }}
-                        />
-                    </div>
-
                     {/* Service Name with Arrow - AFTER the image */}
                     <div 
-                        className="absolute flex items-center"
+                        className="flex items-center"
                         style={{
-                            top: "calc(28vh + 18.75vw + 10vh)", // Updated calculation: new image top + image height + larger gap
+                            // top: "calc(28vh + 18.75vw + 10vh)", // Updated calculation: new image top + image height + larger gap
                             gap: "clamp(1rem, 2vw, 2rem)",
                         }}
                     >
@@ -121,6 +89,40 @@ const CardServices = ({
                             </svg>
                         </div>
                     </div>
+                    {/* Intro Text */}
+                    <p 
+                        className="relative font-poppins leading-relaxed text-gray-500 m-0 text-left"
+                        style={{
+                            fontFamily: 'var(--font-poppins), sans-serif',
+                            // top: "8vh", // Reduced from 10vh for more space
+                            marginTop: "2vh",
+                            fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
+                            width: "30vw", // Reduced from 100% to 30vw
+                        }}
+                    >
+                        {introText}
+                    </p>
+
+                    {/* Image */}
+                    <div 
+                        className="relative"
+                        style={{
+                            top: "8vh", // Increased from 25vh for more space after intro text
+                            width: "18.75vw", // Reduced by 25% (was 25vw)
+                            height: "18.75vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
+                        }}
+                    >
+                        <Image
+                            src={imageUrl}
+                            alt="Architecture Service"
+                            fill
+                            sizes="18.75vw"
+                            style={{
+                                objectFit: "cover",
+                            }}
+                        />
+                    </div>
+
                 </div>
 
                 {/* Right Column - 60% */}
