@@ -63,3 +63,13 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Custom Cursor */
+* {
+  cursor: none !important;
+}
+
+/* Hide cursor on interactive elements */
+button, a, input, textarea, select {
+  cursor: none !important;
+}

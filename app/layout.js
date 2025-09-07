@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Bruno_Ace_SC, Bruno_Ace, Poppins } from "next/font/google";
 import localFont from 'next/font/local'
 import "./globals.css";
+import CustomCursor from "./components/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
+        <CustomCursor />
         {children}
       </body>
     </html>
