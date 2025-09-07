@@ -179,7 +179,7 @@ export default function ServicesOverview() {
               className="font-poppins text-gray-700 leading-relaxed mb-4"
               style={{
                 fontFamily: 'var(--font-poppins), sans-serif',
-                fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
+                fontSize: 'clamp(0.9rem, 1.8vw, 1.4rem)',
                 letterSpacing: '0.25em',
                 maxWidth: '90%'
               }}
@@ -202,8 +202,8 @@ export default function ServicesOverview() {
           </div>
 
           {/* Right: Top 2 Service Cards */}
-          <div className="w-2/5 flex items-start h-full" style={{ paddingTop: "0" }}>
-            <div className="flex" style={{ gap: 'clamp(1rem, 2.5vw, 2rem)' }}>
+          <div className="w-2/5 flex items-start h-full justify-start" style={{ paddingTop: "0" }}>
+            <div className="flex" style={{ gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
               {topServices.map((service, index) => (
                 <div
                   key={service.id}
@@ -211,12 +211,14 @@ export default function ServicesOverview() {
                   className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
                   style={{ 
                     height: "clamp(25vh, 35vh, 40vh)",
-                    width: "clamp(15vw, 18vw, 22vw)",
+                    width: "17.5vw",
                     minHeight: "25vh",
-                    maxHeight: "40vh"
+                    maxHeight: "40vh",
+                    flexShrink: 0,
+                    flexGrow: 0
                   }}
                 >
-                  <div className="relative h-3/5 overflow-hidden">
+                  <div className="relative h-full overflow-hidden">
                     <Image
                       src={service.image}
                       alt={service.title}
@@ -224,22 +226,36 @@ export default function ServicesOverview() {
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    
+                    {/* Curtain reveal text overlay */}
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
+                      <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4" 
+                          style={{ 
+                            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                            fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)' 
+                          }}>
+                        {service.title}
+                      </h3>
+                      <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                        {service.subtitle}
+                      </p>
+                      <p className="font-poppins text-white/80 text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                        {service.description}
+                      </p>
+                    </div>
+
                     <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white font-bold text-lg">{service.id}</span>
                     </div>
-                  </div>
-                  <div className="p-5 h-2/5 flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-bruno-ace-sc font-bold text-gray-900 mb-1" 
+                    <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
+                      <h3 className="font-bruno-ace-sc font-bold text-white mb-1" 
                           style={{ 
                             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                             fontSize: 'clamp(1rem, 1.5vw, 1.2rem)' 
                           }}>
                         {service.title}
                       </h3>
-                      <p className="font-poppins text-gray-600 text-sm mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>{service.subtitle}</p>
                     </div>
-                    <p className="font-poppins text-gray-500 text-xs leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>{service.description}</p>
                   </div>
                 </div>
               ))}
@@ -248,7 +264,7 @@ export default function ServicesOverview() {
         </div>
 
         {/* Bottom: 5 Service Cards */}
-        <div className="flex items-end justify-center w-full" style={{ paddingBottom: "8vh", height: "45vh", gap: 'clamp(1rem, 2.5vw, 2rem)' }}>
+        <div className="flex items-end justify-start w-full" style={{ paddingBottom: "8vh", height: "45vh", gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
           {bottomServices.map((service, index) => (
             <div
               key={service.id}
@@ -256,12 +272,14 @@ export default function ServicesOverview() {
               className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
               style={{ 
                 height: "clamp(25vh, 35vh, 40vh)",
-                width: "clamp(15vw, 18vw, 22vw)",
+                width: "17.5vw",
                 minHeight: "25vh",
-                maxHeight: "40vh"
+                maxHeight: "40vh",
+                flexShrink: 0,
+                flexGrow: 0
               }}
             >
-              <div className="relative h-3/5 overflow-hidden">
+              <div className="relative h-full overflow-hidden">
                 <Image
                   src={service.image}
                   alt={service.title}
@@ -269,10 +287,28 @@ export default function ServicesOverview() {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                
+                {/* Curtain reveal text overlay */}
+                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
+                  <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4" 
+                      style={{ 
+                        fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                        fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)' 
+                      }}>
+                    {service.title}
+                  </h3>
+                  <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                    {service.subtitle}
+                  </p>
+                  <p className="font-poppins text-white/80 text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                    {service.description}
+                  </p>
+                </div>
+
                 <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="text-white font-bold text-lg">{service.id}</span>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
+                <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
                   <h3 className="font-bruno-ace-sc font-bold text-white mb-1" 
                       style={{ 
                         fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
@@ -280,11 +316,7 @@ export default function ServicesOverview() {
                       }}>
                     {service.title}
                   </h3>
-                  <p className="font-poppins text-white/80 text-sm" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>{service.subtitle}</p>
                 </div>
-              </div>
-              <div className="p-4 h-2/5 flex items-center">
-                <p className="font-poppins text-gray-600 text-sm leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>{service.description}</p>
               </div>
             </div>
           ))}
