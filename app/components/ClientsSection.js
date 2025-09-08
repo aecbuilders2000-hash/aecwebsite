@@ -110,26 +110,6 @@ const ScrollMarquee = () => {
       repeat: -1
     });
 
-    // Simple fade in animation for the section
-    gsap.fromTo(section, 
-      { 
-        opacity: 0,
-        y: 30
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 90%',
-          scrub: 2,
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
-
     // Cleanup function
     return () => {
       baseAnim1.kill();
@@ -155,21 +135,18 @@ const ScrollMarquee = () => {
         ref={sectionRef}
         className="relative bg-black py-20 md:py-32 overflow-hidden"
       >
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent transform rotate-12 -translate-x-full animate-pulse"></div>
-        </div>
-
-        {/* Gradient overlays for seamless effect */}
-        <div className="absolute inset-y-0 left-0 w-32 md:w-48 bg-gradient-to-r from-black to-transparent z-10"></div>
-        <div className="absolute inset-y-0 right-0 w-32 md:w-48 bg-gradient-to-l from-black to-transparent z-10"></div>
-
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24 px-4">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-thin text-white mb-6 tracking-wide">
+          <h2
+            className="text-3xl md:text-5xl lg:text-6xl font-thin text-white mb-6 tracking-wide font-bruno-ace-sc"
+            style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}
+          >
             CLIENTS WE WORK WITH
           </h2>
-          <p className="text-sm md:text-base text-gray-400 tracking-widest uppercase">
+          <p
+            className="text-sm md:text-base text-gray-400 tracking-widest uppercase font-century-gothic"
+            style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
+          >
             We can't wait to show you what we can do for you and your brand
           </p>
         </div>

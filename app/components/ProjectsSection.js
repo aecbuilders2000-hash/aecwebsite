@@ -121,7 +121,7 @@ const AboutScene = () => {
 // **NEW**: A stylish placeholder for your ContactUs component.
 const ContactUs = () => {
     return (
-      <div style={{ width: '100vw', height: '100vh', background: '#fff', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center' }}>
+      <div style={{ width: '100vw', height: '100vh', background: '#E9ECEF', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center' }}>
         <h2 
           style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(2rem, 5vw, 4rem)', letterSpacing: '0.1em', marginBottom: '1.5rem' }}
           className="font-bold"
@@ -149,18 +149,18 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
 
   return (
     <>
-      <div style={{ background: '#ECEFF1', width: `${verticalProjectsWidth}vw`, height: '100vh', display: 'flex', position: 'relative' }}>
+      <div style={{ background: '#E9ECEF', width: `${verticalProjectsWidth}vw`, height: '100vh', display: 'flex', position: 'relative' }}>
         {Array.from({ length: numColumns }).map((_, idx) => {
           const project1 = projects[idx * 2];
           const project2 = projects[idx * 2 + 1];
           return (
-            <div key={idx} style={{ height: '100%', width: '20vw', borderLeft: '2px solid #737272', background: 'white', boxSizing: 'border-box', position: 'absolute', top: 0, left: `${4 + idx * 20}vw`, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div key={idx} style={{ height: '100%', width: '20vw', borderLeft: '2px solid #737272', background: 'transparent', boxSizing: 'border-box', position: 'absolute', top: 0, left: `${4 + idx * 20}vw`, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ height: '100%', width: '90%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0 }}>
-                <div style={{ flex: 1, background: '#F5F5F5', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0.7vw 1vw' }}>
+                <div style={{ flex: 1, background: 'transparent', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0.7vw 1vw' }}>
                   {project1 && (<><span style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontWeight: 700, fontSize: '1.1vw', letterSpacing: '0.12em', maxWidth: '60%', wordBreak: 'break-word' }}>{project1.title}</span><span style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', color: '#737272', fontSize: '0.8vw', maxWidth: '35%', textAlign: 'right' }}>{project1.location}</span></>)}
                 </div>
                 <div style={{ width: '100%', aspectRatio: '1/1', background: '#E3F2FD' }}>{project1 && <img src={project1.imageUrl} alt={project1.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}</div>
-                <div style={{ flex: 1, background: '#F5F5F5', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0.7vw 1vw' }}>
+                <div style={{ flex: 1, background: 'transparent', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0.7vw 1vw' }}>
                   {project2 && (<><span style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontWeight: 700, fontSize: '1.1vw', letterSpacing: '0.12em', maxWidth: '60%', wordBreak: 'break-word' }}>{project2.title}</span><span style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', color: '#737272', fontSize: '0.8vw', maxWidth: '35%', textAlign: 'right' }}>{project2.location}</span></>)}
                 </div>
                 <div style={{ width: '100%', aspectRatio: '1/1', background: '#E3F2FD' }}>{project2 && <img src={project2.imageUrl} alt={project2.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}</div>
