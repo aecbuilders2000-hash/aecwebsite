@@ -67,7 +67,7 @@ export default function ProjectsSection() {
         className="flex"
         style={{
           height: "100vh",
-          width: `${(NUM_PAGES + 2) * 100 + 100}vw`, // +1 for intro (150vw), +1 for contact form, +50vw for intro extra width
+          width: `${(NUM_PAGES + 2) * 100 + 75}vw`, // +1 for intro (150vw), +1 for contact form, +50vw for intro extra width
           willChange: "transform",
         }}
       >
@@ -75,14 +75,14 @@ export default function ProjectsSection() {
         <div
           className="relative bg-gray-2 border-r-2 border-gray-4 flex"
           style={{
-            minWidth: "150vw",
+            minWidth: "125vw",
             height: "100vh",
           }}
         >
           {/* Left Side - Image and Our Projects */}
-          <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-center px-8">
+          <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-center py-0">
             {/* Image */}
-            <div className="relative h-[40vh] w-full max-w-[35vw] mb-6">
+            <div className="relative h-[75vh] w-full max-w-[35vw] mb-6 mt-0">
               <Image
                 src="/ModernVilla.png"
                 alt="Modern Villa"
@@ -92,7 +92,7 @@ export default function ProjectsSection() {
             </div>
 
             {/* Text */}
-            <div className="mb-6">
+            <div className="mb-2 px-6">
               <h2
                 className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
                 style={{
@@ -162,7 +162,40 @@ export default function ProjectsSection() {
           </div>
 
           {/* Right Side - Large Text */}
-          <div className="relative w-[100vw] flex items-center justify-center">
+          <div className="relative w-[75vw] mt-[5%]">
+            <div className="text-3xl ml-[5%]"
+              style={{
+                fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+                letterSpacing: "0.2em",
+                lineHeight: "1.2",
+              }}>
+              FROM HERE,
+              <br />
+              IT&apos;S ONLY UP
+            </div>
+
+            <div className="text-3xl ml-[5%] mt-4 md:mt-8 mb-8 flex items-center gap-4">
+              <h2>Let&apos;s Collaborate</h2>
+              <button className="flex items-center justify-center cursor-pointer bg-transparent font-geist-sans group">
+                <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
+                  <svg
+                    className="stroke-white transform transition-transform duration-300 ease-in-out -rotate-45 group-hover:rotate-0"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M13 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </button>
+            </div>
+
             <div
               className="font-bruno-ace-sc text-black font-bold text-right tracking-widest leading-tight"
               style={{
@@ -175,7 +208,32 @@ export default function ProjectsSection() {
               <br /> COLLECTIVE
             </div>
           </div>
+        </div>
 
+        <div className="w-[100vw] flex">
+          <div className="w-[50%] mx-auto flex justify-center">
+            <div style={{ width: "100%", height: "100vh", position: "relative" }}>
+              <Image
+                src="/ModernVilla.png"
+                alt="Modern Villa"
+                fill
+                className="w-full h-full object-fill"
+                style={{ objectFit: "fill" }}
+              />
+            </div>
+          </div>
+          <div className="w-[50%] mx-auto pb-8 pt-8 ml-[5%] text-black">
+            <div className="w-full text-left flex flex-col items-start gap-8">
+              <p className="w-[60%] text-xl">
+                Collective AEC is a specialized collaborative studio offering end-to-end backend support for design firms. We are not an outsourcing company. We are your extended in-house team of architects, designers, visualizers, computational experts, and problem solvers. Our mission is to free design firms from the time-consuming burdens of drafting, automation, and visualization, so they can focus on what matters most: designing, innovating and winning clients.
+              </p>
+            </div>
+            <div className="w-full text-right mt-48 flex flex-col items-end gap-8">
+              <p className="w-[40%] text-xl mr-[5%] text-[#737272]">
+                Your brand&apos;s compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Project Pages */}
