@@ -4,10 +4,8 @@ import HeroSection from "./components/HeroSection";
 import { useLenis } from "../lib/lenis";
 import ServicesSection from "./components/ServicesSection";
 import ProjectsSection from "./components/ProjectsSection";
-import TestimonialsSection from "./components/TestimonialsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
-import CardServices from "./components/ServicesCard";
 import ServicesOverview from "./components/ServicesOverview";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
@@ -42,7 +40,6 @@ export default function Home() {
       <ClientsSection />
       <ProjectsSection />
       <ContactUs />
-      <TestimonialsSection />
       <Footer />
     </div>
   );

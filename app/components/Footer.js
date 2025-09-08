@@ -5,8 +5,8 @@ import {
 
 const Footer = () => {
     return (
-        <div className='text-white bg-black p-6 ml-[5%] mr-[5%]'>
-            <div className='flex items-center justify-between max-w-7xl mx-auto'>
+        <div className='text-white bg-black p-6 pl-[5%] pr-[5%]'>
+            <div className='flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto'>
                 <h2 className='text-2xl font-bold mb-4'
                     style={{
                         fontFamily: "var(--font-bruno-ace-sc), sans-serif",
@@ -75,8 +75,8 @@ const Footer = () => {
                 <p className='m-0 w-96'>info@collectiveaec.com</p>
             </div>
 
-            <div className='flex items-center justify-between max-w-7xl mx-auto mt-4'>
-                <div className='text-4xl' style={{
+            <div className='flex items-center flex-col md:flex-row justify-between max-w-7xl mx-auto mt-4'>
+                <div className='text-4xl text-center' style={{
                     fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                     fontSize: "clamp(1.5rem, 3.5vw, 2rem)",
                     letterSpacing: "0.3em",
