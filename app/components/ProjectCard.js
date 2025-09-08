@@ -3,7 +3,7 @@ import React from 'react'
 const ProjectCard = ({
     title = "THE MARINA",
     location = "Surat, India",
-    imageUrl = "/api/placeholder/500/400",
+    imageUrl = "ModernVilla.png",
 }) => {
     const [imageError, setImageError] = useState(false);
 

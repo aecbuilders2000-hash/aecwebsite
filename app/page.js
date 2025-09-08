@@ -10,6 +10,7 @@ import ContentSection from "./components/ContentSection";
 import CardServices from "./components/ServicesCard";
 import ServicesOverview from "./components/ServicesOverview";
 import ContactUs from "./components/ContactUs";
+import Footer from "./components/Footer";
 
 export default function Home() {
   useLenis();
@@ -37,26 +38,12 @@ export default function Home() {
       </section>
       {/* <CardServices /> */}
       <ServicesOverview />
-      <ServicesSection/>
+      <ServicesSection />
       <ClientsSection />
       <ProjectsSection />
       <ContactUs />
       <TestimonialsSection />
-      <footer
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "var(--gray-9)",
-          color: "var(--gray-0)",
-          borderTop: "1px solid var(--gray-3)",
-        }}
-      >
-        <h2 style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
-          Footer Section
-        </h2>
-      </footer>
+      <Footer />
     </div>
   );
 }

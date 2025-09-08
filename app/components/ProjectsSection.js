@@ -1,16 +1,91 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const NUM_PAGES = 5;
+// ProjectCard component
+const ProjectCard = ({
+    title = "THE MARINA",
+    location = "Surat, India",
+    imageUrl = "ModernVilla.png",
+}) => {
+    const [imageError, setImageError] = useState(false);
+
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
+    return (
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 w-full">
+            {/* Header */}
+            <div className="p-4 pb-3">
+                <h2 className="text-lg font-bold text-gray-900 tracking-wider mb-1">
+                    {title}
+                </h2>
+                <p className="text-gray-600 text-xs font-light tracking-wide">
+                    {location}
+                </p>
+            </div>
+
+            {/* Image Container */}
+            <div className="px-4 pb-4">
+                <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-[4/3]">
+                    {!imageError ? (
+                        <img
+                            src={imageUrl}
+                            alt={title}
+                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                            onError={handleImageError}
+                        />
+                    ) : (
+                        // Placeholder when image fails to load
+                        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <div className="text-center">
+                                <div className="w-12 h-12 bg-white rounded-lg mx-auto mb-2 flex items-center justify-center shadow-sm">
+                                    <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <p className="text-gray-500 text-xs">Project Image</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
+
+  // Sample project data - 20 projects
+  const projects = [
+    { title: "THE MARINA", location: "Surat, India", imageUrl: "/ModernVilla.png" },
+    { title: "SKYLINE TOWERS", location: "Mumbai, India", imageUrl: "/ModernVilla.png" },
+    { title: "EMERALD GARDENS", location: "Bangalore, India", imageUrl: "/ModernVilla.png" },
+    { title: "CRYSTAL PALMS", location: "Goa, India", imageUrl: "/ModernVilla.png" },
+    { title: "GOLDEN HEIGHTS", location: "Delhi, India", imageUrl: "/ModernVilla.png" },
+    { title: "AZURE RESIDENCY", location: "Chennai, India", imageUrl: "/ModernVilla.png" },
+    { title: "PLATINUM PLAZA", location: "Hyderabad, India", imageUrl: "/ModernVilla.png" },
+    { title: "DIAMOND DISTRICT", location: "Pune, India", imageUrl: "/ModernVilla.png" },
+    { title: "SAPPHIRE SQUARE", location: "Ahmedabad, India", imageUrl: "/ModernVilla.png" },
+    { title: "RUBY RETREAT", location: "Kolkata, India", imageUrl: "/ModernVilla.png" },
+    { title: "PEARL PAVILION", location: "Jaipur, India", imageUrl: "/ModernVilla.png" },
+    { title: "OPAL OASIS", location: "Kochi, India", imageUrl: "/ModernVilla.png" },
+    { title: "JADE JUNCTION", location: "Lucknow, India", imageUrl: "/ModernVilla.png" },
+    { title: "CORAL COURT", location: "Indore, India", imageUrl: "/ModernVilla.png" },
+    { title: "AMBER ARCADE", location: "Bhopal, India", imageUrl: "/ModernVilla.png" },
+    { title: "IVORY ISLE", location: "Chandigarh, India", imageUrl: "/ModernVilla.png" },
+    { title: "ONYX OUTLOOK", location: "Vadodara, India", imageUrl: "/ModernVilla.png" },
+    { title: "QUARTZ QUARTERS", location: "Nashik, India", imageUrl: "/ModernVilla.png" },
+    { title: "GRANITE GROVE", location: "Coimbatore, India", imageUrl: "/ModernVilla.png" },
+    { title: "MARBLE MANOR", location: "Mysore, India", imageUrl: "/ModernVilla.png" }
+  ];
 
   useEffect(() => {
     const container = containerRef.current;
@@ -20,7 +95,9 @@ export default function ProjectsSection() {
     gsap.set(container, { x: 0 });
 
     // Calculate total width including the intro section + all project pages
-    const totalWidth = container.scrollWidth - window.innerWidth;
+    // Each project page is 100vw, so 10 pages = 1000vw + 125vw intro = 1125vw total
+    const projectPagesCount = Math.ceil(projects.length / 4); // 4 projects per page (2x2 grid)
+    const totalWidth = (125 + (projectPagesCount * 100)) * window.innerWidth / 100 - window.innerWidth;
 
     const st = ScrollTrigger.create({
       trigger: section,
@@ -51,7 +128,47 @@ export default function ProjectsSection() {
       st.kill();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [projects.length]);
+
+  // Create project pages (4 projects per page in 2x2 grid)
+  const createProjectPages = () => {
+    const pages = [];
+    const projectsPerPage = 4;
+    const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+    for (let i = 0; i < totalPages; i++) {
+      const startIndex = i * projectsPerPage;
+      const pageProjects = projects.slice(startIndex, startIndex + projectsPerPage);
+      
+      pages.push(
+        <div key={i} className="w-[100vw] h-[100vh] flex items-center justify-center bg-gray-1 border-r-2 border-gray-4">
+          <div className="w-full h-full p-8 flex items-center justify-center">
+            <div className="grid grid-cols-2 gap-8 max-w-4xl w-full">
+              {pageProjects.map((project, index) => (
+                <div key={startIndex + index} className="w-full">
+                  <ProjectCard
+                    title={project.title}
+                    location={project.location}
+                    imageUrl={project.imageUrl}
+                  />
+                </div>
+              ))}
+              {/* Fill empty slots if less than 4 projects on last page */}
+              {pageProjects.length < projectsPerPage && 
+                Array(projectsPerPage - pageProjects.length).fill(null).map((_, emptyIndex) => (
+                  <div key={`empty-${emptyIndex}`} className="w-full opacity-0"></div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return pages;
+  };
+
+  const projectPagesCount = Math.ceil(projects.length / 4);
+  const totalContainerWidth = 125 + (projectPagesCount * 100); // 125vw intro + project pages
 
   return (
     <section
@@ -67,7 +184,7 @@ export default function ProjectsSection() {
         className="flex"
         style={{
           height: "100vh",
-          width: `${(NUM_PAGES + 2) * 100 + 75}vw`, // +1 for intro (150vw), +1 for contact form, +50vw for intro extra width
+          width: `${totalContainerWidth}vw`,
           willChange: "transform",
         }}
       >
@@ -210,7 +327,8 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        <div className="w-[100vw] flex">
+        {/* About Section */}
+        <div className="w-[100vw] flex border-r-2 border-gray-4">
           <div className="w-[50%] mx-auto flex justify-center">
             <div style={{ width: "100%", height: "100vh", position: "relative" }}>
               <Image
@@ -236,20 +354,10 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        {/* Project Pages */}
-        {Array.from({ length: NUM_PAGES }).map((_, i) => (
-          <div
-            key={i}
-            className={`flex items-center justify-center text-5xl font-bold text-gray-9 border-r-2 border-gray-4 ${i % 2 === 0 ? "bg-gray-1" : "bg-gray-3"
-              }`}
-            style={{
-              minWidth: "100vw",
-              height: "100vh",
-            }}
-          >
-            Project {i + 1}
-          </div>
-        ))}
+        {/* Single Projects Section - All 20 projects in 2 rows */}
+        {
+          createProjectPages()
+        }
       </div>
     </section>
   );
