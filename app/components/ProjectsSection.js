@@ -119,22 +119,91 @@ const secondParagraphText = `Your project’s blueprint. It defines vision, guid
 
 const IntroScene = React.forwardRef(
   ({ weTextRef, areTextRef, collectiveTextRef }, ref) => {
+    // --- START: SLIDESHOW LOGIC ---
+    // Use three different images for the GSAP slideshow
+    const slideshowImages = [
+      "/ModernVilla.png",
+      "/SanBridge.png",
+      "/Gemini_Generated_Image_yba538yba538yba5 1.png",
+    ];
+    const imageSet = [...slideshowImages, slideshowImages[0]];
+
+    useEffect(() => {
+      const items = gsap.utils.toArray(".intro-slideshow-item");
+      const images = gsap.utils.toArray(".intro-slideshow-item img");
+      if (items.length <= 1) return;
+
+      items.forEach((item, index) => {
+        if (index !== 0) {
+          gsap.set(item, { yPercent: 100 });
+          gsap.set(images[index], { yPercent: -100 });
+        }
+      });
+
+      const tl = gsap.timeline({
+        repeat: -1,
+        defaults: { ease: "power3.inOut", duration: 1.5 },
+      });
+
+      items.forEach((item, index) => {
+        if (index < items.length - 1) {
+          tl.to(item, { yPercent: -100 })
+            .to(images[index], { yPercent: 100 }, "<")
+            .to(items[index + 1], { yPercent: 0 }, "<")
+            .to(images[index + 1], { yPercent: 0 }, "<")
+            .to({}, { duration: 2 });
+        }
+      });
+
+      return () => {
+        tl.kill();
+      };
+    }, []);
+    // --- END: SLIDESHOW LOGIC ---
+
     return (
       <div
         className="relative bg-gray-2 flex"
         style={{ minWidth: "125vw", height: "100vh" }}
       >
         {/* Left Side */}
-        <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-center py-0">
-          <div className="relative h-[75vh] w-full max-w-[35vw] mb-6 mt-0">
-            <Image
-              src="/ModernVilla.png"
-              alt="Modern Villa"
-              fill
-              className="object-cover"
-            />
+        {/* --- START: CODE CORRECTION FOR ALIGNMENT --- */}
+        <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-start items-start py-0">
+          {/* SUMMARY OF CHANGES:
+            1. Parent container now uses `justify-start` to align children to the top.
+            2. The slideshow container below no longer has `max-w-[35vw]`, allowing it to fill the full width.
+            3. `mt-0` is removed as it's no longer necessary.
+          */}
+          <div className="relative h-[75vh] w-full max-w-[35vw] mb-6 overflow-hidden">
+            {imageSet.map((src, index) => (
+              <div
+                key={index}
+                className="intro-slideshow-item"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  src={src}
+                  alt={`Slideshow image ${index + 1}`}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                  priority={index === 0}
+                />
+              </div>
+            ))}
           </div>
-          <div className="mb-2 px-6">
+          {/* --- END: CODE CORRECTION FOR ALIGNMENT --- */}
+
+          <div className="mb-2 px-6 flex items-center gap-4">
             <h2
               className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
               style={{
@@ -145,25 +214,7 @@ const IntroScene = React.forwardRef(
             >
               OUR <br /> PROJECTS
             </h2>
-          </div>
-          <div className="flex justify-end max-w-[35vw] items-end -mb-2">
-            <button className="flex items-center justify-center cursor-pointer bg-transparent font-geist-sans group">
-              <div className="bg-black rounded-full flex items-center justify-center w-16 h-16 transition-colors duration-300 ease-in-out">
-                <svg
-                  className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M13 5l7 7-7 7" />
-                </svg>
-              </div>
-            </button>
+            <ArrowButton />
           </div>
           <div className="absolute top-0 right-0 h-full flex items-start">
             <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
@@ -196,6 +247,7 @@ const IntroScene = React.forwardRef(
             <div className="w-[2px] bg-gray-500 h-full"></div>
           </div>
         </div>
+
         {/* Right Side */}
         <div className="relative w-[75vw] mt-[5%]">
           <div
@@ -260,9 +312,79 @@ const IntroScene = React.forwardRef(
 IntroScene.displayName = "IntroScene";
 
 const AboutScene = () => {
-  // --- START: ADDED WAVE EFFECT LOGIC ---
   const lastHoveredIndex = useRef(-1);
   const waveTimeouts = useRef([]);
+
+  // --- START: Slideshow Logic ---
+  // Define two separate image sets. They MUST have the same number of images.
+  const mainSlideshowImages = [
+    "/ModernVilla.png",
+    "/SanBridge.png",
+    "/Gemini_Generated_Image_yba538yba538yba5 1.png",
+  ];
+  const collageSlideshowImages = [
+    "/SanBridge.png",
+    "/Gemini_Generated_Image_yba538yba538yba5 1.png",
+    "/ModernVilla.png",
+  ];
+
+  // Create the looping image sets for rendering
+  const mainImageSet = [...mainSlideshowImages, mainSlideshowImages[0]];
+  const collageImageSet = [...collageSlideshowImages, collageSlideshowImages[0]];
+
+  // A single useEffect to control both slideshows in sync
+  useEffect(() => {
+    const mainItems = gsap.utils.toArray(".main-slideshow-item");
+    const mainImages = gsap.utils.toArray(".main-slideshow-item img");
+    const collageItems = gsap.utils.toArray(".collage-slideshow-item");
+    const collageImages = gsap.utils.toArray(".collage-slideshow-item img");
+
+    if (mainItems.length <= 1 || collageItems.length <= 1) return;
+
+    // Set initial positions for both slideshows based on their direction
+    mainItems.forEach((item, index) => {
+      if (index !== 0) {
+        gsap.set(item, { xPercent: -100 }); // Main: Starts left
+        gsap.set(mainImages[index], { xPercent: 100 });
+      }
+    });
+    collageItems.forEach((item, index) => {
+      if (index !== 0) {
+        gsap.set(item, { xPercent: 100 }); // Collage: Starts right
+        gsap.set(collageImages[index], { xPercent: -100 });
+      }
+    });
+
+    // A single timeline to animate both sets of items together
+    const tl = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: "power3.inOut", duration: 1.2 },
+    });
+
+    // Loop through and create synced tweens
+    for (let i = 0; i < mainItems.length - 1; i++) {
+      tl
+        .to([mainItems[i], collageItems[i]], {
+          xPercent: (index) => (index === 0 ? 100 : -100),
+        })
+        .to(
+          [mainImages[i], collageImages[i]],
+          {
+            xPercent: (index) => (index === 0 ? -100 : 100),
+          },
+          "<"
+        )
+        .to([mainItems[i + 1], collageItems[i + 1]], { xPercent: 0 }, "<")
+        .to([mainImages[i + 1], collageImages[i + 1]], { xPercent: 0 }, "<")
+        .to({}, { duration: 2 });
+    }
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+  // --- END: Slideshow Logic ---
+
 
   const createWaveEffect = (
     centerIndex,
@@ -329,38 +451,83 @@ const AboutScene = () => {
       createWaveEffect(0, allLetters, mouseX, mouseY, rect);
     }
   };
-  // --- END: ADDED WAVE EFFECT LOGIC ---
 
   return (
     <div className="w-[120vw] flex">
       <div className="w-[100vw] flex">
+        {/* Static Parent Container */}
         <div
           className="relative h-[100vh]"
-          style={{ aspectRatio: "1/1", transform: "translateX(10vw)" }}
+          style={{
+            aspectRatio: "1/1",
+            transform: "translateX(10vw)",
+          }}
         >
-          <Image
-            src="/ModernVilla.png"
-            alt="Modern Villa"
-            fill
-            className="object-cover"
-          />
+          {/* SIBLING 1: Main Background Slideshow (uses mainImageSet) */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+            {mainImageSet.map((src, index) => (
+              <div
+                key={`main-${index}`}
+                className="main-slideshow-item"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  src={src}
+                  alt={`Main Slideshow image ${index + 1}`}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                  priority={index === 0}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* SIBLING 2: Overlaid Collage Slideshow (uses collageImageSet) */}
           <div
-            className="absolute"
+            className="absolute overflow-hidden"
             style={{ width: "60%", height: "40%", top: "12%", left: "20%" }}
           >
-            <Image
-              src="/SanBridge.png"
-              alt="San Bridge"
-              fill
-              className="object-cover"
-              style={{ filter: "grayscale(100%) contrast(120%)" }}
-            />
+            {collageImageSet.map((src, index) => (
+              <div
+                key={`collage-${index}`}
+                className="collage-slideshow-item"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  src={src}
+                  alt={`Collage Slideshow image ${index + 1}`}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    filter: "grayscale(100%) contrast(120%)",
+                  }}
+                  priority={index === 0}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
       <div className="w-[55%] mx-auto pb-8 pt-8 ml-[5%] text-black">
         <div className="w-full text-left flex flex-col items-start gap-8">
-          {/* --- MODIFIED FIRST PARAGRAPH --- */}
           <div
             className="w-[80%] text-xl cursor-pointer"
             style={{
@@ -393,7 +560,6 @@ const AboutScene = () => {
           </div>
         </div>
         <div className="w-full text-right mt-48 flex flex-col items-end gap-8">
-          {/* --- MODIFIED SECOND PARAGRAPH --- */}
           <div
             className="w-[60%] text-xl mr-[5%] text-[#737272] cursor-pointer"
             style={{
@@ -429,7 +595,6 @@ const AboutScene = () => {
   );
 };
 
-// **NEW**: A stylish placeholder for your ContactUs component.
 const ContactUs = () => {
   return (
     <div
@@ -648,8 +813,6 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
   );
 };
 
-// --- MAIN EXPORTED COMPONENT ---
-
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
@@ -659,7 +822,7 @@ export default function ProjectsSection() {
 
   const numColumns = Math.ceil(projects.length / 2);
   const verticalProjectsWidth = numColumns * 20 + 8;
-  const totalContainerWidth = 125 + 120 + verticalProjectsWidth + 100; // The final 100 is for the ContactUs page
+  const totalContainerWidth = 125 + 120 + verticalProjectsWidth + 100;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -669,7 +832,6 @@ export default function ProjectsSection() {
     const totalScrollDistance =
       (totalContainerWidth * window.innerWidth) / 100 - window.innerWidth;
 
-    // Main horizontal scroll animation
     gsap.to(container, {
       x: () => `-${totalScrollDistance}`,
       ease: "none",
@@ -684,7 +846,6 @@ export default function ProjectsSection() {
       },
     });
 
-    // Intro text parallax animation
     const textScrollDistance = window.innerHeight;
     gsap.to(weTextRef.current, {
       x: "-400px",
@@ -710,7 +871,7 @@ export default function ProjectsSection() {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [totalContainerWidth]); // Re-run effect if total width changes
+  }, [totalContainerWidth]);
 
   return (
     <section
