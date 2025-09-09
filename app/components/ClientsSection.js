@@ -147,7 +147,7 @@ const ScrollMarquee = () => {
             className="text-sm md:text-base text-gray-400 tracking-widest uppercase font-century-gothic"
             style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
           >
-            We can't wait to show you what we can do for you and your brand
+            We can&apos;t wait to show you what we can do for you and your brand
           </p>
         </div>
 

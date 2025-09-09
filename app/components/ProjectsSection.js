@@ -126,7 +126,7 @@ const ContactUs = () => {
           style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(2rem, 5vw, 4rem)', letterSpacing: '0.1em', marginBottom: '1.5rem' }}
           className="font-bold"
         >
-          LET'S BUILD TOGETHER
+          LET&spos;S BUILD TOGETHER
         </h2>
         <p 
           style={{ fontFamily: 'var(--font-poppins), sans-serif', maxWidth: '600px', marginBottom: '3rem', fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', lineHeight: '1.75' }}
