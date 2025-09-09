@@ -2,6 +2,7 @@ import React from 'react'
 import {
     FaInstagram, FaLinkedin, FaFacebookF, FaTwitter, FaYoutube
 } from 'react-icons/fa'; // Example for FontAwesome icons
+import ArrowButton from '../ui/ArrowButton';
 
 const Footer = () => {
     return (
@@ -17,55 +18,7 @@ const Footer = () => {
                 </h2>
 
                 <div className="flex pt-1 justify-end items-end gap-4">
-                    <button
-                        className="flex items-center justify-between bg-white border-none rounded-full cursor-pointer font-century-gothic transition-all duration-300 ease-in-out shadow-lg"
-                        style={{
-                            fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-                            zIndex: 1001,
-                            padding: 'clamp(0.3rem, 1vw, 0.6rem)',
-                            paddingLeft: 'clamp(0.6rem, 2vw, 1.5rem)',
-                            gap: 'clamp(0.4rem, 1.5vw, 1rem)',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                        }}
-                    >
-                        {/* Text */}
-                        <span
-                            className="button-text bg-transparent text-black whitespace-nowrap transition-colors duration-300 ease-in-out font-bold"
-                            style={{
-                                fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)',
-                            }}
-                        >
-                            Let&apos; Collaborate
-                        </span>
-
-                        {/* Circle inside the button */}
-                        <div
-                            className="arrow-circle bg-black rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-in-out rotate-45"
-                            style={{
-                                width: 'clamp(20px, 6vw, 36px)',
-                                height: 'clamp(20px, 6vw, 36px)',
-                            }}
-                        >
-                            <svg
-                                className="arrow-icon stroke-white transition-all duration-300 ease-in-out"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                style={{
-                                    transform: 'rotate(-45deg)', // Top-right diagonal initially
-                                    width: 'clamp(10px, 3vw, 16px)',
-                                    height: 'clamp(10px, 3vw, 16px)',
-                                }}
-                            >
-                                <path d="M7 7h10v10" />
-                                <path d="M7 17L17 7" />
-                            </svg>
-                        </div>
-                    </button>
+                    <ArrowButton label="Let's Collaborate" />
                 </div>
             </div>
             {/* Address moved here so it appears on the right side under the button */}

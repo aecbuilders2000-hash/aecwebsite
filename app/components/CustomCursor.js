@@ -56,8 +56,8 @@ export default function CustomCursor() {
       // Clamp velocity for reasonable scaling - Responsive range
       const clampedVelocity = Math.min(Math.max(velocity.current, 0), window.innerWidth * 0.02);
       
-      // Scale based on velocity: slow = normal (1), fast = large (1.8)
-      const targetScale = 1 + (clampedVelocity / (window.innerWidth * 0.02)) * 0.8;
+  // Scale based on velocity: slow = normal (1), fast = large (3.2)
+  const targetScale = 1 + (clampedVelocity / (window.innerWidth * 0.02)) * 2.2;
 
       // Update cursor position with lag using GSAP - Responsive positioning
       gsap.to(cursor, {
@@ -117,8 +117,8 @@ export default function CustomCursor() {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: 'clamp(1.5rem, 3vw, 2rem)', // Responsive size - larger base
-        height: 'clamp(1.5rem, 3vw, 2rem)', // Responsive size - larger base
+        width: 'clamp(1rem, 2vw, 1.6rem)', // Reduced base size
+        height: 'clamp(1rem, 2vw, 1.6rem)', // Reduced base size
         backgroundColor: '#FFFFFF', // White fill
         borderRadius: '50%',
         pointerEvents: 'none',

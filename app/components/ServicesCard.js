@@ -19,6 +19,7 @@ const CardServices = ({
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
 
@@ -129,32 +130,13 @@ const CardServices = ({
                         </span>
                         
                         {/* Arrow Circle */}
-                        <div
-                            className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
-                            style={{
-                                width: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
-                                height: 'clamp(35px, 10vw, 60px)', // Increased by 25% (was clamp(28px, 8vw, 48px))
-                            }}
-                        >
-                            <svg 
-                                width="20" // Increased from 16 (25% increase)
-                                height="20" // Increased from 16 (25% increase)
-                                viewBox="0 0 24 24" 
-                                fill="none" 
-                                stroke="#fff" 
-                                strokeWidth="2" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
-                                style={{
-                                    transform: 'rotate(-45deg)', // Top-right diagonal
-                                    width: 'clamp(12.5px, 3.75vw, 20px)', // Increased by 25% (was clamp(10px, 3vw, 16px))
-                                    height: 'clamp(12.5px, 3.75vw, 20px)', // Increased by 25% (was clamp(10px, 3vw, 16px))
-                                }}
-                            >
-                                <path d="M7 7h10v10" />
-                                <path d="M7 17L17 7" />
-                            </svg>
-                        </div>
+                        <button className="flex items-center justify-center cursor-pointer bg-transparent group" style={{padding: 0, border: 'none', background: 'none'}}>
+                            <div className="bg-black rounded-full flex items-center justify-center flex-shrink-0" style={{width: 'clamp(35px, 10vw, 60px)', height: 'clamp(35px, 10vw, 60px)'}}>
+                                <svg className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45" width="36" height="36" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M5 12h14" /><path d="M13 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                     {/* Intro Text */}
                     <p 
@@ -315,6 +297,22 @@ const CardServices = ({
 
         </section>
     );
-};
+// Add CSS for arrow rotation
+const style = document.createElement('style');
+style.innerHTML = `
+.arrow-rest {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: rotate(-45deg);
+}
+.arrow-rotate {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: rotate(-90deg);
+}
+`;
+if (typeof window !== 'undefined' && !document.head.querySelector('style[data-arrow-rotate]')) {
+    style.setAttribute('data-arrow-rotate', 'true');
+    document.head.appendChild(style);
+}
+}
 
 export default CardServices;
