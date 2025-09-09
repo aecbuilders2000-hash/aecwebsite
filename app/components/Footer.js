@@ -22,22 +22,22 @@ const Footer = () => {
                 </div>
             </div>
             {/* Address moved here so it appears on the right side under the button */}
-            <div className='mt-8 text-medium text-gray-300 flex flex-col items-end text-right text-wrap'>
+            <div className='mt-8 mr-11 text-medium text-gray-300 flex flex-col items-end text-right text-wrap'>
                 <p className='m-0 w-96 text-wrap'>144 Avadh Viceroy, Sarthana Jakat Naka, Varachha, Surat, Gujarat 395010</p>
                 <p className='m-0 w-96'>+91 910 687 8832</p>
                 <p className='m-0 w-96'>info@collectiveaec.com</p>
             </div>
 
             <div className='flex items-center flex-col md:flex-row justify-between max-w-7xl mx-auto mt-4'>
-                <div className='text-4xl text-center' style={{
+                <div className='text-4xl text-left' style={{
                     fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                     fontSize: "clamp(1.5rem, 3.5vw, 2rem)",
                     letterSpacing: "0.3em",
                     lineHeight: "1.2",
                 }}>
-                    MANAGE LESS
-                    <br />
                     DESIGN MORE
+                    <br />
+                    MANAGE LESS
                 </div>
                 <div className='flex flex-col justify-center items-center'>
                     <h2 className='text-2xl font-bold mb-4'>

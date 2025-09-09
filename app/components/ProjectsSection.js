@@ -214,7 +214,23 @@ const IntroScene = React.forwardRef(
             >
               OUR <br /> PROJECTS
             </h2>
-            <ArrowButton />
+            <button className="flex items-center justify-center cursor-pointer bg-transparent font-geist-sans group">
+              <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
+                <svg
+                  className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M13 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
           </div>
           <div className="absolute top-0 right-0 h-full flex items-start">
             <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
