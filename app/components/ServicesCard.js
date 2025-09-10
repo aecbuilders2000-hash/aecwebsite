@@ -201,21 +201,23 @@ const CardServices = ({
                         }}
                     >
                         <h3 
-                            className="font-poppins font-light text-gray-500 m-0"
+                            className="font-poppins font-light m-0"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
+                                fontSize: 'clamp(1rem, 2vw, 1.67rem)',
                                 letterSpacing: '0.15em',
+                                color: '#000',
                             }}
                         >
                             SERVICES
                         </h3>
                         <span 
-                            className="font-poppins text-gray-500"
+                            className="font-poppins"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                fontSize: 'clamp(0.67rem, 1.07vw, 0.93rem)', // Reduced by ~33% from clamp(1rem, 1.6vw, 1.4rem)
+                                fontSize: 'clamp(0.67rem, 1.07vw, 0.93rem)',
                                 letterSpacing: '0.1em',
+                                color: '#000',
                             }}
                         >
                             {pageNumber}
@@ -261,10 +263,10 @@ const CardServices = ({
                                         className="bg-transparent font-poppins font-light whitespace-nowrap transition-all duration-300 ease-in-out"
                                         style={{
                                             fontFamily: 'var(--font-poppins), sans-serif',
-                                            color: isHovered ? '#000000' : '#CED4DA', // All start as #CED4DA, turn black on hover
-                                            fontSize: 'clamp(1rem, 2vw, 1.67rem)', // Reduced by ~33% from clamp(1.5rem, 3vw, 2.5rem)
+                                            color: isHovered ? '#000000' : '#737272', // Default #737272, black on hover
+                                            fontSize: 'clamp(1rem, 2vw, 1.67rem)',
                                             letterSpacing: '0.15em',
-                                            transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)', // Text shifts right on hover
+                                            transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)',
                                         }}
                                     >
                                         {option}

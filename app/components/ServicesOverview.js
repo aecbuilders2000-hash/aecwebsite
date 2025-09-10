@@ -9,22 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     id: 1,
-    title: "Architectural",
-    subtitle: "Design Services",
-    image: "/ModernVilla.png",
-    description: "Complete architectural design from concept to construction",
-    position: "top"
-  },
-  {
-    id: 2,
-    title: "Structural",
-    subtitle: "Engineering",
-    image: "/SanBridge.png", 
-    description: "Advanced structural analysis and engineering solutions",
-    position: "top"
-  },
-  {
-    id: 3,
     title: "MEP Services",
     subtitle: "& Coordination",
     image: "/ModernVilla.png",
@@ -32,15 +16,15 @@ const services = [
     position: "bottom"
   },
   {
-    id: 4,
-    title: "Project",
-    subtitle: "Management",
-    image: "/SanBridge.png",
-    description: "End-to-end project coordination and management",
+    id: 2,
+    title: "Architectural",
+    subtitle: "Design Services",
+    image: "/ModernVilla.png",
+    description: "Complete architectural design from concept to construction",
     position: "bottom"
   },
   {
-    id: 5,
+    id: 3,
     title: "3D Visualization",
     subtitle: "& Rendering",
     image: "/ModernVilla.png",
@@ -48,21 +32,21 @@ const services = [
     position: "bottom"
   },
   {
-    id: 6,
+    id: 4,
+    title: "Structural",
+    subtitle: "Engineering",
+    image: "/SanBridge.png", 
+    description: "Advanced structural analysis and engineering solutions",
+    position: "bottom"
+  },
+  {
+    id: 5,
     title: "BIM Services",
     subtitle: "& Consulting",
     image: "/SanBridge.png",
     description: "Advanced Building Information Modeling solutions",
     position: "bottom"
   },
-  {
-    id: 7,
-    title: "CAD Drafting",
-    subtitle: "& Documentation",
-    image: "/ModernVilla.png",
-    description: "Precise technical drawings and construction documentation",
-    position: "bottom"
-  }
 ];
 
 export default function ServicesOverview() {

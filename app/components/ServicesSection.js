@@ -22,20 +22,6 @@ const services = [
     />
   },
   {
-    title: "Engineering Design",
-    description: "Precise engineering solutions for complex projects",
-    color: "#2d3748",
-    accent: "#4299e1",
-    content: <CardServices 
-      introText="Advanced engineering design services combining technical expertise with innovative solutions for mechanical, product, and sheet metal applications."
-      imageUrl="/ModernVilla.png"
-      serviceName="ENGINEERING"
-      pageNumber="002/007"
-      services={["Mechanical Drafting Services", "Product Design Services", "Sheet Metal Design Services", "Engineering Analysis Services"]}
-      bottomText="Our engineering expertise ensures optimal performance, safety, and efficiency in every project we undertake."
-    />
-  },
-  {
     title: "Structural Design",
     description: "Robust structural engineering and detailing",
     color: "#1a202c",
@@ -90,21 +76,7 @@ const services = [
       services={["BIM Consulting Services", "Scan to BIM", "BIM Coordination", "BIM Clash Detection", "4D BIM Services", "Quantity Takeoff"]}
       bottomText=""
     />
-  },
-  {
-    title: "CAD Drafting",
-    description: "Precise technical drawings and documentation",
-    color: "#553c9a",
-    accent: "#b794f6",
-    content: <CardServices 
-      introText="Professional CAD drafting services providing accurate technical drawings and comprehensive construction documentation for all project phases."
-      imageUrl="/SanBridge.png"
-      serviceName="CAD DRAFTING"
-      pageNumber="007/007"
-      services={["CAD Drafting Services", "Technical Drawing Services", "Construction Documentation", "As-Built Drawings"]}
-      bottomText="Our CAD expertise ensures precision in every line, delivering clear, accurate documentation that facilitates smooth construction processes."
-    />
-  },
+  }
 ];
 
 export default function ServicesSection() {
@@ -133,7 +105,7 @@ export default function ServicesSection() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: `+=${(services.length - 1) * window.innerHeight}`, // Exact scroll distance needed
+        end: `+=${(services.length - 1) * window.innerHeight}`,
         scrub: 1,
         pin: true,
         anticipatePin: 1,
@@ -143,26 +115,20 @@ export default function ServicesSection() {
     // Animate each card (except first)
     services.forEach((_, index) => {
       if (index === 0) return;
-
-      // Simple linear distribution: card 1 at 0.2, card 2 at 0.4, etc.
       const progress = index / services.length;
-
-      // Current card slides up
       tl.fromTo(cards[index],
         { y: "100vh" },
         { y: 0, duration: 0.15, ease: "power2.out" },
         progress
       );
-
-      // Previous cards shrink and fade
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
         const depth = index - prevIndex;
         tl.to(cards[prevIndex], {
-          scale: Math.max(0.85 - depth * 0.08, 0.6), // More aggressive scaling
-          opacity: Math.max(1 - depth * 0.25, 0.15), // More aggressive fading
-          y: -depth * 15, // More vertical displacement
-          z: -depth * 30, // Add Z-depth for 3D effect
-          rotationX: depth * 2, // Slight 3D rotation
+          scale: Math.max(0.85 - depth * 0.08, 0.6),
+          opacity: Math.max(1 - depth * 0.25, 0.15),
+          y: -depth * 15,
+          z: -depth * 30,
+          rotationX: depth * 2,
           transformOrigin: "center bottom",
           duration: 0.2,
           ease: "power1.inOut"

@@ -4,7 +4,85 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MorphingButton from "../ui/MorphingButton";
 
+
 gsap.registerPlugin(ScrollTrigger);
+
+// WaveNavLink component for animated navbar links
+function WaveNavLink({ href, text }) {
+  const linkRef = React.useRef(null);
+
+  // Split text into spans for each letter
+  const letters = text.split("");
+
+  // Animate wave on hover
+  const handleMouseEnter = () => {
+    if (!linkRef.current) return;
+    const letterSpans = linkRef.current.querySelectorAll(".wave-letter");
+    letterSpans.forEach((span, i) => {
+      gsap.to(span, {
+        y: -10,
+        scale: 1.2,
+        rotation: (Math.random() - 0.5) * 8,
+        duration: 0.4,
+        ease: "back.out(2.5)",
+        delay: i * 0.04
+      });
+      gsap.to(span, {
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 0.8,
+        delay: 0.1 + i * 0.04,
+        ease: "elastic.out(1, 0.4)"
+      });
+    });
+  };
+
+  // Smooth scroll to section on click
+  const handleClick = (e) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <a
+      href={href}
+      ref={linkRef}
+      onMouseEnter={handleMouseEnter}
+      onClick={handleClick}
+      style={{
+        fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
+        fontWeight: 600,
+        fontSize: 'clamp(1rem, 2vw, 1.125rem)',
+        color: '#000',
+        textDecoration: 'none',
+        letterSpacing: '0.1em',
+        marginRight: '0.5vw',
+        transition: 'color 0.2s',
+        display: 'inline-block',
+        cursor: 'pointer',
+      }}
+    >
+      {letters.map((char, i) => (
+        <span
+          key={i}
+          className="wave-letter"
+          style={{
+            display: 'inline-block',
+            willChange: 'transform',
+            pointerEvents: 'none',
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </a>
+  );
+}
 
 export default function HeroSection() {
   const heroRef = useRef(null);
@@ -298,8 +376,19 @@ export default function HeroSection() {
           top: '5vh',
           right: '2.5vw',
           zIndex: 1001,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '5vw', // Increased gap to shift links left
         }}
       >
+        {/* Navigation Links with Wave Effect */}
+        {[
+          { href: "#projects-section", label: "Projects" },
+          { href: "#services-section", label: "Our Services" },
+          { href: "#careers-section", label: "Careers" }
+        ].map((nav, idx) => (
+          <WaveNavLink key={nav.label} href={nav.href} text={nav.label} />
+        ))}
         <MorphingButton 
           text="Let's Collaborate"
           fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
