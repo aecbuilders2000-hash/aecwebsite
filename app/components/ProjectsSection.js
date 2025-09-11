@@ -551,6 +551,7 @@ const AboutScene = () => {
               fontWeight: 400,
               transform: "translateX(-4vw)",
               lineHeight: "1.7",
+              marginTop: "4rem", // Shift paragraph down
             }}
             onMouseMove={handleMouseMove}
           >
@@ -575,7 +576,7 @@ const AboutScene = () => {
             ))}
           </div>
         </div>
-        <div className="w-full text-right mt-48 flex flex-col items-end gap-8">
+        <div className="w-full text-right mt-24 flex flex-col items-end gap-8">
           <div
             className="w-[60%] text-xl mr-[5%] text-[#737272] cursor-pointer"
             style={{
@@ -712,52 +713,73 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
                     padding: "0.7vw 1vw",
                   }}
                 >
-                  {project1 && (
-                    <>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                          fontWeight: 700,
-                          fontSize: "1.1vw",
-                          letterSpacing: "0.12em",
-                          maxWidth: "60%",
-                          wordBreak: "break-word",
-                        }}
-                      >
-                        {project1.title}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily:
-                            "var(--font-century-gothic), Century Gothic, sans-serif",
-                          color: "#737272",
-                          fontSize: "0.8vw",
-                          maxWidth: "35%",
-                          textAlign: "right",
-                        }}
-                      >
-                        {project1.location}
-                      </span>
-                    </>
-                  )}
+                  {/* Intentionally left empty as requested */}
                 </div>
                 <div
                   style={{
                     width: "100%",
                     aspectRatio: "1/1",
                     background: "#E3F2FD",
+                    position: "relative",
+                    overflow: "hidden",
                   }}
                 >
                   {project1 && (
-                    <img
-                      src={project1.imageUrl}
-                      alt={project1.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
+                    <>
+                      <img
+                        src={project1.imageUrl}
+                        alt={project1.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                        }}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          bottom: 0,
+                          width: "100%",
+                          height: "32%",
+                          background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "flex-end",
+                          padding: "1vw 1.2vw",
+                          zIndex: 2,
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                            fontWeight: 700,
+                            fontSize: "1.1vw",
+                            letterSpacing: "0.12em",
+                            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                            alignSelf: "flex-end",
+                          }}
+                        >
+                          {project1.title}
+                        </span>
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
+                            fontSize: "0.8vw",
+                            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                            alignSelf: "flex-end",
+                            textAlign: "right",
+                            width: "40%",
+                          }}
+                        >
+                          {project1.location}
+                        </span>
+                      </div>
+                    </>
                   )}
                 </div>
                 <div
@@ -770,52 +792,73 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
                     padding: "0.7vw 1vw",
                   }}
                 >
-                  {project2 && (
-                    <>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                          fontWeight: 700,
-                          fontSize: "1.1vw",
-                          letterSpacing: "0.12em",
-                          maxWidth: "60%",
-                          wordBreak: "break-word",
-                        }}
-                      >
-                        {project2.title}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily:
-                            "var(--font-century-gothic), Century Gothic, sans-serif",
-                          color: "#737272",
-                          fontSize: "0.8vw",
-                          maxWidth: "35%",
-                          textAlign: "right",
-                        }}
-                      >
-                        {project2.location}
-                      </span>
-                    </>
-                  )}
+                  {/* Intentionally left empty as requested */}
                 </div>
                 <div
                   style={{
                     width: "100%",
                     aspectRatio: "1/1",
                     background: "#E3F2FD",
+                    position: "relative",
+                    overflow: "hidden",
                   }}
                 >
                   {project2 && (
-                    <img
-                      src={project2.imageUrl}
-                      alt={project2.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
+                    <>
+                      <img
+                        src={project2.imageUrl}
+                        alt={project2.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                        }}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          bottom: 0,
+                          width: "100%",
+                          height: "32%",
+                          background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "flex-end",
+                          padding: "1vw 1.2vw",
+                          zIndex: 2,
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                            fontWeight: 700,
+                            fontSize: "1.1vw",
+                            letterSpacing: "0.12em",
+                            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                            alignSelf: "flex-end",
+                          }}
+                        >
+                          {project2.title}
+                        </span>
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
+                            fontSize: "0.8vw",
+                            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                            alignSelf: "flex-end",
+                            textAlign: "right",
+                            width: "40%",
+                          }}
+                        >
+                          {project2.location}
+                        </span>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>

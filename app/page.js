@@ -36,18 +36,12 @@ export default function Home() {
         </h2>
       </section>
       {/* <CardServices /> */}
-      <section id="services-section">
-        <ServicesOverview />
-        <ServicesSection />
-      </section>
+      <ServicesOverview />
+      <ServicesSection />
       <ClientsSection />
-      <section id="projects-section">
-        <ProjectsSection />
-      </section>
+      <ProjectsSection />
       <ContactUs />
-      {/* <section id="careers-section">
-        <CareerForm />
-      </section> */}
+      <CareerForm />
       <Footer />
     </div>
   );
