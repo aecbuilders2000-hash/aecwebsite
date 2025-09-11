@@ -4,6 +4,8 @@ import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
 import AudioManager from "./components/AudioManager";
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import LayoutWrapper from "./components/LayoutWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,12 +55,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
+      <body className={`${geistSans.variable} bg-white ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
         <CustomCursor />
         <AudioManager />
+        <Navbar />
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow">
-            {children}
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
           </main>
           <Footer />
         </div>
