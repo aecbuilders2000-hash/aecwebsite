@@ -7,46 +7,47 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  {
+    {
     id: 1,
-    title: "MEP Services",
-    subtitle: "& Coordination",
-    image: "/ModernVilla.png",
-    description: "Mechanical, Electrical, and Plumbing system design",
+    title: "BIM Services",
+    subtitle: "& Consulting",
+    image: "/BIM Service.png",
+    description: "Advanced Building Information Modeling solutions",
     position: "bottom"
   },
   {
     id: 2,
-    title: "Architectural",
-    subtitle: "Design Services",
-    image: "/ModernVilla.png",
-    description: "Complete architectural design from concept to construction",
+    title: "MEP Services",
+    subtitle: "& Coordination",
+    image: "/MEP Service.png",
+    description: "Mechanical, Electrical, and Plumbing system design",
     position: "bottom"
   },
   {
     id: 3,
-    title: "3D Visualization",
-    subtitle: "& Rendering",
-    image: "/ModernVilla.png",
-    description: "Photorealistic visualizations and architectural renderings",
+    title: "Architectural",
+    subtitle: "Design Services",
+    image: "/Automation Service.png",
+    description: "Complete architectural design from concept to construction",
     position: "bottom"
   },
-  {
+    {
     id: 4,
     title: "Structural",
     subtitle: "Engineering",
-    image: "/SanBridge.png", 
+    image: "/Structural Service.png", 
     description: "Advanced structural analysis and engineering solutions",
     position: "bottom"
   },
   {
     id: 5,
-    title: "BIM Services",
-    subtitle: "& Consulting",
-    image: "/SanBridge.png",
-    description: "Advanced Building Information Modeling solutions",
+    title: "3D Visualization",
+    subtitle: "& Rendering",
+    image: "/3D Service.png",
+    description: "Photorealistic visualizations and architectural renderings",
     position: "bottom"
   },
+
 ];
 
 export default function ServicesOverview() {

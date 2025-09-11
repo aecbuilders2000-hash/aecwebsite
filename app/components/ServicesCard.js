@@ -157,18 +157,22 @@ const CardServices = ({
                         className="relative"
                         style={{
                             top: "8vh", // Increased from 25vh for more space after intro text
-                            width: "18.75vw", // Reduced by 25% (was 25vw)
-                            height: "18.75vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
+                            width: "30vw", // Reduced by 25% (was 25vw)
+                            height: "20vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
+                            overflow: "hidden",
+                            borderRadius: "1.5rem", // rounded-3xl
                         }}
                     >
-                        <Image
-                            src={imageUrl}
-                            alt="Architecture Service"
-                            fill
-                            sizes="18.75vw"
-                            style={{
-                                objectFit: "cover",
-                            }}
+                            <Image
+                                src={imageUrl}
+                                alt="Architecture Service"
+                                fill
+                                sizes="18.75vw"
+                                style={{
+                                    objectFit: "cover",
+                                    objectPosition: "center center",
+                                    background: '#fff',
+                                }}
                         />
                     </div>
 
@@ -206,7 +210,7 @@ const CardServices = ({
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 fontSize: 'clamp(1rem, 2vw, 1.67rem)',
                                 letterSpacing: '0.15em',
-                                color: '#000',
+                                color: '#737272',
                             }}
                         >
                             SERVICES
@@ -217,7 +221,7 @@ const CardServices = ({
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 fontSize: 'clamp(0.67rem, 1.07vw, 0.93rem)',
                                 letterSpacing: '0.1em',
-                                color: '#000',
+                                color: '#737272',
                             }}
                         >
                             {pageNumber}
@@ -238,8 +242,9 @@ const CardServices = ({
                                     key={index}
                                     className="flex items-center justify-start border-none cursor-pointer bg-transparent font-poppins w-full relative transition-all duration-300 ease-in-out"
                                     style={{
-                                        padding: 'clamp(0.5rem, 1vw, 0.8rem)',
+                                        padding: 'clamp(0.2rem, 0.5vw, 0.4rem)', // Reduced line height
                                         paddingLeft: 'clamp(1rem, 2vw, 1.5rem)',
+                                        lineHeight: 1.0, // Bring lines closer
                                     }}
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
@@ -263,9 +268,10 @@ const CardServices = ({
                                         className="bg-transparent font-poppins font-light whitespace-nowrap transition-all duration-300 ease-in-out"
                                         style={{
                                             fontFamily: 'var(--font-poppins), sans-serif',
-                                            color: isHovered ? '#000000' : '#737272', // Default #737272, black on hover
-                                            fontSize: 'clamp(1rem, 2vw, 1.67rem)',
-                                            letterSpacing: '0.15em',
+                                            color: '#000000', // Always black
+                                            fontSize: 'clamp(1rem, 1.5vw, 1.67rem)',
+                                            letterSpacing: '0.03em', // Decreased letter spacing
+                                            fontWeight: '400',
                                             transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)',
                                         }}
                                     >
