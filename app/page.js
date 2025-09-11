@@ -41,8 +41,6 @@ export default function Home() {
       <ClientsSection />
       <ProjectsSection />
       <ContactUs />
-      <CareerForm />
-      <Footer />
     </div>
   );
 }

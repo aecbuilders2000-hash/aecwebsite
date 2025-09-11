@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
 import AudioManager from "./components/AudioManager";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,7 +56,12 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
         <CustomCursor />
         <AudioManager />
-        {children}
+        <div className="flex flex-col min-h-screen">
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
