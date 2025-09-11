@@ -11,6 +11,9 @@ const CareerForm = () => {
         experience: ''
     });
 
+    const [resumeFile, setResumeFile] = useState(null);
+    const [fileError, setFileError] = useState('');
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -19,11 +22,33 @@ const CareerForm = () => {
         }));
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const validTypes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ];
+        if (!validTypes.includes(file.type)) {
+            setFileError('Only PDF or DOCX files are allowed.');
+            e.target.value = '';
+            setResumeFile(null);
+            return;
+        }
+        setFileError('');
+        setResumeFile(file);
+    };
+
     const [selectedCountry, setSelectedCountry] = useState(
         countries.find((c) => c.value === "IN") || countries[0] // Default India
     );
 
     const handleSubmit = () => {
+        if (!resumeFile) {
+            setFileError('Please upload your resume (PDF or DOCX).');
+            return;
+        }
         console.log('Form submitted:', formData);
         // Handle form submission here
     };
@@ -79,7 +104,6 @@ const CareerForm = () => {
                     </div>
 
                     <div className="flex items-center w-full justify-between gap-16">
-
                         {/* Phone Field */}
                         <div className='flex-1'>
                             <label className="block text-black text-2xl mb-4 font-bold">Phone:</label>
@@ -131,8 +155,36 @@ const CareerForm = () => {
                                 className="w-full text-black bg-transparent border-b-2 border-gray-300 pb-2 text-lg placeholder-gray-400 focus:border-black outline-none transition-colors"
                             />
                         </div>
-
                     </div>
+
+                    <div className="flex items-center w-full justify-between gap-16">
+                        <div className="flex-1">
+                            <label className="block text-black text-2xl mb-4 font-bold">
+                                Resume (PDF / DOCX):
+                            </label>
+                            <div className="flex flex-col gap-3">
+                                <input
+                                    type="file"
+                                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                    onChange={handleFileChange}
+                                    className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-800 cursor-pointer"
+                                />
+                                {resumeFile && !fileError && (
+                                    <p className="text-xs text-gray-600">
+                                        Selected: {resumeFile.name} ({(resumeFile.size / 1024).toFixed(1)} KB)
+                                    </p>
+                                )}
+                                {fileError && (
+                                    <p className="text-xs text-red-600">
+                                        {fileError}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                        {/* Keep layout aligned (empty spacer) */}
+                        <div className="flex-1" />
+                    </div>
+
                     {/* Submit Button */}
                     <div className="flex pt-4 justify-end">
                         {/* Use ArrowButton component for consistency */}

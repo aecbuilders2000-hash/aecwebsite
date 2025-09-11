@@ -1,15 +1,16 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MorphingButton from "../ui/MorphingButton";
-
 
 gsap.registerPlugin(ScrollTrigger);
 
 // WaveNavLink component for animated navbar links
 function WaveNavLink({ href, text }) {
   const linkRef = React.useRef(null);
+  const router = useRouter();
 
   // Split text into spans for each letter
   const letters = text.split("");
@@ -38,13 +39,25 @@ function WaveNavLink({ href, text }) {
     });
   };
 
-  // Smooth scroll to section on click
+  // Smooth scroll to section on click for hash links; use Next router for other routes
   const handleClick = (e) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // For normal routes (like /careers), use router.push to perform client navigation
     e.preventDefault();
-    const targetId = href.replace('#', '');
-    const target = document.getElementById(targetId);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+    try {
+      router.push(href);
+    } catch (err) {
+      // fallback to full navigation
+      window.location.href = href;
     }
   };
 
@@ -385,7 +398,7 @@ export default function HeroSection() {
         {[
           { href: "#projects-section", label: "Projects" },
           { href: "#services-section", label: "Our Services" },
-          { href: "#careers-section", label: "Careers" }
+          { href: "/careers", label: "Careers" }
         ].map((nav, idx) => (
           <WaveNavLink key={nav.label} href={nav.href} text={nav.label} />
         ))}

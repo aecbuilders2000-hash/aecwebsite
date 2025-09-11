@@ -45,9 +45,9 @@ export default function Home() {
         <ProjectsSection />
       </section>
       <ContactUs />
-      <section id="careers-section">
+      {/* <section id="careers-section">
         <CareerForm />
-      </section>
+      </section> */}
       <Footer />
     </div>
   );
