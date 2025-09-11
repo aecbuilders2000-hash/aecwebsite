@@ -3,26 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  SiPorsche, 
-  SiCocacola, 
-  SiSony, 
-  SiHyundai, 
-  SiGoogle, 
-  SiApple, 
-  SiMeta, 
-  SiNvidia 
-} from 'react-icons/si';
-import { 
-  FaAward,
-  FaCar,
-  FaDesktop,
-  FaMobile,
-  FaPalette,
-  FaRocket,
-  FaCode,
-  FaGlobe
-} from 'react-icons/fa';
+import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -32,63 +13,42 @@ const ScrollMarquee = () => {
   const sectionRef = useRef(null);
   const marquee1Ref = useRef(null);
   const marquee2Ref = useRef(null);
-  const marquee3Ref = useRef(null);
 
-  // Client logo data with icons
-  const clientRows = [
-    // Row 1 - Top row with automotive and luxury brands
+  // Only two rows now
+  const imageRows = [
     [
-      { icon: SiPorsche, name: "PORSCHE", size: "text-5xl" },
-      { icon: FaPalette, name: "Wallpaper*", size: "text-5xl" },
-      { icon: SiCocacola, name: "Coca-Cola", size: "text-5xl" },
-      { icon: FaCar, name: "MaxMara", size: "text-5xl" },
-      { icon: FaDesktop, name: "Calvin Klein", size: "text-5xl" },
-      { icon: SiPorsche, name: "PORSCHE", size: "text-5xl" },
-      { icon: FaPalette, name: "Wallpaper*", size: "text-5xl" },
-      { icon: SiCocacola, name: "Coca-Cola", size: "text-5xl" },
-      { icon: FaCar, name: "MaxMara", size: "text-5xl" },
-      { icon: FaDesktop, name: "Calvin Klein", size: "text-5xl" },
+      'https://i.postimg.cc/rw8GYT2r/Gemini-Generated-Image-84uxsf84uxsf84ux.png',
+      'https://i.postimg.cc/yYTcRG3Y/Gemini-Generated-Image-8cni4j8cni4j8cni.png',
+      'https://i.postimg.cc/SKPWsz26/Gemini-Generated-Image-9lja669lja669lja.png',
+      'https://i.postimg.cc/ZRy6yKp1/Gemini-Generated-Image-e4fjbve4fjbve4fj.png',
+      'https://i.postimg.cc/RVmwNmFD/Gemini-Generated-Image-jkv9bsjkv9bsjkv9.png',
+      'https://i.postimg.cc/rw8GYT2r/Gemini-Generated-Image-84uxsf84uxsf84ux.png',
+      'https://i.postimg.cc/yYTcRG3Y/Gemini-Generated-Image-8cni4j8cni4j8cni.png',
+      'https://i.postimg.cc/SKPWsz26/Gemini-Generated-Image-9lja669lja669lja.png',
+      'https://i.postimg.cc/ZRy6yKp1/Gemini-Generated-Image-e4fjbve4fjbve4fj.png',
+      'https://i.postimg.cc/RVmwNmFD/Gemini-Generated-Image-jkv9bsjkv9bsjkv9.png'
     ],
-    // Row 2 - Middle row with tech giants (fastest moving)
     [
-      { icon: SiSony, name: "SONY", size: "text-5xl" },
-      { icon: SiHyundai, name: "HYUNDAI", size: "text-5xl" },
-      { icon: SiGoogle, name: "Google", size: "text-5xl" },
-      { icon: SiApple, name: "Apple", size: "text-5xl" },
-      { icon: FaAward, name: "WEBBY AWARDS", size: "text-5xl" },
-      { icon: SiSony, name: "SONY", size: "text-5xl" },
-      { icon: SiHyundai, name: "HYUNDAI", size: "text-5xl" },
-      { icon: SiGoogle, name: "Google", size: "text-5xl" },
-      { icon: SiApple, name: "Apple", size: "text-5xl" },
-      { icon: FaAward, name: "WEBBY AWARDS", size: "text-5xl" },
-    ],
-    // Row 3 - Bottom row with creative and tech
-    [
-      { icon: SiMeta, name: "META", size: "text-5xl" },
-      { icon: SiCocacola, name: "Coca-Cola", size: "text-5xl" },
-      { icon: FaGlobe, name: "awwwards.", size: "text-5xl" },
-      { icon: SiNvidia, name: "NVIDIA", size: "text-5xl" },
-      { icon: FaRocket, name: "AKQA", size: "text-5xl" },
-      { icon: SiMeta, name: "META", size: "text-5xl" },
-      { icon: SiCocacola, name: "Coca-Cola", size: "text-5xl" },
-      { icon: FaGlobe, name: "awwwards.", size: "text-5xl" },
-      { icon: SiNvidia, name: "NVIDIA", size: "text-5xl" },
-      { icon: FaRocket, name: "AKQA", size: "text-5xl" },
+      'https://i.postimg.cc/brck0cRd/Gemini-Generated-Image-ng572cng572cng57.png',
+      'https://i.postimg.cc/25yQrx6j/Gemini-Generated-Image-pl53hdpl53hdpl53.png',
+      'https://i.postimg.cc/WpgMNz2Z/Gemini-Generated-Image-rw1o3vrw1o3vrw1o.png',
+      'https://i.postimg.cc/prf8qG0C/Gemini-Generated-Image-z90gnz90gnz90gnz.png',
+      'https://i.postimg.cc/P52Wg7dF/image-1.png',
+      'https://i.postimg.cc/brck0cRd/Gemini-Generated-Image-ng572cng572cng57.png',
+      'https://i.postimg.cc/25yQrx6j/Gemini-Generated-Image-pl53hdpl53hdpl53.png',
+      'https://i.postimg.cc/WpgMNz2Z/Gemini-Generated-Image-rw1o3vrw1o3vrw1o.png',
+      'https://i.postimg.cc/prf8qG0C/Gemini-Generated-Image-z90gnz90gnz90gnz.png',
+      'https://i.postimg.cc/P52Wg7dF/image-1.png'
     ]
   ];
 
   useEffect(() => {
-    const section = sectionRef.current;
     const marquee1 = marquee1Ref.current;
     const marquee2 = marquee2Ref.current;
-    const marquee3 = marquee3Ref.current;
+    if (!marquee1 || !marquee2) return;
 
-    if (!section || !marquee1 || !marquee2 || !marquee3) return;
+    gsap.set([marquee1, marquee2], { xPercent: 0 });
 
-    // Set initial positions
-    gsap.set([marquee1, marquee2, marquee3], { xPercent: 0 });
-
-    // Simple, smooth continuous animations without scroll interference
     const baseAnim1 = gsap.to(marquee1, {
       xPercent: -50,
       duration: 30,
@@ -98,121 +58,84 @@ const ScrollMarquee = () => {
 
     const baseAnim2 = gsap.to(marquee2, {
       xPercent: -50,
-      duration: 20,
+      duration: 22,
       ease: 'none',
       repeat: -1
     });
 
-    const baseAnim3 = gsap.to(marquee3, {
-      xPercent: -50,
-      duration: 25,
-      ease: 'none',
-      repeat: -1
-    });
-
-    // Cleanup function
     return () => {
       baseAnim1.kill();
       baseAnim2.kill();
-      baseAnim3.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
-  const ClientLogo = ({ icon: Icon, name, size }) => (
-    <div className="flex items-center gap-4 px-8 py-2 hover:scale-105 transition-transform duration-200">
-      <Icon className={`${size} text-white opacity-90 hover:opacity-100 transition-opacity duration-200`} />
-      <span className="text-white font-light tracking-wider whitespace-nowrap text-sm md:text-base">
-        {name}
-      </span>
+  const ClientLogo = ({ src, alt }) => (
+    <div className="flex items-center px-10 py-3 hover:scale-105 transition-transform duration-200">
+      <div className="relative w-36 h-16 md:w-48 md:h-20 lg:w-56 lg:h-24 opacity-90 hover:opacity-100 transition-opacity duration-200">
+        <Image
+          src={src}
+          alt={alt || 'Client logo'}
+          fill
+          sizes="(max-width:768px) 150px, (max-width:1024px) 200px, 240px"
+          style={{ objectFit: 'contain' }}
+          draggable={false}
+        />
+      </div>
     </div>
   );
 
   return (
-    <>
-      {/* Main Marquee Section */}
-      <section 
-        ref={sectionRef}
-        className="relative bg-black py-20 md:py-32 overflow-hidden"
-      >
-        {/* Section Header */}
-        <div className="text-center mb-16 md:mb-24 px-4">
-          <h2
-            className="text-3xl md:text-5xl lg:text-6xl font-thin text-white mb-6 tracking-wide font-bruno-ace-sc"
-            style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}
+    <section
+      ref={sectionRef}
+      className="relative bg-black py-20 md:py-32 overflow-hidden"
+    >
+      <div className="text-center mb-16 md:mb-24 px-4">
+        <h2
+          className="text-3xl md:text-5xl lg:text-6xl font-thin text-white mb-6 tracking-wide font-bruno-ace-sc"
+          style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}
+        >
+          CLIENTS WE WORK WITH
+        </h2>
+        <p
+          className="text-sm md:text-base text-gray-400 tracking-widest uppercase font-century-gothic"
+          style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
+        >
+          We can&apos;t wait to show you what we can do for you and your brand
+        </p>
+      </div>
+
+      {/* Only two marquee rows now */}
+      <div className="relative h-72 md:h-80 flex flex-col justify-between">
+        {/* Row 1 */}
+        <div className="flex items-center h-32 md:h-36 overflow-hidden">
+          <div
+            ref={marquee1Ref}
+            className="flex items-center gap-12 md:gap-20 whitespace-nowrap"
+            style={{ willChange: 'transform' }}
           >
-            CLIENTS WE WORK WITH
-          </h2>
-          <p
-            className="text-sm md:text-base text-gray-400 tracking-widest uppercase font-century-gothic"
-            style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
-          >
-            We can&apos;t wait to show you what we can do for you and your brand
-          </p>
-        </div>
-
-        {/* Marquee Container */}
-        <div className="relative h-80 md:h-96 flex flex-col justify-between">
-          {/* Row 1 - Top row (slow) */}
-          <div className="flex items-center h-24 md:h-28 overflow-hidden">
-            <div 
-              ref={marquee1Ref}
-              className="flex items-center gap-8 md:gap-16 whitespace-nowrap"
-              style={{ willChange: 'transform' }}
-            >
-              {/* duplicate the items to create seamless loop */}
-              {[...clientRows[0], ...clientRows[0]].map((client, index) => (
-                <ClientLogo 
-                  key={`r1-${index}`} 
-                  icon={client.icon}
-                  // name={client.name}
-                  size={client.size}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Row 2 - Middle row (fastest) */}
-          <div className="flex items-center h-28 md:h-32 overflow-hidden">
-            <div 
-              ref={marquee2Ref}
-              className="flex items-center gap-8 md:gap-16 whitespace-nowrap"
-              style={{ willChange: 'transform' }}
-            >
-              {[...clientRows[1], ...clientRows[1]].map((client, index) => (
-                <ClientLogo 
-                  key={`r2-${index}`} 
-                  icon={client.icon}
-                  // name={client.name}
-                  size={client.size}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Row 3 - Bottom row (medium) */}
-          <div className="flex items-center h-24 md:h-28 overflow-hidden">
-            <div 
-              ref={marquee3Ref}
-              className="flex items-center gap-8 md:gap-16 whitespace-nowrap"
-              style={{ willChange: 'transform' }}
-            >
-              {[...clientRows[2], ...clientRows[2]].map((client, index) => (
-                <ClientLogo 
-                  key={`r3-${index}`} 
-                  icon={client.icon}
-                  // name={client.name}
-                  size={client.size}
-                />
-              ))}
-            </div>
+            {[...imageRows[0], ...imageRows[0]].map((src, index) => (
+              <ClientLogo key={`r1-${index}`} src={src} />
+            ))}
           </div>
         </div>
 
-        {/* Bottom decoration */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
-      </section>
-    </>
+        {/* Row 2 */}
+        <div className="flex items-center h-32 md:h-36 overflow-hidden">
+          <div
+            ref={marquee2Ref}
+            className="flex items-center gap-12 md:gap-20 whitespace-nowrap"
+            style={{ willChange: 'transform' }}
+          >
+            {[...imageRows[1], ...imageRows[1]].map((src, index) => (
+              <ClientLogo key={`r2-${index}`} src={src} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+    </section>
   );
 };
 
