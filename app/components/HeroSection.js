@@ -240,7 +240,8 @@ function WaveNavLink({ href, text }) {
                     fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                     textShadow: "0 4px 20px rgba(0,0,0,0.08)",
                     letterSpacing: "0.3em",
-                    color: "#000",
+                    color: "#fff",
+                    mixBlendMode: "difference",
                     fontSize: "clamp(2rem, 9vw, 15.2rem)",
                     left: "50%",
                     transform: "translateX(-50%)",
@@ -373,7 +374,7 @@ function WaveNavLink({ href, text }) {
                     zIndex: 0,
                     objectFit: "cover",
                     objectPosition: "top",
-                    transform: "scale(1.08)",
+                    transform: "scale(1.00)",
                     backfaceVisibility: "hidden",
                     perspective: 1000,
                     willChange: "transform",
@@ -385,7 +386,7 @@ function WaveNavLink({ href, text }) {
                   disableRemotePlayback
                   controlsList="nodownload nofullscreen noremoteplayback"
                 >
-                  <source src="/BGVideo.mp4" type="video/mp4" />
+                  <source src="/DesertBG.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
