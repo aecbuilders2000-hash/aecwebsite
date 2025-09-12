@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const ScrollMarquee = () => {
+const ClientsMarquee = () => {
   const sectionRef = useRef(null);
   const marquee1Ref = useRef(null);
   const marquee2Ref = useRef(null);
@@ -139,4 +139,4 @@ const ScrollMarquee = () => {
   );
 };
 
-export default ScrollMarquee;
+export default ClientsMarquee;

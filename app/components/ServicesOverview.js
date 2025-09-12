@@ -251,7 +251,7 @@ export default function ServicesOverview() {
                     
                     {/* Curtain reveal text overlay */}
                     <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
-                      <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4" 
+                      <h3 className="font-bruno-ace-sc font-bold text-black text-center mb-4" 
                           style={{ 
                             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                             fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)' 
@@ -330,7 +330,7 @@ export default function ServicesOverview() {
                   <span className="text-white font-bold text-lg">{service.id}</span>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                  <h3 className="font-bruno-ace-sc font-bold text-white mb-1" 
+                  <h3 className="font-bruno-ace-sc font-bold text-black mb-1" 
                       style={{ 
                         fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                         fontSize: 'clamp(1rem, 1.5vw, 1.3rem)' 

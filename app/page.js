@@ -10,6 +10,7 @@ import ServicesOverview from "./components/ServicesOverview";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
 import CareerForm from "./components/CareerForm";
+import TestinomialSection from "./components/TestinomialSection";
 
 export default function Home() {
   useLenis();
@@ -40,6 +41,7 @@ export default function Home() {
       <ServicesSection />
       <ClientsSection />
       <ProjectsSection />
+      <TestinomialSection />
       <ContactUs />
     </div>
   );
