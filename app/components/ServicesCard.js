@@ -168,7 +168,7 @@ const CardServices = ({
                                 fill
                                 sizes="18.75vw"
                                 style={{
-                                    objectFit: "cover",
+                                    objectFit: "contain",
                                     objectPosition: "center center",
                                     background: '#fff',
                                 }}

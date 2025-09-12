@@ -21,14 +21,11 @@ const WaveNavLink = ({ href, text, homeAnchor = false }) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (homeAnchor) {
-      // Navigate to home with hash so sections scroll
       router.push('/' + href);
     } else if (href.startsWith('#')) {
       const el = document.getElementById(href.slice(1));
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-      else router.push('/' + href); // fallback
-    } else {
-      router.push(href);
+      else router.push('/' + href);
     }
   };
 
@@ -36,19 +33,29 @@ const WaveNavLink = ({ href, text, homeAnchor = false }) => {
     <a
       href={href}
       ref={linkRef}
-      onMouseEnter={handleMouseEnter}
-      onClick={handleClick}
       className="select-none"
       style={{
         fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-        fontWeight: 600,
+        fontWeight: 400,
         fontSize: 'clamp(0.85rem,1.6vw,1rem)',
-        color: '#000',
-        letterSpacing: '0.12em',
-        textDecoration: 'none',
-        display: 'inline-block',
+        letterSpacing: '0.08em',
+        color: '#222',
         cursor: 'pointer',
+        transition: 'color 0.2s',
+        opacity: 1,
+        textDecoration: 'none',
+        padding: '0.2em 0.6em',
+        borderRadius: '0.5em',
+        background: 'transparent',
+        outline: 'none',
+        border: 'none',
+        boxShadow: 'none',
+        position: 'relative',
+        zIndex: 1,
+        display: 'inline-block',
       }}
+      onMouseEnter={handleMouseEnter}
+      onClick={handleClick}
     >
       {letters.map((c, i) => (
         <span key={i} className="wave-letter" style={{ display: 'inline-block', pointerEvents: 'none', willChange: 'transform' }}>

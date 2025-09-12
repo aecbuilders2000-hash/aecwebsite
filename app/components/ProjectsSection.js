@@ -881,35 +881,34 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
 
 const mosaicImages = [
   // Add your image URLs here
-  "https://i.postimg.cc/VktsJ4fL/K13-3.webp",
+  "https://i.postimg.cc/NfTDPLRM/K29-7.webp",
+  "https://i.postimg.cc/HLmxmvJ5/K46-4.webp",
+  "https://i.postimg.cc/85tstdzv/K47-2.webp",
+  "https://i.postimg.cc/fRDc2Cw2/K27-5.webp",
+  "https://i.postimg.cc/BQtP7zDn/K50-3.webp",
+  "https://i.postimg.cc/VNBYR60x/K12-3.webp",
+  "https://i.postimg.cc/gk68k50B/K31-1.webp",
+  "https://i.postimg.cc/zB6Yz3dM/K62-1.webp",
+  "https://i.postimg.cc/yNCPHKXP/K35-1.webp",
+  "https://i.postimg.cc/T3sPL2HV/K23-3.webp",
+  "https://i.postimg.cc/854z151R/K29-5.webp",
+  "https://i.postimg.cc/VvhqHPkX/K33-8.webp",
+  "https://i.postimg.cc/QdLwYRPQ/K58.jpg",
+  "https://i.postimg.cc/nLnHgs5G/K43-4.webp",
+  "https://i.postimg.cc/Vk2CyF1P/K1-4.webp",
+  "https://i.postimg.cc/DZNV5mL6/K66-1.webp",
+  "https://i.postimg.cc/Nf5jcBZX/K13-4.webp",
+  "https://i.postimg.cc/fL31rDwv/K60-2.webp",
+  "https://i.postimg.cc/wxnFVDyZ/K29-2.webp",
   "https://i.postimg.cc/TwfPMmX2/K26-2.webp",
-  "https://i.postimg.cc/5twtRgTk/K29-8.webp",
-  "https://i.postimg.cc/qRJpZT8z/K11-1.webp",
-  "https://i.postimg.cc/vTmHDsBp/K24-4.webp",
-  "https://i.postimg.cc/02b6jDHW/ASHWA-01-3.png",
-  "https://i.postimg.cc/254LmYXC/ASHWA-01-4.png",
-  "https://i.postimg.cc/sXsQgLt7/ASHWA-01-5.png",
-  "https://i.postimg.cc/FRpfdZ4q/ASHWA-01-6.png",
-  "https://i.postimg.cc/m2D990hS/ASHWA-01-7.png",
-  "https://i.postimg.cc/QxyTJ0TZ/ASHWA-01-8.png",
-  "https://i.postimg.cc/gj0xvZc0/ASHWA-01-9.png",
-  "https://i.postimg.cc/KcQLRZcz/ASHWA-01-10.png",
-  "https://i.postimg.cc/MGkfhH5s/ASHWA-01-11.png",
-  "https://i.postimg.cc/C5vft4rD/ASHWA-34-1.png",
-  "https://i.postimg.cc/2yT4YYy1/ASHWA-34-2.png",
-  "https://i.postimg.cc/13bDsJmr/ASHWA-34-3.png",
-  "https://i.postimg.cc/NjKR3Wc0/ASHWA-34-4.png",
-  "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
-  "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
-  "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
+  "https://i.postimg.cc/bJK4XWrf/K59-4.webp",
+  "https://i.postimg.cc/k4Tq0pcw/K1-2.webp",
+  "https://i.postimg.cc/mrhFJ6Kw/K26-3.webp",
+  "https://i.postimg.cc/5tgr0jtg/K64-4.webp",
+  "https://i.postimg.cc/jdG6HT9b/K33-3.webp",
+  "https://i.postimg.cc/g0j7xm6P/K59-3.webp",
+  "https://i.postimg.cc/pd5g0PVJ/K39-2.webp",
   "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
-  "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
-  "https://i.postimg.cc/25vh6h3R/ASHWA-34-10.png",
-  "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
-  "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
-  "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
-  "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
-  "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
   // Add more if needed
 ];
 
@@ -919,8 +918,8 @@ function getRandomInt(min, max) {
 
 const ProjectsMosaicPage = () => {
   const [sideItems, setSideItems] = useState([[], [], [], []]);
-  // 1. State to track the source of the hovered image
   const [hoveredSrc, setHoveredSrc] = useState(null);
+  const [failedImages, setFailedImages] = useState([]);
 
   useEffect(() => {
     // This useEffect logic for calculating positions remains the same
@@ -941,41 +940,40 @@ const ProjectsMosaicPage = () => {
       usedImages.slice(imagesPerSide * 3),
     ];
 
-    const newSideItems = sides.map((sideImgs, i) =>
-      sideImgs.map((src, idx) => {
-        let w, h;
-        const shapeType = getRandomInt(0, 2);
-
-        if (shapeType === 0) {
-          w = getRandomInt(20, 28);
-          h = getRandomInt(12, 18);
-        } else if (shapeType === 1) {
-          w = getRandomInt(12, 18);
-          h = getRandomInt(20, 28);
-        } else {
-          const size = getRandomInt(15, 22);
-          w = size;
-          h = size;
-        }
-
-        const zIndex = getRandomInt(1, 5);
-
-        if (i === 0) {
-          const left = (idx * (100 - w * overlap)) / sideImgs.length;
-          return { src, w, h, left, top: paddingTop, zIndex };
-        } else if (i === 1) {
-          const top = (idx * (100 - h * overlap)) / sideImgs.length;
-          return { src, w, h, left: 100 - w, top, zIndex };
-        } else if (i === 2) {
-          const left = (idx * (100 - w * overlap)) / sideImgs.length;
-          return { src, w, h, left, top: 100 - h, zIndex };
-        } else {
-          const top = (idx * (100 - h * overlap)) / sideImgs.length;
-          return { src, w, h, left: 0, top, zIndex };
-        }
-      })
-    );
-    setSideItems(newSideItems);
+        const newSideItems = sides.map((sideImgs, i) =>
+          sideImgs.map((src, idx) => {
+            let w, h;
+            const shapeType = getRandomInt(0, 2);
+            if (shapeType === 0) {
+              w = getRandomInt(20, 28);
+              h = getRandomInt(12, 18);
+            } else if (shapeType === 1) {
+              w = getRandomInt(12, 18);
+              h = getRandomInt(20, 28);
+            } else {
+              const size = getRandomInt(15, 22);
+              w = size;
+              h = size;
+            }
+            const zIndex = getRandomInt(1, 5);
+            // Hide if image failed to load
+            if (failedImages.includes(src)) return null;
+            if (i === 0) {
+              const left = (idx * (100 - w * overlap)) / sideImgs.length;
+              return { src, w, h, left, top: paddingTop, zIndex };
+            } else if (i === 1) {
+              const top = (idx * (100 - h * overlap)) / sideImgs.length;
+              return { src, w, h, left: 100 - w, top, zIndex };
+            } else if (i === 2) {
+              const left = (idx * (100 - w * overlap)) / sideImgs.length;
+              return { src, w, h, left, top: 100 - h, zIndex };
+            } else {
+              const top = (idx * (100 - h * overlap)) / sideImgs.length;
+              return { src, w, h, left: 0, top, zIndex };
+            }
+          })
+        );
+        setSideItems(newSideItems);
   }, []);
 
   return (
