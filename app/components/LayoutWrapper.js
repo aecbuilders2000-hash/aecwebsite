@@ -7,7 +7,7 @@ export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
   const isHome = pathname === '/' || pathname === '';
   return (
-    <div className={isHome ? '' : 'pt-[12vh] md:pt-[14vh] transition-[padding] duration-300'}>
+    <div className={isHome ? '' : 'pt-[8vh] transition-[padding] duration-300'}>
       {children}
     </div>
   );
