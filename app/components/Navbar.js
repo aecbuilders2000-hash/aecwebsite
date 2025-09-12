@@ -65,35 +65,34 @@ export default function Navbar() {
   if (isHome) return null; // Hide on homepage
 
   return (
-    <div className="fixed inset-x-0 top-0 z-[110] pointer-events-none">
-      {/* Brand (matches final compact COLLECTIVE state) */}
+    <header
+      className="fixed top-0 left-0 w-full z-[110] flex items-center justify-between"
+      style={{
+        background: 'rgba(255,255,255,0.18)',
+        boxShadow: '0 4px 32px rgba(0,0,0,0.08)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(255,255,255,0.25)',
+        padding: '0.75rem 2.5vw'
+      }}
+    >
+      {/* Brand */}
       <div
-        className="pointer-events-auto"
         style={{
-          position: 'fixed',
-            top: '2vh', // Shift up
-            left: '2.5vw',
-            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-            fontSize: 'clamp(1.2rem, 2.5vw, 2rem)',
-            letterSpacing: '0.3em',
-            mixBlendMode: 'difference',
-            color: '#000',
-            zIndex: 111,
-            userSelect: 'none'
+          fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+          fontSize: 'clamp(1.1rem, 2.2vw, 1.8rem)',
+          letterSpacing: '0.3em',
+          color: '#000',
+          userSelect: 'none'
         }}
       >
         COLLECTIVE
       </div>
 
-      {/* Nav links bar */}
+      {/* Navigation */}
       <nav
-        className="pointer-events-auto flex items-center justify-end gap-8 md:gap-12 pr-[2.5vw]"
-        style={{
-          position: 'fixed',
-          top: '2vh', // Shift up
-          right: '0',
-          fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif'
-        }}
+        className="flex items-center gap-8 md:gap-12"
+        style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
       >
         <WaveNavLink href="/" text="HOME" />
         <WaveNavLink href="#projects-section" text="PROJECTS" homeAnchor />
@@ -101,6 +100,6 @@ export default function Navbar() {
         <WaveNavLink href="#clients" text="CLIENTS" homeAnchor />
         <WaveNavLink href="/careers" text="CAREERS" />
       </nav>
-    </div>
+    </header>
   );
 }

@@ -267,10 +267,10 @@ const CardServices = ({
                                         className="bg-transparent font-poppins font-light whitespace-nowrap transition-all duration-300 ease-in-out"
                                         style={{
                                             fontFamily: 'var(--font-poppins), sans-serif',
-                                            color: '#000000', // Always black
                                             fontSize: 'clamp(1rem, 1.5vw, 1.67rem)',
                                             letterSpacing: '0.03em', // Decreased letter spacing
                                             fontWeight: '400',
+                                            color: isHovered ? '#000' : '#2b2b2b',
                                             transform: isHovered ? 'translateX(clamp(1.5rem, 3vw, 2.5rem))' : 'translateX(0)',
                                         }}
                                     >
