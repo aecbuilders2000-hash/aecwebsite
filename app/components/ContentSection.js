@@ -289,7 +289,7 @@ export default function ContentSection() {
       >
         {/* Top Row - Left and Right Boxes */}
         <div
-          className="flex absolute left-0 right-0 box-border m-0"
+          className="flex absolute left-0 right-0 box-border m-0 items-center justify-center"
           style={{
             top: "12.5vh", // 12.5% from top of screen
             width: "100%",
@@ -297,6 +297,8 @@ export default function ContentSection() {
             paddingLeft: "2.5vw", // Left padding instead of left margin
             paddingRight: "2.5vw", // Right padding instead of right margin
             gap: "clamp(1rem, 2.5vw, 2rem)", // Gap between left and right boxes
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
 
@@ -305,9 +307,10 @@ export default function ContentSection() {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
-              perspective: '1000px',
-              transform: 'translateY(5vh)', // Shift down
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              perspective: '1000px'
             }}
           >
             <div
@@ -387,13 +390,14 @@ export default function ContentSection() {
           </div>
           {/* Box 2: Right - Text Paragraph */}
           <div
-            className="flex items-center justify-end h-full" // vertically center content
+            className="flex items-center justify-center h-full" // vertically center content
             style={{
               width: "50vw", // Match left side width
               paddingRight: "1.25vw", // Align with navbar spacing
               position: "relative", // Remove absolute positioning
               boxSizing: "border-box",
               zIndex: 5,
+              height: "100%"
             }}
           >
             <div
