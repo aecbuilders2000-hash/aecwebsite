@@ -140,6 +140,7 @@ export default function ServicesOverview() {
 
   return (
     <section
+      id="services-overview-section"
       ref={sectionRef}
       className="relative bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 overflow-hidden"
       style={{
@@ -247,7 +248,6 @@ export default function ServicesOverview() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                     
                     {/* Curtain reveal text overlay */}
                     <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
@@ -308,7 +308,6 @@ export default function ServicesOverview() {
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 
                 {/* Curtain reveal text overlay */}
                 <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">

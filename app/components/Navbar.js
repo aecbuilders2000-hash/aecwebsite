@@ -71,7 +71,7 @@ export default function Navbar() {
         className="pointer-events-auto"
         style={{
           position: 'fixed',
-            top: '5vh',
+            top: '2vh', // Shift up
             left: '2.5vw',
             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
             fontSize: 'clamp(1.2rem, 2.5vw, 2rem)',
@@ -90,7 +90,7 @@ export default function Navbar() {
         className="pointer-events-auto flex items-center justify-end gap-8 md:gap-12 pr-[2.5vw]"
         style={{
           position: 'fixed',
-          top: '5vh',
+          top: '2vh', // Shift up
           right: '0',
           fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif'
         }}

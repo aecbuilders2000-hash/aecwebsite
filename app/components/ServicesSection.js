@@ -184,6 +184,7 @@ export default function ServicesSection() {
 
   return (
     <section
+      id="services-section"
       ref={sectionRef}
       className="relative overflow-hidden bg-gray-100 w-screen"
       style={{

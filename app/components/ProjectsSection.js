@@ -152,9 +152,9 @@ const IntroScene = React.forwardRef(
     // --- START: SLIDESHOW LOGIC ---
     // Use three different images for the GSAP slideshow
     const slideshowImages = [
-      "/ModernVilla.png",
-      "/SanBridge.png",
-      "/Gemini_Generated_Image_yba538yba538yba5 1.png",
+      "/K6 (3).webp",
+      "/K17 (1).webp",
+      "/K12 (3).webp",
     ];
     const imageSet = [...slideshowImages, slideshowImages[0]];
 
@@ -364,14 +364,14 @@ const AboutScene = () => {
   // --- START: Slideshow Logic ---
   // Define two separate image sets. They MUST have the same number of images.
   const mainSlideshowImages = [
-    "/ModernVilla.png",
-    "/SanBridge.png",
-    "/Gemini_Generated_Image_yba538yba538yba5 1.png",
+    "/K13 (3).webp",
+    "/K26 (2).webp",
+    "/K29 (8).webp",
   ];
   const collageSlideshowImages = [
-    "/SanBridge.png",
-    "/Gemini_Generated_Image_yba538yba538yba5 1.png",
-    "/ModernVilla.png",
+    "/K11 (1).webp",
+    "/K13 (3).webp",
+    "/K24 (4).webp",
   ];
 
   // Create the looping image sets for rendering
@@ -964,6 +964,7 @@ export default function ProjectsSection() {
 
   return (
     <section
+      id="projects-section"
       ref={sectionRef}
       className="relative bg-gray-2 text-gray-9 overflow-hidden"
       style={{ height: "100vh", width: "100vw" }}

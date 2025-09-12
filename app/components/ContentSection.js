@@ -279,6 +279,7 @@ export default function ContentSection() {
       {/* Main Content (centered) */}
       {/* Main Content Section */}
       <section
+        id="content-section"
         className="w-full min-h-screen bg-white overflow-hidden flex flex-col box-border"
         style={{
           paddingTop: "5vh", // 5vh gap from navbar
@@ -306,7 +307,7 @@ export default function ContentSection() {
               flexDirection: "column",
               alignItems: "flex-start",
               perspective: '1000px',
-              transform: 'translateY(-5vh)', // Move up slightly
+              transform: 'translateY(5vh)', // Shift down
             }}
           >
             <div
@@ -391,7 +392,7 @@ export default function ContentSection() {
               height: "100%",
               position: "absolute",
               right: "2.5vw", // Position from right edge to align with navbar
-              top: "0", // Align with top of container
+              top: "7vh", // Shift down
               margin: 0, // Remove any default margin
               padding: 0, // Remove any default padding
               boxSizing: "border-box",
@@ -448,6 +449,7 @@ export default function ContentSection() {
 
         {/* Box 3: Bottom - We are Collective and Stats */}
         <div
+          id="content-section-details"
           style={{
             position: "absolute",
             bottom: "0",
