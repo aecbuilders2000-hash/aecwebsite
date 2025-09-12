@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from '../ui/Button';
 import { countries } from '../constants/CountryList';
 import ArrowButton from '../ui/ArrowButton';
 
@@ -10,12 +9,6 @@ const ContactForm = () => {
         phone: '',
         message: ''
     });
-
-    const services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"];
-
-    // index 1 selected by default
-    const [selected, setSelected] = useState(services[1]);
-    const [hoveredIndex, setHoveredIndex] = useState(1);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,10 +22,10 @@ const ContactForm = () => {
         countries.find((c) => c.value === "IN") || countries[0] // Default India
     );
 
-    const handleSubmit = () => {
-        console.log('Form submitted:', formData);
-        // Handle form submission here
-    };
+    // const handleSubmit = () => {
+    //     console.log('Form submitted:', formData);
+    //     // Handle form submission here
+    // };
 
     return (
     <div id="contact-us-section" className="min-h-screen bg-gray-50 flex items-center justify-center p-8">

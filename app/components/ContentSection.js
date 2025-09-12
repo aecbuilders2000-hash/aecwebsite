@@ -2,7 +2,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -280,7 +279,7 @@ export default function ContentSection() {
       {/* Main Content Section */}
       <section
         id="content-section"
-        className="w-full min-h-screen bg-white overflow-hidden flex flex-col box-border"
+        className="w-full min-h-screen overflow-hidden flex flex-col box-border"
         style={{
           paddingTop: "5vh", // 5vh gap from navbar
           paddingLeft: "2.5vw", // 2.5% from left
@@ -289,7 +288,7 @@ export default function ContentSection() {
       >
         {/* Top Row - Left and Right Boxes */}
         <div
-          className="flex absolute left-0 right-0 box-border m-0"
+          className="flex flex-col md:flex-row absolute left-0 justify-between items-center right-0 box-border m-0"
           style={{
             top: "12.5vh", // 12.5% from top of screen
             width: "100%",
@@ -307,7 +306,7 @@ export default function ContentSection() {
               flexDirection: "column",
               alignItems: "flex-start",
               perspective: '1000px',
-              transform: 'translateY(5vh)', // Shift down
+              // transform: 'translateY(5vh)', // Shift down
             }}
           >
             <div

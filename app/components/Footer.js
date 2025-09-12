@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    FaInstagram, FaLinkedin, FaFacebookF, FaTwitter, FaYoutube
+    FaInstagram, FaLinkedin, FaFacebookF, FaYoutube
 } from 'react-icons/fa'; // Example for FontAwesome icons
 import ArrowButton from '../ui/ArrowButton';
 
