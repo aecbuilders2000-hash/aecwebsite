@@ -387,36 +387,28 @@ export default function ContentSection() {
           </div>
           {/* Box 2: Right - Text Paragraph */}
           <div
+            className="flex items-center justify-end h-full" // vertically center content
             style={{
-              width: "50vw", // Reduced to 50% of screen
-              height: "100%",
-              position: "absolute",
-              right: "2.5vw", // Position from right edge to align with navbar
-              top: "7vh", // Shift down
-              margin: 0, // Remove any default margin
-              padding: 0, // Remove any default padding
+              width: "50vw", // Match left side width
+              paddingRight: "1.25vw", // Align with navbar spacing
+              position: "relative", // Remove absolute positioning
               boxSizing: "border-box",
-              zIndex: 5, // Lower z-index than left box to avoid overlap
+              zIndex: 5,
             }}
           >
             <div
               ref={rightTextRef}
-              className="absolute font-poppins text-gray-700 text-right leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
+              className="font-poppins text-gray-700 text-right leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
               style={{
                 fontFamily: 'var(--font-poppins), sans-serif',
-                top: "10vh",
-                right: "1.25vw",
-                left: "0",
                 fontSize: 'clamp(1rem, 2.1vw, 1.25rem)',
+                maxWidth: '100%',
               }}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
-                
                 const allLetters = Array.from(e.currentTarget.querySelectorAll('.bounce-letter'));
-                
-                // Throttle the effect to prevent too many triggers
                 if (Date.now() - (lastHoveredIndex.current || 0) > 50) {
                   lastHoveredIndex.current = Date.now();
                   createWaveEffect(0, allLetters, mouseX, mouseY, rect);

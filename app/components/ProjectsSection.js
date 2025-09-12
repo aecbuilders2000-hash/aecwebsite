@@ -364,14 +364,14 @@ const AboutScene = () => {
   // --- START: Slideshow Logic ---
   // Define two separate image sets. They MUST have the same number of images.
   const mainSlideshowImages = [
-    "/K13 (3).webp",
-    "/K26 (2).webp",
-    "/K29 (8).webp",
+    "https://i.postimg.cc/VktsJ4fL/K13-3.webp",
+    "https://i.postimg.cc/TwfPMmX2/K26-2.webp",
+    "https://i.postimg.cc/5twtRgTk/K29-8.webp",
   ];
   const collageSlideshowImages = [
-    "/K11 (1).webp",
-    "/K13 (3).webp",
-    "/K24 (4).webp",
+    "https://i.postimg.cc/qRJpZT8z/K11-1.webp",
+    "https://i.postimg.cc/VktsJ4fL/K13-3.webp",
+    "https://i.postimg.cc/vTmHDsBp/K24-4.webp",
   ];
 
   // Create the looping image sets for rendering
