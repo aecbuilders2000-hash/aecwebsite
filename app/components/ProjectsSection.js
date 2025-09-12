@@ -1,90 +1,68 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
-import ArrowButton from "../ui/ArrowButton";
+// Define projects array
+  const projects = [
+    {
+      title: "IVORY ISLE",
+      location: "Chandigarh, India",
+      imageUrl: "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
+    },
+    {
+      title: "ONYX OUTLOOK",
+      location: "Vadodara, India",
+      imageUrl: "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
+    },
+    {
+      title: "QUARTZ QUARTERS",
+      location: "Nashik, India",
+      imageUrl: "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
+    },
+    {
+      title: "GRANITE GROVE",
+      location: "Coimbatore, India",
+      imageUrl: "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
+    },
+    {
+      title: "MARBLE MANOR",
+      location: "Mysore, India",
+      imageUrl: "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
+    },
+    {
+      title: "LIMESTONE LODGE",
+      location: "Vijayawada, India",
+      imageUrl: "https://i.postimg.cc/25vh6h3R/ASHWA-34-10.png",
+    },
+    {
+      title: "SANDSTONE SANCTUARY",
+      location: "Guwahati, India",
+      imageUrl: "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
+    },
+    {
+      title: "BRICK BOULEVARD",
+      location: "Nagpur, India",
+      imageUrl: "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
+    },
+    {
+      title: "TERRACOTTA TERRACE",
+      location: "Patna, India",
+      imageUrl: "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
+    },
+    {
+      title: "CLAY COURTYARD",
+      location: "Agra, India",
+      imageUrl: "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
+    },
+    {
+      title: "CONCRETE CITADEL",
+      location: "Solapur, India",
+      imageUrl: "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
+    },
+  ];
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import ArrowButton from '../ui/ArrowButton';
+import gsap from 'gsap';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// --- DATA ---
-const projects = [
-  // {
-  //   title: "THE MARINA",
-  //   location: "Surat, India",
-  //   imageUrl: "https://i.postimg.cc/9XxRcJ1w/ASHWA-01-1.png",
-  // },
-  // {
-  //   title: "SKYLINE TOWERS",
-  //   location: "Mumbai, India",
-  //   imageUrl: "https://i.postimg.cc/Fzn7GH1V/ASHWA-01-2.png",
-  // },
-  // {
-  //   title: "EMERALD GARDENS",
-  //   location: "Bangalore, India",
-  //   imageUrl: "https://i.postimg.cc/02b6jDHW/ASHWA-01-3.png",
-  // },
-  // {
-  //   title: "CRYSTAL PALMS",
-  //   location: "Goa, India",
-  //   imageUrl: "https://i.postimg.cc/254LmYXC/ASHWA-01-4.png",
-  // },
-  // {
-  //   title: "GOLDEN HEIGHTS",
-  //   location: "Delhi, India",
-  //   imageUrl: "https://i.postimg.cc/sXsQgLt7/ASHWA-01-5.png",
-  // },
-  // {
-  //   title: "AZURE RESIDENCY",
-  //   location: "Chennai, India",
-  //   imageUrl: "https://i.postimg.cc/FRpfdZ4q/ASHWA-01-6.png",
-  // },
-  // {
-  //   title: "PLATINUM PLAZA",
-  //   location: "Hyderabad, India",
-  //   imageUrl: "https://i.postimg.cc/m2D990hS/ASHWA-01-7.png",
-  // },
-  // {
-  //   title: "DIAMOND DISTRICT",
-  //   location: "Pune, India",
-  //   imageUrl: "https://i.postimg.cc/QxyTJ0TZ/ASHWA-01-8.png",
-  // },
-  // {
-  //   title: "SAPPHIRE SQUARE",
-  //   location: "Ahmedabad, India",
-  //   imageUrl: "https://i.postimg.cc/gj0xvZc0/ASHWA-01-9.png",
-  // },
-  // {
-  //   title: "RUBY RETREAT",
-  //   location: "Kolkata, India",
-  //   imageUrl: "https://i.postimg.cc/KcQLRZcz/ASHWA-01-10.png",
-  // },
-  // {
-  //   title: "PEARL PAVILION",
-  //   location: "Jaipur, India",
-  //   imageUrl: "https://i.postimg.cc/MGkfhH5s/ASHWA-01-11.png",
-  // },
-  // {
-  //   title: "OPAL OASIS",
-  //   location: "Kochi, India",
-  //   imageUrl: "https://i.postimg.cc/C5vft4rD/ASHWA-34-1.png",
-  // },
-  // {
-  //   title: "JADE JUNCTION",
-  //   location: "Lucknow, India",
-  //   imageUrl: "https://i.postimg.cc/2yT4YYy1/ASHWA-34-2.png",
-  // },
-  // {
-  //   title: "CORAL COURT",
-  //   location: "Indore, India",
-  //   imageUrl: "https://i.postimg.cc/13bDsJmr/ASHWA-34-3.png",
-  // },
-  // {
-  //   title: "AMBER ARCADE",
-  //   location: "Bhopal, India",
-  //   imageUrl: "https://i.postimg.cc/NjKR3Wc0/ASHWA-34-4.png",
-  // },
-  // {
+// ...existing code...
   //   title: "IVORY ISLE",
   //   location: "Chandigarh, India",
   //   imageUrl: "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
@@ -139,7 +117,7 @@ const projects = [
   //   location: "Solapur, India",
   //   imageUrl: "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
   // }
-];
+// ...existing code...
 
 // --- TEXT CONTENT ---
 const firstParagraphText = `Collective AEC specializes in delivering exceptional commercial and residential projects, blending creativity with technical expertise. Our team of architects, designers, and project managers collaborates closely with clients to turn ideas into reality. From concept development to final execution, we handle every detail, ensuring each project is completed with precision, innovation, and a commitment to quality that sets us apart in the industry.`;
@@ -897,10 +875,196 @@ const ProjectsScene = ({ projects, verticalProjectsWidth }) => {
         })}
       </div>
 
-      <ContactUs />
     </>
   );
 };
+
+const mosaicImages = [
+  // Add your image URLs here
+  "https://i.postimg.cc/VktsJ4fL/K13-3.webp",
+  "https://i.postimg.cc/TwfPMmX2/K26-2.webp",
+  "https://i.postimg.cc/5twtRgTk/K29-8.webp",
+  "https://i.postimg.cc/qRJpZT8z/K11-1.webp",
+  "https://i.postimg.cc/vTmHDsBp/K24-4.webp",
+  "https://i.postimg.cc/02b6jDHW/ASHWA-01-3.png",
+  "https://i.postimg.cc/254LmYXC/ASHWA-01-4.png",
+  "https://i.postimg.cc/sXsQgLt7/ASHWA-01-5.png",
+  "https://i.postimg.cc/FRpfdZ4q/ASHWA-01-6.png",
+  "https://i.postimg.cc/m2D990hS/ASHWA-01-7.png",
+  "https://i.postimg.cc/QxyTJ0TZ/ASHWA-01-8.png",
+  "https://i.postimg.cc/gj0xvZc0/ASHWA-01-9.png",
+  "https://i.postimg.cc/KcQLRZcz/ASHWA-01-10.png",
+  "https://i.postimg.cc/MGkfhH5s/ASHWA-01-11.png",
+  "https://i.postimg.cc/C5vft4rD/ASHWA-34-1.png",
+  "https://i.postimg.cc/2yT4YYy1/ASHWA-34-2.png",
+  "https://i.postimg.cc/13bDsJmr/ASHWA-34-3.png",
+  "https://i.postimg.cc/NjKR3Wc0/ASHWA-34-4.png",
+  "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
+  "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
+  "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
+  "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
+  "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
+  "https://i.postimg.cc/25vh6h3R/ASHWA-34-10.png",
+  "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
+  "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
+  "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
+  "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
+  "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
+  // Add more if needed
+];
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const ProjectsMosaicPage = () => {
+  const [sideItems, setSideItems] = useState([[], [], [], []]);
+  // 1. State to track the source of the hovered image
+  const [hoveredSrc, setHoveredSrc] = useState(null);
+
+  useEffect(() => {
+    // This useEffect logic for calculating positions remains the same
+    const paddingTop = 10;
+    const overlap = 0.5;
+    const imageCountFactor = 0.85;
+
+    const usedImages = mosaicImages.slice(
+      0,
+      Math.ceil(mosaicImages.length * imageCountFactor)
+    );
+
+    const imagesPerSide = Math.ceil(usedImages.length / 4);
+    const sides = [
+      usedImages.slice(0, imagesPerSide),
+      usedImages.slice(imagesPerSide, imagesPerSide * 2),
+      usedImages.slice(imagesPerSide * 2, imagesPerSide * 3),
+      usedImages.slice(imagesPerSide * 3),
+    ];
+
+    const newSideItems = sides.map((sideImgs, i) =>
+      sideImgs.map((src, idx) => {
+        let w, h;
+        const shapeType = getRandomInt(0, 2);
+
+        if (shapeType === 0) {
+          w = getRandomInt(20, 28);
+          h = getRandomInt(12, 18);
+        } else if (shapeType === 1) {
+          w = getRandomInt(12, 18);
+          h = getRandomInt(20, 28);
+        } else {
+          const size = getRandomInt(15, 22);
+          w = size;
+          h = size;
+        }
+
+        const zIndex = getRandomInt(1, 5);
+
+        if (i === 0) {
+          const left = (idx * (100 - w * overlap)) / sideImgs.length;
+          return { src, w, h, left, top: paddingTop, zIndex };
+        } else if (i === 1) {
+          const top = (idx * (100 - h * overlap)) / sideImgs.length;
+          return { src, w, h, left: 100 - w, top, zIndex };
+        } else if (i === 2) {
+          const left = (idx * (100 - w * overlap)) / sideImgs.length;
+          return { src, w, h, left, top: 100 - h, zIndex };
+        } else {
+          const top = (idx * (100 - h * overlap)) / sideImgs.length;
+          return { src, w, h, left: 0, top, zIndex };
+        }
+      })
+    );
+    setSideItems(newSideItems);
+  }, []);
+
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        background: "#fff",
+        position: "relative",
+        overflow: "hidden",
+        boxSizing: "border-box",
+      }}
+    >
+      {sideItems.map((sideImgs, i) => (
+        <React.Fragment key={i}>
+          {sideImgs.map((item, idx) => {
+            // 2. Determine styles based on hover state
+            const isHovered = hoveredSrc === item.src;
+            const isAnyHovered = hoveredSrc !== null;
+
+            const style = {
+              position: "absolute",
+              left: `${item.left}vw`,
+              top: `${item.top}vh`,
+              width: `${item.w}vw`,
+              height: `${item.h}vh`,
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 4px 18px rgba(0,0,0,0.13)",
+              background: "#eee",
+              // --- Dynamic styles for the hover effect ---
+              transition: "transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease",
+              zIndex: isHovered ? 10 : item.zIndex,
+              transform: isHovered ? "scale(1.1)" : "scale(1)",
+              filter: isAnyHovered && !isHovered ? "grayscale(100%)" : "grayscale(0%)",
+              opacity: isAnyHovered && !isHovered ? "0.6" : "1",
+            };
+
+            return (
+              <div
+                key={item.src + idx}
+                style={style}
+                // 3. Add event handlers to update the state
+                onMouseEnter={() => setHoveredSrc(item.src)}
+                onMouseLeave={() => setHoveredSrc(null)}
+              >
+                <Image
+                  src={item.src}
+                  alt={`Mosaic ${idx}`}
+                  width={600}
+                  height={600}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            );
+          })}
+        </React.Fragment>
+      ))}
+      {/* Center text */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 10,
+          background: "rgba(255,255,255,0.85)",
+          padding: "2vw 4vw",
+          borderRadius: "2vw",
+          boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "3vw",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            color: "#222",
+            textAlign: "center",
+            fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+          }}
+        >
+          Our Projects
+        </h1>
+      </div>
+    </div>
+  );
+};
+
 
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
@@ -909,9 +1073,8 @@ export default function ProjectsSection() {
   const areTextRef = useRef(null);
   const collectiveTextRef = useRef(null);
 
-  const numColumns = Math.ceil(projects.length / 2);
-  const verticalProjectsWidth = numColumns * 20 + 8;
-  const totalContainerWidth = 125 + 120 + verticalProjectsWidth + 100;
+  // Only include widths for rendered scenes: IntroScene (125vw), ProjectsMosaicPage (100vw), ContactUs (100vw)
+  const totalContainerWidth = 125 + 100 + 100;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -972,22 +1135,20 @@ export default function ProjectsSection() {
       <div
         ref={containerRef}
         className="flex"
-        style={{
-          height: "100vh",
-          width: `${totalContainerWidth}vw`,
-          willChange: "transform",
-        }}
+        style={{ height: "100vh", width: `${totalContainerWidth}vw`, willChange: "transform" }}
       >
         <IntroScene
           weTextRef={weTextRef}
           areTextRef={areTextRef}
           collectiveTextRef={collectiveTextRef}
         />
-        <AboutScene />
-        <ProjectsScene
+        {/* <AboutScene /> */}
+        {/* <ProjectsScene
           projects={projects}
           verticalProjectsWidth={verticalProjectsWidth}
-        />
+        /> */}
+        <ProjectsMosaicPage />
+        <ContactUs />
       </div>
     </section>
   );
