@@ -34,30 +34,36 @@ function WaveNavLink({ href, text }) {
               });
             });
           };
-          const handleClick = (e) => {
-            if (href.startsWith("#")) {
+            const handleClick = (e) => {
+              console.log('WaveNavLink clicked:', { text, href });
+              if (href.startsWith("#")) {
+                e.preventDefault();
+                const targetId = href.replace("#", "");
+                // Special handling for Why Us? navigation
+                if (targetId === "content-section-details") {
+                  window.scrollTo({ top: window.innerHeight * 2, behavior: "smooth" });
+                  return;
+                }
+                // Default behavior for other anchors
+                let target = document.getElementById(targetId);
+                if (!target) {
+                  target = document.querySelector(`[id='${targetId}'], [name='${targetId}']`);
+                }
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+                else if (window.pageYOffset > 0) {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+                return;
+              }
               e.preventDefault();
-              const targetId = href.replace("#", "");
-              // Try to find section by id, fallback to querySelector for nextjs/app router
-              let target = document.getElementById(targetId);
-              if (!target) {
-                target = document.querySelector(`[id='${targetId}'], [name='${targetId}']`);
+              try {
+                router.push(href);
+              } catch {
+                window.location.href = href;
               }
-              if (target) {
-                target.scrollIntoView({ behavior: "smooth" });
-              } else {
-                // fallback: scroll to top if not found
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-              return;
-            }
-            e.preventDefault();
-            try {
-              router.push(href);
-            } catch {
-              window.location.href = href;
-            }
-          };
+            };
           return (
             <a
               href={href}
@@ -230,16 +236,27 @@ function WaveNavLink({ href, text }) {
               <div
                 ref={collectiveTextRef}
                 className="font-bruno-ace-sc font-normal select-none text-left overflow-hidden whitespace-nowrap box-border p-0 m-0 cursor-pointer"
-                style={{
-                  fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                  textShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                  letterSpacing: "0.3em",
-                  color: "#000",
-                  width: "95vw",
-                  paddingLeft: "0",
-                  marginLeft: "0",
-                }}
+                  style={{
+                    fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                    textShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                    letterSpacing: "0.3em",
+                    color: "#000",
+                    fontSize: "clamp(2rem, 9vw, 15.2rem)",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    position: "fixed",
+                    maxWidth: "100vw",
+                    width: "auto",
+                    overflow: "hidden",
+                    textAlign: "center",
+                    whiteSpace: "nowrap",
+                    padding: 0,
+                    margin: 0,
+                    zIndex: 1002,
+                    boxSizing: "border-box"
+                  }}
                 onClick={() => {
+                  console.log('COLLECTIVE clicked');
                   window.scrollTo({ top: 0, behavior: "smooth" });
                   if (window.location.pathname !== "/") {
                     window.location.href = "/";

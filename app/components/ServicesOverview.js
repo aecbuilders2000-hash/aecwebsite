@@ -138,6 +138,16 @@ export default function ServicesOverview() {
     return () => ctx.revert();
   }, []);
 
+  // Array of vh values for each card
+  const cardVhPositions = [400, 500, 600, 720, 850];
+
+  // Scroll to a fixed vh for each service card
+  const scrollToService = (index) => {
+    const targetVh = cardVhPositions[index] || 500;
+    const y = window.innerHeight * (targetVh / 100);
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
   return (
     <section
       id="services-overview-section"
@@ -300,6 +310,7 @@ export default function ServicesOverview() {
                 flexShrink: 0,
                 flexGrow: 0
               }}
+              onClick={() => scrollToService(index)}
             >
               <div className="relative h-full overflow-hidden">
                 <Image
@@ -308,7 +319,6 @@ export default function ServicesOverview() {
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                
                 {/* Curtain reveal text overlay */}
                 <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
                   <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4" 
