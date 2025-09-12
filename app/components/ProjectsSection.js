@@ -9,136 +9,136 @@ gsap.registerPlugin(ScrollTrigger);
 
 // --- DATA ---
 const projects = [
-  {
-    title: "THE MARINA",
-    location: "Surat, India",
-    imageUrl: "https://i.postimg.cc/9XxRcJ1w/ASHWA-01-1.png",
-  },
-  {
-    title: "SKYLINE TOWERS",
-    location: "Mumbai, India",
-    imageUrl: "https://i.postimg.cc/Fzn7GH1V/ASHWA-01-2.png",
-  },
-  {
-    title: "EMERALD GARDENS",
-    location: "Bangalore, India",
-    imageUrl: "https://i.postimg.cc/02b6jDHW/ASHWA-01-3.png",
-  },
-  {
-    title: "CRYSTAL PALMS",
-    location: "Goa, India",
-    imageUrl: "https://i.postimg.cc/254LmYXC/ASHWA-01-4.png",
-  },
-  {
-    title: "GOLDEN HEIGHTS",
-    location: "Delhi, India",
-    imageUrl: "https://i.postimg.cc/sXsQgLt7/ASHWA-01-5.png",
-  },
-  {
-    title: "AZURE RESIDENCY",
-    location: "Chennai, India",
-    imageUrl: "https://i.postimg.cc/FRpfdZ4q/ASHWA-01-6.png",
-  },
-  {
-    title: "PLATINUM PLAZA",
-    location: "Hyderabad, India",
-    imageUrl: "https://i.postimg.cc/m2D990hS/ASHWA-01-7.png",
-  },
-  {
-    title: "DIAMOND DISTRICT",
-    location: "Pune, India",
-    imageUrl: "https://i.postimg.cc/QxyTJ0TZ/ASHWA-01-8.png",
-  },
-  {
-    title: "SAPPHIRE SQUARE",
-    location: "Ahmedabad, India",
-    imageUrl: "https://i.postimg.cc/gj0xvZc0/ASHWA-01-9.png",
-  },
-  {
-    title: "RUBY RETREAT",
-    location: "Kolkata, India",
-    imageUrl: "https://i.postimg.cc/KcQLRZcz/ASHWA-01-10.png",
-  },
-  {
-    title: "PEARL PAVILION",
-    location: "Jaipur, India",
-    imageUrl: "https://i.postimg.cc/MGkfhH5s/ASHWA-01-11.png",
-  },
-  {
-    title: "OPAL OASIS",
-    location: "Kochi, India",
-    imageUrl: "https://i.postimg.cc/C5vft4rD/ASHWA-34-1.png",
-  },
-  {
-    title: "JADE JUNCTION",
-    location: "Lucknow, India",
-    imageUrl: "https://i.postimg.cc/2yT4YYy1/ASHWA-34-2.png",
-  },
-  {
-    title: "CORAL COURT",
-    location: "Indore, India",
-    imageUrl: "https://i.postimg.cc/13bDsJmr/ASHWA-34-3.png",
-  },
-  {
-    title: "AMBER ARCADE",
-    location: "Bhopal, India",
-    imageUrl: "https://i.postimg.cc/NjKR3Wc0/ASHWA-34-4.png",
-  },
-  {
-    title: "IVORY ISLE",
-    location: "Chandigarh, India",
-    imageUrl: "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
-  },
-  {
-    title: "ONYX OUTLOOK",
-    location: "Vadodara, India",
-    imageUrl: "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
-  },
-  {
-    title: "QUARTZ QUARTERS",
-    location: "Nashik, India",
-    imageUrl: "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
-  },
-  {
-    title: "GRANITE GROVE",
-    location: "Coimbatore, India",
-    imageUrl: "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
-  },
-  {
-    title: "MARBLE MANOR",
-    location: "Mysore, India",
-    imageUrl: "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
-  },
-  {
-    title: "LIMESTONE LODGE",
-    location: "Vijayawada, India",
-    imageUrl: "https://i.postimg.cc/25vh6h3R/ASHWA-34-10.png",
-  },
-  {
-    title: "SANDSTONE SANCTUARY",
-    location: "Guwahati, India",
-    imageUrl: "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
-  },
-  {
-    title: "BRICK BOULEVARD",
-    location: "Nagpur, India",
-    imageUrl: "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
-  },
-  {
-    title: "TERRACOTTA TERRACE",
-    location: "Patna, India",
-    imageUrl: "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
-  },
-  {
-    title: "CLAY COURTYARD",
-    location: "Agra, India",
-    imageUrl: "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
-  },
-  {
-    title: "CONCRETE CITADEL",
-    location: "Solapur, India",
-    imageUrl: "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
-  }
+  // {
+  //   title: "THE MARINA",
+  //   location: "Surat, India",
+  //   imageUrl: "https://i.postimg.cc/9XxRcJ1w/ASHWA-01-1.png",
+  // },
+  // {
+  //   title: "SKYLINE TOWERS",
+  //   location: "Mumbai, India",
+  //   imageUrl: "https://i.postimg.cc/Fzn7GH1V/ASHWA-01-2.png",
+  // },
+  // {
+  //   title: "EMERALD GARDENS",
+  //   location: "Bangalore, India",
+  //   imageUrl: "https://i.postimg.cc/02b6jDHW/ASHWA-01-3.png",
+  // },
+  // {
+  //   title: "CRYSTAL PALMS",
+  //   location: "Goa, India",
+  //   imageUrl: "https://i.postimg.cc/254LmYXC/ASHWA-01-4.png",
+  // },
+  // {
+  //   title: "GOLDEN HEIGHTS",
+  //   location: "Delhi, India",
+  //   imageUrl: "https://i.postimg.cc/sXsQgLt7/ASHWA-01-5.png",
+  // },
+  // {
+  //   title: "AZURE RESIDENCY",
+  //   location: "Chennai, India",
+  //   imageUrl: "https://i.postimg.cc/FRpfdZ4q/ASHWA-01-6.png",
+  // },
+  // {
+  //   title: "PLATINUM PLAZA",
+  //   location: "Hyderabad, India",
+  //   imageUrl: "https://i.postimg.cc/m2D990hS/ASHWA-01-7.png",
+  // },
+  // {
+  //   title: "DIAMOND DISTRICT",
+  //   location: "Pune, India",
+  //   imageUrl: "https://i.postimg.cc/QxyTJ0TZ/ASHWA-01-8.png",
+  // },
+  // {
+  //   title: "SAPPHIRE SQUARE",
+  //   location: "Ahmedabad, India",
+  //   imageUrl: "https://i.postimg.cc/gj0xvZc0/ASHWA-01-9.png",
+  // },
+  // {
+  //   title: "RUBY RETREAT",
+  //   location: "Kolkata, India",
+  //   imageUrl: "https://i.postimg.cc/KcQLRZcz/ASHWA-01-10.png",
+  // },
+  // {
+  //   title: "PEARL PAVILION",
+  //   location: "Jaipur, India",
+  //   imageUrl: "https://i.postimg.cc/MGkfhH5s/ASHWA-01-11.png",
+  // },
+  // {
+  //   title: "OPAL OASIS",
+  //   location: "Kochi, India",
+  //   imageUrl: "https://i.postimg.cc/C5vft4rD/ASHWA-34-1.png",
+  // },
+  // {
+  //   title: "JADE JUNCTION",
+  //   location: "Lucknow, India",
+  //   imageUrl: "https://i.postimg.cc/2yT4YYy1/ASHWA-34-2.png",
+  // },
+  // {
+  //   title: "CORAL COURT",
+  //   location: "Indore, India",
+  //   imageUrl: "https://i.postimg.cc/13bDsJmr/ASHWA-34-3.png",
+  // },
+  // {
+  //   title: "AMBER ARCADE",
+  //   location: "Bhopal, India",
+  //   imageUrl: "https://i.postimg.cc/NjKR3Wc0/ASHWA-34-4.png",
+  // },
+  // {
+  //   title: "IVORY ISLE",
+  //   location: "Chandigarh, India",
+  //   imageUrl: "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
+  // },
+  // {
+  //   title: "ONYX OUTLOOK",
+  //   location: "Vadodara, India",
+  //   imageUrl: "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
+  // },
+  // {
+  //   title: "QUARTZ QUARTERS",
+  //   location: "Nashik, India",
+  //   imageUrl: "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
+  // },
+  // {
+  //   title: "GRANITE GROVE",
+  //   location: "Coimbatore, India",
+  //   imageUrl: "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
+  // },
+  // {
+  //   title: "MARBLE MANOR",
+  //   location: "Mysore, India",
+  //   imageUrl: "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
+  // },
+  // {
+  //   title: "LIMESTONE LODGE",
+  //   location: "Vijayawada, India",
+  //   imageUrl: "https://i.postimg.cc/25vh6h3R/ASHWA-34-10.png",
+  // },
+  // {
+  //   title: "SANDSTONE SANCTUARY",
+  //   location: "Guwahati, India",
+  //   imageUrl: "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
+  // },
+  // {
+  //   title: "BRICK BOULEVARD",
+  //   location: "Nagpur, India",
+  //   imageUrl: "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
+  // },
+  // {
+  //   title: "TERRACOTTA TERRACE",
+  //   location: "Patna, India",
+  //   imageUrl: "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
+  // },
+  // {
+  //   title: "CLAY COURTYARD",
+  //   location: "Agra, India",
+  //   imageUrl: "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
+  // },
+  // {
+  //   title: "CONCRETE CITADEL",
+  //   location: "Solapur, India",
+  //   imageUrl: "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
+  // }
 ];
 
 // --- TEXT CONTENT ---

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from '../ui/Button';
 import { countries } from '../constants/CountryList';
 import ArrowButton from '../ui/ArrowButton';
 
@@ -44,14 +43,14 @@ const CareerForm = () => {
         countries.find((c) => c.value === "IN") || countries[0] // Default India
     );
 
-    const handleSubmit = () => {
-        if (!resumeFile) {
-            setFileError('Please upload your resume (PDF or DOCX).');
-            return;
-        }
-        console.log('Form submitted:', formData);
-        // Handle form submission here
-    };
+    // const handleSubmit = () => {
+    //     if (!resumeFile) {
+    //         setFileError('Please upload your resume (PDF or DOCX).');
+    //         return;
+    //     }
+    //     console.log('Form submitted:', formData);
+    //     // Handle form submission here
+    // };
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">

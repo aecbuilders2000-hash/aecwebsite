@@ -8,8 +8,6 @@ import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
 import ServicesOverview from "./components/ServicesOverview";
 import ContactUs from "./components/ContactUs";
-import Footer from "./components/Footer";
-import CareerForm from "./components/CareerForm";
 import TestinomialSection from "./components/TestinomialSection";
 
 export default function Home() {

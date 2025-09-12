@@ -2,7 +2,6 @@
 import { useState, useRef, useEffect } from 'react';
 import React from 'react';
 import Image from 'next/image';
-import Button from '../ui/Button';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -19,7 +18,7 @@ const CardServices = ({
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [arrowHovered, setArrowHovered] = useState(false);
+    // const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
 
