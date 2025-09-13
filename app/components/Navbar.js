@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import gsap from 'gsap';
 
 // Reusable wave link (same hover behavior as Hero)
-const WaveNavLink = ({ href, text, homeAnchor = false }) => {
+const WaveNavLink = ({ href, text, homeAnchor = false, scrollToVH = null }) => {
   const linkRef = useRef(null);
   const router = useRouter();
   const letters = text.split('');
@@ -20,6 +20,12 @@ const WaveNavLink = ({ href, text, homeAnchor = false }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    // If a specific vh scroll amount is provided, scroll to that absolute position
+    if (typeof scrollToVH === 'number') {
+      const top = window.innerHeight * (scrollToVH / 100);
+      window.scrollTo({ top, behavior: 'smooth' });
+      return;
+    }
     if (homeAnchor) {
       router.push('/' + href);
     } else if (href.startsWith('#')) {
@@ -102,7 +108,8 @@ export default function Navbar() {
         style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif' }}
       >
         <WaveNavLink href="/" text="HOME" />
-        <WaveNavLink href="#projects-section" text="PROJECTS" homeAnchor />
+  <WaveNavLink href="#projects-section" text="PROJECTS" homeAnchor />
+  <WaveNavLink href="#about-us" text="ABOUT US" scrollToVH={200} />
         <WaveNavLink href="#services-section" text="SERVICES" homeAnchor />
         <WaveNavLink href="#clients" text="CLIENTS" homeAnchor />
         <WaveNavLink href="/careers" text="CAREERS" />

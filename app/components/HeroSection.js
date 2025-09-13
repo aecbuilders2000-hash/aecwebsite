@@ -242,14 +242,12 @@ export default function HeroSection() {
           {[
             {
               href: "#content-section-details",
-              label: "Why Us?",
+              label: "About Us",
               onClick: (e) => {
                 e.preventDefault();
-                const target = document.getElementById("content-section-details");
-                if (target) {
-                  const y = target.getBoundingClientRect().top + window.pageYOffset - 100;
-                  window.scrollTo({ top: y, behavior: "smooth" });
-                }
+                // Scroll to 200vh (two viewports down)
+                const top = window.innerHeight * 2;
+                window.scrollTo({ top, behavior: "smooth" });
               },
             },
             { href: "#projects-section", label: "Projects" },
