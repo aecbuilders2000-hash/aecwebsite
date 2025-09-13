@@ -8,67 +8,44 @@ import { gsap } from 'gsap';
 const testimonials = [
   {
     id: 1,
-    name: 'Aarav Mehta',
-    role: 'Head of Design',
-    company: 'StudioForma',
+    name: 'Reaz P.',
+    role: 'Owner',
+    company: '',
+    address: '',
     avatar: 'https://i.postimg.cc/k4Tq0pcw/K1-2.webp',
-    quote: 'Their collaborative approach transformed our design delivery speed.',
-    fullText: 'Collective AEC re-engineered our entire BIM workflow. Turnaround time on complex coordination sets dropped by 42%. Their team embedded directly with ours, proactively flagging design conflicts long before clash detection. The partnership felt genuinely integrated—transparent, accountable, and relentlessly quality-focused.'
+    quote: 'Quickly understood the requirement',
+    fullText: 'Kenil has created several Grasshopper scripts for my projects. He is very skilled in Rhino and Grasshopper. He quickly understood the requirement, communicated very well and delivered the work on time and with great quality. He added features not requested, but very helpful to the project.'
   },
   {
     id: 2,
-    name: 'Sahana Iyer',
-    role: 'Project Director',
-    company: 'UrbanMesh',
+    name: 'Suzie W.',
+    role: 'Director',
+    company: 'High End Residential',
+    address: 'JIA DESIGNS, VIC, AUSTRALIA',
     avatar: 'https://i.postimg.cc/ZKM0BC6j/K6-3.webp',
-    quote: 'Exceptionally precise modeling and documentation standards.',
-    fullText: 'The precision of their structural modeling saved us from cascading RFIs downstream. Every deliverable was audit-ready. Their documentation hierarchy and naming discipline alone are worth the engagement. We re-used their standards on two other projects.'
+    quote: 'His ability to take direction is excellent',
+    fullText: 'I have hired Kenil for multiple projects and he consistently delivers a high: standard of work in a timely fashion.His ability to take direction is excellent, and nothing is ever a problem.Kenil has helped us meet very tight deadlines by being available when we need him, which has been incredibly valuable.Kenil has provided a combination of services for our interior design studio, from architectural design, elevation and shop drawings, SketchUp modelling and 3D photorealistic rendering.I highly recommend him'
   },
   {
     id: 3,
-    name: 'Liam Carter',
-    role: 'Development Manager',
-    company: 'CrestWorks',
+    name: 'Borinquen G.',
+    role: 'Artist',
+    company: 'Public Art, PRATT INSTITUTE',
+    address: 'NY, USA',
     avatar: 'https://i.postimg.cc/qRJpZT8z/K11-1.webp',
-    quote: 'Our fastest entitlement package submission to date.',
-    fullText: 'From schematic massing to entitlement-ready BIM exports, the pipeline was seamless. Their rapid iteration cycles let us test façade and core options in parallel. That parallelization shaved weeks off our municipal submission schedule.'
+    quote: 'I endorse him wholeheartedly and highly recommend him!',
+    fullText: 'I hired Kenil to work on detailed shop drawings for the fabrication of a public art project. he produced stunning drawings, communicated effectively, he was always punctual in delivering milestones, consistently efficient, and significantly resourceful. His extensive digital literacy and strong set of skills make him a real asset. He was always professional, a persistent problem solver with remarkable work ethic. I endorse him wholeheartedly and highly recommend him!'
   },
   {
     id: 4,
-    name: 'Elena Rodriguez',
-    role: 'BIM Coordinator',
-    company: 'AxisGrid',
+    name: 'Lily D.',
+    role: 'CEO',
+    company: 'Carson Curtis Design LLC',
+    address: '',
     avatar: 'https://i.postimg.cc/VNBYR60x/K12-3.webp',
-    quote: 'Flawless cross-discipline coordination under tight deadlines.',
-    fullText: 'MEP, structural, and architectural packages aligned cleanly with almost zero clash fallout in Navisworks. Their proactive issue tagging workflow fed straight into our internal tracker. It felt like having an extension of our core team rather than an external vendor.'
+    quote: 'Very highly recommend working with him!',
+    fullText: 'I have worked with Kenil on projects ranging from 3D modeling for a home remodel to business services and manufacturing and design and he has consistently delivered results above and beyond my expectations. He is great at problem solving and coming up with solutions for whatever challenges you may have. I very highly recommend working with him!'
   },
-  {
-    id: 5,
-    name: 'Noah Patel',
-    role: 'Operations Lead',
-    company: 'ConstructiveLayer',
-    avatar: 'https://i.postimg.cc/VktsJ4fL/K13-3.webp',
-    quote: 'They improved our internal QA benchmarks in under a month.',
-    fullText: 'We brought them in for overflow, but they elevated our process maturity: custom Revit templates, view filters, parametric families, and a QC checklist pipeline that now forms our standard operating baseline.'
-  },
-  {
-    id: 6,
-    name: 'Maya Singh',
-    role: 'Technical Architect',
-    company: 'FormAxis',
-    avatar: 'https://i.postimg.cc/Zqhbp3nP/K14-6.webp',
-    quote: 'Consistent, dependable, and deeply detail oriented.',
-    fullText: 'Even under compressed milestone phases they held drawing fidelity and parametric integrity. Their approach to level-of-development staging minimized over-modeling while preserving downstream flexibility.'
-  },
-  {
-    id: 7,
-    name: 'Daniel Wu',
-    role: 'Innovation Lead',
-    company: 'ParametricLab',
-    avatar: 'https://i.postimg.cc/zvPDgcH3/K17-1.webp',
-    quote: 'Real-time iteration changed our feasibility studies.',
-    fullText: 'They wired up a live parametric pipeline for early massing + energy exposure. Our feasibility pass cycles went from days to hours. Huge multiplier on strategic optioning.'
-  }
 ];
 
 const TestimonialCard = ({ data, onOpen }) => {
@@ -87,7 +64,7 @@ const TestimonialCard = ({ data, onOpen }) => {
         </div>
         <div className="min-w-0">
           <p className="text-white font-medium tracking-wide text-sm md:text-base">{data.name}</p>
-            <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-wider font-light">{data.role} • {data.company}</p>
+          <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-wider font-light">{data.role} • {data.company}</p>
         </div>
       </div>
       <p className="text-neutral-300 text-sm md:text-[15px] leading-relaxed line-clamp-4 group-hover:text-neutral-100 transition-colors">“{data.quote}”</p>
@@ -136,7 +113,10 @@ const Modal = ({ open, onClose, testimonial }) => {
           </div>
           <div>
             <h3 className="text-white text-lg font-medium tracking-wide">{testimonial.name}</h3>
-            <p className="text-neutral-400 text-xs uppercase tracking-wider">{testimonial.role} • {testimonial.company}</p>
+            <p className="text-neutral-400 text-xs uppercase tracking-wider">{testimonial.role}{" "}
+              {testimonial.company && `• ${testimonial.company}`}
+              {testimonial.address && `, ${testimonial.address}`}
+            </p>
           </div>
           <div className="ml-auto">
             <button
