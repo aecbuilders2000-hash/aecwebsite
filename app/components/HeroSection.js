@@ -127,7 +127,7 @@ export default function HeroSection() {
         left: "2.5vw",
         x: "0%",
         // ✅ FIX 2: Set final top position to exactly 2.5vh.
-        top: "2vh", 
+        top: "2.5vh", 
         bottom: "auto",
         ease: "none",
       });
