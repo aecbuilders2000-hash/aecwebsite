@@ -61,6 +61,8 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import ArrowButton from '../ui/ArrowButton';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 // ...existing code...
   //   title: "IVORY ISLE",
@@ -979,9 +981,9 @@ const ProjectsMosaicPage = () => {
   return (
     <div
       style={{
-        width: "100vw",
+        width: "120vw",
         height: "100vh",
-        background: "#fff",
+        background: "#E9ECEF",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box",
@@ -990,43 +992,155 @@ const ProjectsMosaicPage = () => {
       {sideItems.map((sideImgs, i) => (
         <React.Fragment key={i}>
           {sideImgs.map((item, idx) => {
+            if (!item) return null;
+            // compute a global index across all side arrays so labels/keys are unique
+            const priorCount = sideItems.slice(0, i).reduce((sum, arr) => sum + (arr ? arr.length : 0), 0);
+            const globalIndex = priorCount + idx;
+            const srcName = item.src ? item.src.split('/').pop().split('?')[0] : `img-${globalIndex}`;
+            // scale coordinates from original 100vw system to 120vw container
+            const containerScale = 120 / 100; // 1.2
+            const scaledLeft = (item.left || 0) * containerScale;
+            const scaledWidth = (item.w || 0) * containerScale;
+            // Apply explicit per-index margin overrides (1-based indexes)
+            const oneBasedIndex = globalIndex + 1;
+            let extraLeftVW = 0;
+            let extraRightVW = 0;
+            // As requested: indexes 13 and 19 get a left margin of 10vw; index 7 gets a right margin of 10vw
+            if (oneBasedIndex === 13 || oneBasedIndex === 19) {
+              extraLeftVW = 10;
+            }
+            if (oneBasedIndex === 7) {
+              extraRightVW = 10;
+            }
+            const adjustedLeft = scaledLeft + extraLeftVW - extraRightVW;
+            // Convex curvature: for left (i===3) and right (i===1) sides,
+            // compute a translateX inward proportional to distance from vertical equator (50vh)
+            let dynamicBorderRadius = 12; // base px
+            let translateVW = 0;
+            if (i === 1 || i === 3) {
+              const itemTop = item.top || 50; // in vh
+              const itemLeft = item.left || 50; // in vw-like units
+              const distFromEquator = Math.abs(itemTop - 50); // 0..50
+              const normalized = Math.min(1, distFromEquator / 50); // 0..1
+              const maxTranslateVW = 6; // maximum inward translate in vw
+              // boost for corner items (first/last in column)
+              const isCorner = idx === 0 || idx === (sideImgs.length - 1);
+              // boost for items near absolute top/bottom (extremes)
+              const isExtremePos = itemTop <= 12 || itemTop >= 88;
+              // detect positional corners by both top/left extremes
+              const isTop = itemTop <= 12;
+              const isBottom = itemTop >= 88;
+              const isLeft = itemLeft <= 12;
+              const isRight = itemLeft >= 88;
+              const isPosCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
+
+              let edgeBoost = 1.0;
+              if (isCorner) edgeBoost = 1.4;
+              if (isExtremePos) edgeBoost = Math.max(edgeBoost, 1.6);
+              if (isPosCorner) edgeBoost = Math.max(edgeBoost, 1.8);
+
+              translateVW = +((normalized * maxTranslateVW * edgeBoost)).toFixed(2);
+              // increase border-radius slightly towards edges and more for boosted items
+              dynamicBorderRadius = 12 + Math.round(normalized * 28 * edgeBoost);
+
+              // If it's a positional corner, add rotation and stronger shadow later
+              if (isPosCorner) {
+                // mark via adding small properties we can pick up below
+                item._isPosCorner = true;
+                item._cornerDir = isTop ? (isLeft ? 'top-left' : 'top-right') : isLeft ? 'bottom-left' : 'bottom-right';
+              }
+            }
             // 2. Determine styles based on hover state
             const isHovered = hoveredSrc === item.src;
             const isAnyHovered = hoveredSrc !== null;
 
+            const baseScale = isHovered ? "scale(1.1)" : "scale(1)";
+            // apply translate for side curvature and then scale for hover
+            const translateStr = i === 3 ? `translateX(${translateVW}vw)` : i === 1 ? `translateX(-${translateVW}vw)` : "";
+
+            // corner visuals
+            const isPosCornerFlag = item._isPosCorner === true;
+            const cornerDir = item._cornerDir || null;
+            const rotateAngle = isPosCornerFlag
+              ? cornerDir === 'top-left' || cornerDir === 'bottom-left'
+                ? -4
+                : 4
+              : 0;
+
+            const cornerShadow = isPosCornerFlag ? '0 12px 40px rgba(0,0,0,0.28)' : '0 4px 18px rgba(0,0,0,0.13)';
+
             const style = {
               position: "absolute",
-              left: `${item.left}vw`,
+              left: `${adjustedLeft}vw`,
               top: `${item.top}vh`,
-              width: `${item.w}vw`,
+              width: `${scaledWidth}vw`,
               height: `${item.h}vh`,
-              borderRadius: "12px",
+              borderRadius: `${dynamicBorderRadius}px`,
+              transform: `${translateStr} rotate(${rotateAngle}deg) ${baseScale}`,
               overflow: "hidden",
-              boxShadow: "0 4px 18px rgba(0,0,0,0.13)",
+              boxShadow: cornerShadow,
               background: "#eee",
               // --- Dynamic styles for the hover effect ---
               transition: "transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease",
-              zIndex: isHovered ? 10 : item.zIndex,
-              transform: isHovered ? "scale(1.1)" : "scale(1)",
+              zIndex: isHovered ? 20 : isPosCornerFlag ? 15 : item.zIndex,
               filter: isAnyHovered && !isHovered ? "grayscale(100%)" : "grayscale(0%)",
               opacity: isAnyHovered && !isHovered ? "0.6" : "1",
             };
 
             return (
               <div
-                key={item.src + idx}
+                key={`${globalIndex}-${srcName}`}
                 style={style}
                 // 3. Add event handlers to update the state
                 onMouseEnter={() => setHoveredSrc(item.src)}
                 onMouseLeave={() => setHoveredSrc(null)}
+                data-mosaic-index={globalIndex + 1}
               >
-                <Image
-                  src={item.src}
-                  alt={`Mosaic ${idx}`}
-                  width={600}
-                  height={600}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+                {/* Index badge: keep in DOM for debugging but hidden visually */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "6px",
+                    left: "6px",
+                    background: "rgba(0,0,0,0.65)",
+                    color: "#fff",
+                    padding: "4px 6px",
+                    borderRadius: "6px",
+                    fontSize: "0.75rem",
+                    zIndex: 40,
+                    pointerEvents: "none",
+                    opacity: 0,
+                    width: 0,
+                    height: 0,
+                    overflow: "hidden",
+                  }}
+                >
+                  {globalIndex + 1}
+                </div>
+                {/* Apply special corner fixes for indexes 7, 13, 19 (1-based) */}
+                {(() => {
+                  const oneBased = globalIndex + 1;
+                  const isProblemCorner = oneBased === 7 || oneBased === 13 || oneBased === 19;
+                  const cornerOverrides = isProblemCorner
+                    ? {
+                        transform: `${style.transform ? style.transform + ' ' : ''} rotate(${oneBased % 2 === 0 ? -4 : 4}deg)`,
+                        boxShadow: '0 18px 48px rgba(0,0,0,0.36)',
+                        zIndex: (style.zIndex || 20) + 10,
+                      }
+                    : {};
+
+                  return (
+                    <div style={{ width: '100%', height: '100%', position: 'relative', ...cornerOverrides }}>
+                      <Image
+                        src={item.src}
+                        alt={`${srcName} ${globalIndex}`}
+                        width={600}
+                        height={600}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: 'block' }}
+                      />
+                    </div>
+                  );
+                })()}
               </div>
             );
           })}
@@ -1036,14 +1150,10 @@ const ProjectsMosaicPage = () => {
       <div
         style={{
           position: "absolute",
-          top: "50%",
+          top: "55%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 10,
-          background: "rgba(255,255,255,0.85)",
-          padding: "2vw 4vw",
-          borderRadius: "2vw",
-          boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
         }}
       >
         <h1
@@ -1056,7 +1166,7 @@ const ProjectsMosaicPage = () => {
             fontFamily: "var(--font-bruno-ace-sc), sans-serif",
           }}
         >
-          Our Projects
+          We Build the <br/> Extraordinary
         </h1>
       </div>
     </div>
@@ -1071,8 +1181,8 @@ export default function ProjectsSection() {
   const areTextRef = useRef(null);
   const collectiveTextRef = useRef(null);
 
-  // Only include widths for rendered scenes: IntroScene (125vw), ProjectsMosaicPage (100vw), ContactUs (100vw)
-  const totalContainerWidth = 125 + 100 + 100;
+  // Only include widths for rendered scenes: IntroScene (125vw), ProjectsMosaicPage (120vw), ContactUs (100vw)
+  const totalContainerWidth = 125 + 120 + 100;
 
   useEffect(() => {
     const container = containerRef.current;

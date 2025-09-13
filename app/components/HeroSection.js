@@ -19,7 +19,7 @@ function WaveNavLink({ href, text, onClick }) {
     letterSpans.forEach((span, i) => {
       gsap.to(span, {
         y: -10,
-        scale: 1.2,
+        scale: 1.0,
         rotation: (Math.random() - 0.5) * 8,
         duration: 0.4,
         ease: "back.out(2.5)",
@@ -67,7 +67,7 @@ function WaveNavLink({ href, text, onClick }) {
       style={{
         fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
         fontWeight: 600,
-        fontSize: "clamp(1rem, 2vw, 1.125rem)",
+        fontSize: "clamp(0.5rem, 1vw, 1rem)",
         color: "#000",
         textDecoration: "none",
         letterSpacing: "0.1em",
