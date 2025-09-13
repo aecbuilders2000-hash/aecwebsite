@@ -14,6 +14,7 @@ const stats = [
 
 export default function ContentSection() {
   const contentRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
   const topRectRef = useRef(null);
   const bottomRectRef = useRef(null);
   const topTextRef = useRef(null);
@@ -211,6 +212,14 @@ export default function ContentSection() {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
+  }, []);
+
+  // Simple mobile detection to adjust layout values without using px
+  useEffect(() => {
+    const handleResize = () => setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
@@ -442,8 +451,13 @@ export default function ContentSection() {
 
         {/* Box 3: Bottom - Stats */}
         <div
-          className="w-full md:px-10 h-fit absolute left-0 bottom-[2vw] flex items-center justify-center"
+          className="w-full md:px-10 h-fit absolute left-0 flex items-center justify-center"
           id="content-section-details"
+          style={{
+            // Shift metrics slightly up on mobile using responsive units (no px)
+            bottom: isMobile ? '15vh' : '2vw',
+            transition: 'bottom 220ms ease'
+          }}
         >
           <div
             className="w-full grid grid-cols-2 md:grid-cols-4 m-0 p-0 box-border"

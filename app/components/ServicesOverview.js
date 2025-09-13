@@ -163,16 +163,16 @@ export default function ServicesOverview() {
       {/* Ambient background effects */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
       </div>
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between">
         
-        {/* Top Section */}
-        <div className="flex justify-between items-start" style={{ paddingTop: "17vh", height: "55vh" }}>
+    {/* Top Section */}
+  <div className="flex flex-col md:flex-row justify-between items-start" style={{ paddingTop: "12vh", height: "55vh" }}>
           
-          {/* Left: Title and Description - Using 60% width */}
-          <div className="w-3/5 pr-8 flex flex-col justify-start h-full">
+          {/* Left: Title and Description - full width on mobile */}
+          <div className="w-full md:w-3/5 pr-8 flex flex-col justify-start h-full">
             <h2 
               ref={titleRef}
               className="font-bruno-ace-sc font-bold text-black leading-tight mb-6"
@@ -234,9 +234,9 @@ export default function ServicesOverview() {
             </p>
           </div>
 
-          {/* Right: Top 2 Service Cards */}
-          <div className="w-2/5 flex items-start h-full justify-start" style={{ paddingTop: "0" }}>
-            <div className="flex" style={{ gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
+          {/* Right: Top 2 Service Cards (desktop only) */}
+          <div className="w-2/5 hidden md:flex md:items-start md:h-full md:justify-start" style={{ paddingTop: "0" }}>
+            <div className="md:flex" style={{ gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
               {topServices.map((service, index) => (
                 <div
                   key={service.id}
@@ -295,8 +295,26 @@ export default function ServicesOverview() {
           </div>
         </div>
 
-        {/* Bottom: 5 Service Cards */}
-        <div className="flex items-end justify-start w-full" style={{ paddingBottom: "8vh", height: "45vh", gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
+        {/* Mobile: stacked horizontal cards (one per row) */}
+        <div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
+          {bottomServices.map((service, index) => (
+            <div key={service.id} className="w-full flex items-stretch bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ height: '13vh' }} onClick={() => scrollToService(index)}>
+              {/* Image - left (40%) */}
+              <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
+                <Image src={service.image} alt={service.title} fill className="object-cover" />
+              </div>
+              {/* Text - right (60%) */}
+              <div className="w-3/5 p-4 flex flex-col justify-center" style={{ padding: 'clamp(0.5rem, 1.6vw, 0.9rem)' }}>
+                <h3 className="font-bruno-ace-sc font-bold text-gray-900" style={{ fontSize: 'clamp(1rem, 2.6vw, 1.25rem)', lineHeight: 1.1, fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{service.title}</h3>
+                <p className="font-poppins text-gray-700 mt-2" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)' }}>{service.subtitle}</p>
+                <p className="font-poppins text-gray-600 mt-2 leading-relaxed" style={{ fontSize: 'clamp(0.8rem, 1.7vw, 0.95rem)' }}>{service.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom: 5 Service Cards (desktop) */}
+        <div className="hidden md:flex items-end justify-start w-full" style={{ paddingBottom: "8vh", height: "45vh", gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
           {bottomServices.map((service, index) => (
             <div
               key={service.id}
@@ -352,7 +370,6 @@ export default function ServicesOverview() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

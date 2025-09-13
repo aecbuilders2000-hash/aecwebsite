@@ -146,9 +146,10 @@ export default function HeroSection() {
       });
 
       // On mobile we want a larger final scale so the logo doesn't become nearly invisible
-      const finalScale = isSmall ? 0.22 : 0.12;
-      const finalLeft = isSmall ? "3.5vw" : "2.5vw";
-      const finalTop = isSmall ? "2vh" : "1.5vh";
+      // increase mobile final scale/position so logo remains legible on small screens
+      const finalScale = isSmall ? 0.28 : 0.12;
+      const finalLeft = isSmall ? "4vw" : "2.5vw";
+      const finalTop = isSmall ? "3vh" : "1.5vh";
 
       tl.to(logoRef.current, {
         scale: finalScale,
@@ -267,7 +268,7 @@ export default function HeroSection() {
         className="fixed w-full flex items-center justify-between"
         style={{
           // float slightly below the top and center with reduced width so it appears floating
-          top: "1.2vh",
+          top: isMobile ? "1.6vh" : "1.2vh",
           left: "50%",
           transform: "translateX(-50%)",
           width: "calc(100% - 2.5vw)",
@@ -275,13 +276,19 @@ export default function HeroSection() {
           display: "flex",
           alignItems: "center",
           gap: "5vw",
-          background: "rgba(255,255,255,0.18)",
-          boxShadow: "0 6px 44px rgba(0,0,0,0.10)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(255,255,255,0.12)",
+          // stronger translucency on mobile so the glass effect is visible
+          background: isMobile ? "rgba(255,255,255,0.36)" : "rgba(255,255,255,0.18)",
+          boxShadow: isMobile ? "0 10px 58px rgba(0,0,0,0.10)" : "0 6px 44px rgba(0,0,0,0.10)",
+          backdropFilter: isMobile ? "blur(20px)" : "blur(16px)",
+          WebkitBackdropFilter: isMobile ? "blur(20px)" : "blur(16px)",
+          borderBottom: isMobile
+            ? "1px solid rgba(0,0,0,0.06)"
+            : "1px solid rgba(255,255,255,0.12)",
           paddingLeft: "1.6vw",
           paddingRight: 0,
+          paddingTop: isMobile ? "0.05rem" : undefined,
+          paddingBottom: isMobile ? "0.05rem" : undefined,
+          minHeight: isMobile ? "clamp(2.4rem, 6vh, 3rem)" : undefined,
           borderRadius: "9999px", // fully pill-shaped (rounded-full)
         }}
       >
@@ -294,46 +301,57 @@ export default function HeroSection() {
             color: "#000",
             letterSpacing: "0.3em",
             marginRight: "2vw",
+            marginLeft: isMobile ? "2vw" : 0,
           }}
         >
           <div>DESIGN MORE</div>
           <div>MANAGE LESS</div>
         </div>
-  <div style={{ display: "flex", alignItems: "center", gap: "3vw", position: 'relative' }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "3vw",
+            position: "relative",
+          }}
+        >
           {/* Wave links: hide on mobile - mobile will use toggle/menu */}
-          {!isMobile && ([
-            {
-              href: "#content-section-details",
-              label: "About Us",
-              onClick: (e) => {
-                e.preventDefault();
-                // Scroll to 200vh (two viewports down)
-                const top = window.innerHeight * 2;
-                window.scrollTo({ top, behavior: "smooth" });
+          {!isMobile &&
+            [
+              {
+                href: "#content-section-details",
+                label: "About Us",
+                onClick: (e) => {
+                  e.preventDefault();
+                  // Scroll to 200vh (two viewports down)
+                  const top = window.innerHeight * 2;
+                  window.scrollTo({ top, behavior: "smooth" });
+                },
               },
-            },
-            { href: "#services-overview-section", label: "Our Services" },
-            { href: "#projects-section", label: "Projects" },
-            { href: "/news", label: "News" },
-            { href: "/careers", label: "Careers" },
-          ].map((nav) => (
-            <WaveNavLink
-              key={nav.label}
-              href={nav.href}
-              text={nav.label}
-              onClick={nav.onClick}
-            />
-          )))}
+              { href: "#services-overview-section", label: "Our Services" },
+              { href: "#projects-section", label: "Projects" },
+              { href: "/news", label: "News" },
+              { href: "/careers", label: "Careers" },
+            ].map((nav) => (
+              <WaveNavLink
+                key={nav.label}
+                href={nav.href}
+                text={nav.label}
+                onClick={nav.onClick}
+              />
+            ))}
 
           {/* mobile toggle moved outside nav for centering */}
           <MorphingButton
-            key={isMobile ? 'mobile' : 'desktop'}
+            key={isMobile ? "mobile" : "desktop"}
             text="Let's Collaborate"
             fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
             style={{
               margin: "0",
-              fontSize: isMobile ? "0.72rem" : "1.05rem",
-              padding: isMobile ? "0.18rem 0.6rem" : "0.45rem 0.9rem",
+              fontSize: isMobile ? "0.78rem" : "1.05rem",
+              // on mobile match the navbar height/padding using clamp and rems
+              height: isMobile ? "clamp(2.4rem, 6vh, 3rem)" : undefined,
+              padding: isMobile ? "0.35rem 0.8rem" : "0.45rem 0.9rem",
               marginLeft: isMobile ? "0.2rem" : undefined,
             }}
             onClick={() => {
@@ -354,38 +372,53 @@ export default function HeroSection() {
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((s) => !s)}
             style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: isMenuOpen ? 'translate(-50%, -50%) rotate(180deg)' : 'translate(-50%, -50%) rotate(0deg)',
+              position: "absolute",
+              left: "50%",
+              top: "60%",
+              transform: isMenuOpen
+                ? "translate(-50%, -50%) rotate(180deg)"
+                : "translate(-50%, -50%) rotate(0deg)",
               zIndex: 1205,
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
               lineHeight: 1,
-              padding: '0.08rem 0.28rem',
-              minWidth: 'auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              pointerEvents: 'auto',
-              transition: 'transform 200ms cubic-bezier(.2,.9,.2,1)',
+              padding: "0.08rem 0.28rem",
+              minWidth: "auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              pointerEvents: "auto",
+              transition: "transform 200ms cubic-bezier(.2,.9,.2,1)",
             }}
           >
             {/* Wider double-chevron SVG pointing down */}
-              <svg
-                width="26"
-                height="18"
-                viewBox="0 0 36 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                focusable="false"
-                style={{ display: 'block' }}
-              >
-                <polyline points="4,6 18,20 32,6" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                <polyline points="4,0 18,14 32,0" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.95" />
-              </svg>
+            <svg
+              width="26"
+              height="18"
+              viewBox="0 0 36 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+              style={{ display: "block" }}
+            >
+              <polyline
+                points="4,6 18,20 32,6"
+                stroke="#000"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <polyline
+                points="4,0 18,14 32,0"
+                stroke="#000"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.95"
+              />
+            </svg>
           </button>
         )}
       </div>
@@ -415,7 +448,8 @@ export default function HeroSection() {
               width: "100%",
               // slide using transform for smooth GPU-accelerated animation
               transform: isMenuOpen ? "translateY(0%)" : "translateY(-100%)",
-              transition: "transform 360ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease",
+              transition:
+                "transform 360ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease",
               opacity: isMenuOpen ? 1 : 0,
               background: "rgba(255,255,255,0.98)",
               display: "flex",
@@ -425,7 +459,14 @@ export default function HeroSection() {
               paddingTop: "6vh",
             }}
           >
-            <nav style={{ width: "100%", textAlign: "center", fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif" }}>
+            <nav
+              style={{
+                width: "100%",
+                textAlign: "center",
+                fontFamily:
+                  "var(--font-century-gothic), Century Gothic, sans-serif",
+              }}
+            >
               {[
                 {
                   href: "#content-section-details",
@@ -442,7 +483,13 @@ export default function HeroSection() {
                 { href: "/news", label: "News" },
                 { href: "/careers", label: "Careers" },
               ].map((nav) => (
-                <div key={nav.label} style={{ padding: "1rem 0", borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
+                <div
+                  key={nav.label}
+                  style={{
+                    padding: "1rem 0",
+                    borderBottom: "1px solid rgba(0,0,0,0.04)",
+                  }}
+                >
                   <WaveNavLink
                     href={nav.href}
                     text={nav.label}
