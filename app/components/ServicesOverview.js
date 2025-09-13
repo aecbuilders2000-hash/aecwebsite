@@ -27,7 +27,7 @@ const services = [
     id: 3,
     title: "Architectural",
     subtitle: "Design Services",
-    image: "https://i.postimg.cc/1tkmN2Yv/Architecture-Service.png",
+    image: "/Architecture Service.png",
     description: "Complete architectural design from concept to construction",
     position: "bottom"
   },
@@ -35,7 +35,7 @@ const services = [
     id: 4,
     title: "Structural",
     subtitle: "Engineering",
-    image: "https://i.postimg.cc/qRhBq4Qt/Structure-Service.png", 
+    image: "/Structure Service.png", 
     description: "Advanced structural analysis and engineering solutions",
     position: "bottom"
   },

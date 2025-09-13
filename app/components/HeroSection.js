@@ -252,7 +252,7 @@ export default function HeroSection() {
           <div>DESIGN MORE</div>
           <div>MANAGE LESS</div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "5vw" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "3vw" }}>
           {[
             {
               href: "#content-section-details",

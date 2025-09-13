@@ -61,7 +61,7 @@ const services = [
     content: (
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
-        imageUrl="https://i.postimg.cc/1tkmN2Yv/Architecture-Service.png"
+        imageUrl="/Architecture Service.png"
         serviceName="ARCHITECTURAL"
         pageNumber="003/005"
         services={[
@@ -82,7 +82,7 @@ const services = [
     content: (
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
-        imageUrl="https://i.postimg.cc/qRhBq4Qt/Structure-Service.png"
+        imageUrl="/Structure Service.png"
         serviceName="STRUCTURAL"
         pageNumber="004/005"
         services={[
