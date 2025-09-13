@@ -133,7 +133,7 @@ export default function HeroSection() {
       });
 
       tl.to(logoRef.current, {
-        scale: 0.15,
+        scale: 0.12,
         left: "2.5vw",
         x: "0%",
         // ✅ FIX 2: Set final top position to exactly 2.5vh.
