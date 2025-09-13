@@ -11,7 +11,7 @@ const services = [
     id: 1,
     title: "BIM Services",
     subtitle: "& Consulting",
-    image: "/BIM Service .png",
+    image: "https://i.postimg.cc/pLRdCNV7/BIMService.png",
     description: "Advanced Building Information Modeling solutions",
     position: "bottom"
   },
@@ -19,7 +19,7 @@ const services = [
     id: 2,
     title: "MEP Services",
     subtitle: "& Coordination",
-    image: "/MEP Service .png",
+    image: "https://i.postimg.cc/sxmY2YTD/MEPService.png",
     description: "Mechanical, Electrical, and Plumbing system design",
     position: "bottom"
   },
@@ -27,7 +27,7 @@ const services = [
     id: 3,
     title: "Architectural",
     subtitle: "Design Services",
-    image: "/Architecture Service.png",
+    image: "https://i.postimg.cc/1tkmN2Yv/Architecture-Service.png",
     description: "Complete architectural design from concept to construction",
     position: "bottom"
   },
@@ -35,7 +35,7 @@ const services = [
     id: 4,
     title: "Structural",
     subtitle: "Engineering",
-    image: "/Structure Service .png", 
+    image: "https://i.postimg.cc/qRhBq4Qt/Structure-Service.png", 
     description: "Advanced structural analysis and engineering solutions",
     position: "bottom"
   },
@@ -43,7 +43,7 @@ const services = [
     id: 5,
     title: "3D Visualization",
     subtitle: "& Rendering",
-    image: "/3D Visualiser .png",
+    image: "https://i.postimg.cc/8CnPTjdQ/3d-Visualiser.png",
     description: "Photorealistic visualizations and architectural renderings",
     position: "bottom"
   },

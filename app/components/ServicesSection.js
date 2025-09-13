@@ -15,7 +15,7 @@ const services = [
     content: (
       <CardServices
         introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
-        imageUrl="/BIM Service .png"
+        imageUrl="https://i.postimg.cc/pLRdCNV7/BIMService.png"
         serviceName="BIM SERVICES"
         pageNumber="001/005"
         services={[
@@ -38,7 +38,7 @@ const services = [
     content: (
       <CardServices
         introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
-        imageUrl="/MEP Service .png"
+        imageUrl="https://i.postimg.cc/sxmY2YTD/MEPService.png"
         serviceName="MEP"
         pageNumber="002/005"
         services={[
@@ -61,7 +61,7 @@ const services = [
     content: (
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
-        imageUrl="/Architecture Service.png"
+        imageUrl="https://i.postimg.cc/1tkmN2Yv/Architecture-Service.png"
         serviceName="ARCHITECTURAL"
         pageNumber="003/005"
         services={[
@@ -82,7 +82,7 @@ const services = [
     content: (
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
-        imageUrl="/Structure Service .png"
+        imageUrl="https://i.postimg.cc/qRhBq4Qt/Structure-Service.png"
         serviceName="STRUCTURAL"
         pageNumber="004/005"
         services={[
@@ -105,7 +105,7 @@ const services = [
     content: (
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
-        imageUrl="/3D Visualiser .png"
+        imageUrl="https://i.postimg.cc/8CnPTjdQ/3d-Visualiser.png"
         serviceName="3D VISUALIZATION"
         pageNumber="005/005"
         services={["3D Rendering", "3D Floor Plan Services"]}
