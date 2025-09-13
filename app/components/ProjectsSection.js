@@ -215,32 +215,37 @@ const IntroScene = React.forwardRef(
 
           <div className="mb-2 px-6 flex items-center gap-4">
             <h2
-              className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); } }}
+                className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
               style={{
                 fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                 fontSize: "clamp(1.28rem, 2.7vw, 3rem)",
                 letterSpacing: "0.3em",
+                  cursor: 'default'
               }}
             >
               OUR <br /> PROJECTS
             </h2>
-            <button className="flex items-center justify-center cursor-pointer bg-transparent font-geist-sans group">
-              <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
-                <svg
-                  className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M13 5l7 7-7 7" />
-                </svg>
-              </div>
-            </button>
+                {/* Decorative arrow restored for style (aria-hidden). Click behavior moved to the right-side H2. */}
+                <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
+                  <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
+                    <svg
+                      className="stroke-white transform -rotate-45 transition-transform duration-300 ease-in-out group-hover:rotate-0"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="M13 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
           </div>
           <div className="absolute top-0 right-0 h-full flex items-start">
             <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
@@ -288,8 +293,24 @@ const IntroScene = React.forwardRef(
             FROM HERE, <br /> IT&apos;S ONLY UP
           </div>
           <div className="ml-[5%] mt-4 md:mt-8 mb-8 flex items-center gap-4">
+            <div className="flex items-center gap-4">
             <h2
-              className="font-normal"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  const contactSection = document.getElementById('contact-us-section');
+                  if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                  else window.location.href = '/#contact-us-section';
+                }
+              }}
+              onClick={() => {
+                const contactSection = document.getElementById('contact-us-section');
+                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                else window.location.href = '/#contact-us-section';
+              }}
+              className="font-normal cursor-pointer"
               style={{
                 fontFamily:
                   "var(--font-century-gothic), Century Gothic, sans-serif",
@@ -300,10 +321,11 @@ const IntroScene = React.forwardRef(
             >
               Let&apos;s Collaborate
             </h2>
-            <button className="flex items-center justify-center cursor-pointer bg-transparent font-geist-sans group">
+            {/* Decorative arrow to match style on the left - aria-hidden so it doesn't duplicate action */}
+            <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
               <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
                 <svg
-                  className="stroke-white transform transition-transform duration-300 ease-in-out -rotate-45 group-hover:rotate-0"
+                  className="stroke-white transform rotate-0 transition-transform duration-300 ease-in-out group-hover:-rotate-45"
                   width="28"
                   height="28"
                   viewBox="0 0 24 24"
@@ -316,7 +338,8 @@ const IntroScene = React.forwardRef(
                   <path d="M13 5l7 7-7 7" />
                 </svg>
               </div>
-            </button>
+            </div>
+            </div>
           </div>
           <div
             className="font-bruno-ace-sc text-black font-bold text-right tracking-widest leading-tight"
@@ -663,7 +686,18 @@ const ContactUs = () => {
         would love to connect with you.
       </p>
       <div className="flex pt-1 justify-end items-end gap-4">
-        <ArrowButton label="Let's Collaborate" />
+        <ArrowButton
+          label="Let's Collaborate"
+          onClick={() => {
+            const contactSection = document.getElementById('contact-us-section');
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              // fallback: navigate to home with hash
+              window.location.href = '/#contact-us-section';
+            }
+          }}
+        />
       </div>
     </div>
   );

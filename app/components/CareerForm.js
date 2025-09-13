@@ -181,9 +181,12 @@ const CareerForm = () => {
 
           {/* Submit */}
           <div className="flex justify-center md:justify-end pt-2">
-            <button type="submit" disabled={submitting} className="relative inline-flex">
-              <ArrowButton label={submitting ? 'Submitting…' : 'Submit'} />
-            </button>
+            <ArrowButton
+              label={submitting ? 'Submitting…' : 'Submit'}
+              type="submit"
+              disabled={submitting}
+              style={{ opacity: submitting ? 0.6 : 1 }}
+            />
           </div>
         </form>
       </div>

@@ -57,9 +57,16 @@ const Footer = () => {
                     COLLECTIVE
                 </h2>
 
-                <div className="flex py-1 justify-end items-end gap-4">
-                    <ArrowButton label="Let's Collaborate" />
-                </div>
+                                <div className="flex py-1 justify-end items-end gap-4">
+                                        <ArrowButton
+                                            label="Let's Collaborate"
+                                            onClick={() => {
+                                                const contactSection = document.getElementById('contact-us-section');
+                                                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                                                else window.location.href = '/#contact-us-section';
+                                            }}
+                                        />
+                                </div>
             </div>
 
             <div className='w-full mt-8 flex flex-col md:flex-row justify-between gap-8'>
