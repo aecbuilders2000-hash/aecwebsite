@@ -18,10 +18,10 @@ export default function ContentSection() {
   const bottomRectRef = useRef(null);
   const topTextRef = useRef(null);
   const bottomTextRef = useRef(null);
-  
+
   // Ref for text reveal container
   const textRevealContainerRef = useRef(null);
-  
+
   // Ref for right side text bounce effect
   const rightTextRef = useRef(null);
   const lastHoveredIndex = useRef(-1);
@@ -42,16 +42,16 @@ export default function ContentSection() {
       const letterRect = letter.getBoundingClientRect();
       const letterCenterX = letterRect.left + letterRect.width / 2 - containerRect.left;
       const letterCenterY = letterRect.top + letterRect.height / 2 - containerRect.top;
-      
+
       // Calculate actual distance between mouse and letter center
       const deltaX = mouseX - letterCenterX;
       const deltaY = mouseY - letterCenterY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      
+
       if (distance <= maxDistance) {
         const delay = (distance / maxDistance) * maxDelay; // Closer = faster
         const intensity = 1 - (distance / maxDistance); // Closer = stronger
-        
+
         const timeout = setTimeout(() => {
           // Strong bounce effect based on actual proximity
           gsap.to(letter, {
@@ -61,7 +61,7 @@ export default function ContentSection() {
             duration: 0.4,
             ease: "back.out(2.5)"
           });
-          
+
           // Return animation with elastic
           gsap.to(letter, {
             y: 0,
@@ -72,7 +72,7 @@ export default function ContentSection() {
             ease: "elastic.out(1, 0.4)"
           });
         }, delay);
-        
+
         waveTimeouts.current.push(timeout);
       }
     });
@@ -83,7 +83,7 @@ export default function ContentSection() {
     stats.forEach((item, index) => {
       const targetNumber = parseInt(item.number);
       const statObject = { value: 0 };
-      
+
       gsap.to(statObject, {
         value: targetNumber,
         duration: 1.5,
@@ -133,10 +133,10 @@ export default function ContentSection() {
             // When scrub progress reaches the point where boxes finish opening
             if (self.progress >= 0.6 && !tl.textRevealTriggered) {
               tl.textRevealTriggered = true;
-              
+
               // Create separate non-scrub timeline for letter reveal
               tl.textRevealTl = gsap.timeline();
-              
+
               if (textRevealContainerRef.current) {
                 const letters = textRevealContainerRef.current.querySelectorAll('.letter');
                 tl.textRevealTl.to(letters, {
@@ -150,11 +150,11 @@ export default function ContentSection() {
 
               // Create separate non-scrub timeline for metrics animation
               tl.metricsTimeline = gsap.timeline({ delay: 0.2 }); // Small delay after text starts
-              
+
               stats.forEach((item, index) => {
                 const targetNumber = parseInt(item.number);
                 const statObject = { value: 0 };
-                
+
                 tl.metricsTimeline.to(statObject, {
                   value: targetNumber,
                   duration: 1.5,
@@ -169,11 +169,11 @@ export default function ContentSection() {
                 }, 0); // Start all at the same time
               });
             }
-            
+
             // Retract when scrolling back up
             if (self.progress < 0.6 && tl.textRevealTriggered) {
               tl.textRevealTriggered = false;
-              
+
               // Kill any ongoing animations
               if (tl.textRevealTl) {
                 tl.textRevealTl.kill();
@@ -181,9 +181,9 @@ export default function ContentSection() {
               if (tl.metricsTimeline) {
                 tl.metricsTimeline.kill();
               }
-              
+
               tl.textRetractTl = gsap.timeline();
-              
+
               if (textRevealContainerRef.current) {
                 const letters = textRevealContainerRef.current.querySelectorAll('.letter');
                 tl.textRetractTl.to(letters, {
@@ -201,13 +201,13 @@ export default function ContentSection() {
           }
         },
       });
-      
+
       tl.to(topTextRef.current, { opacity: 1, x: 0, ease: "power2.out" }, 0)
         .to(bottomTextRef.current, { opacity: 1, x: 0, ease: "power2.out" }, 0)
         .to(topRectRef.current, { y: "-100%", ease: "power4.inOut" }, 0.3)
         .to(bottomRectRef.current, { y: "100%", ease: "power4.inOut" }, 0.3);
     }
-    
+
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -216,9 +216,8 @@ export default function ContentSection() {
   return (
     <section
       ref={contentRef}
-      className="relative overflow-hidden border-t border-b border-gray-3"
+      className="relative bg-black h-fit min-h-screen overflow-hidden border-t border-b border-gray-3"
       style={{
-        minHeight: "100vh",
         width: "100vw",
         background: "var(--gray-2)", // Using E9ECEF from your color palette
         color: "var(--gray-9)",
@@ -275,11 +274,11 @@ export default function ContentSection() {
           EXTENDED STUDIO.
         </span>
       </div>
-      {/* Main Content (centered) */}
+
       {/* Main Content Section */}
       <section
         id="content-section"
-        className="w-full min-h-screen overflow-hidden flex flex-col box-border"
+        className="w-full h-fit overflow-hidden flex flex-col box-border"
         style={{
           paddingTop: "5vh", // 5vh gap from navbar
           paddingLeft: "2.5vw", // 2.5% from left
@@ -288,11 +287,11 @@ export default function ContentSection() {
       >
         {/* Top Row - Left and Right Boxes */}
         <div
-          className="flex flex-col md:flex-row absolute left-0 justify-between items-center right-0 box-border m-0"
+          className="flex h-fit lg:h-[60vh] flex-col md:flex-row absolute left-0 justify-between items-center right-0 box-border m-0"
           style={{
             top: "12.5vh", // 12.5% from top of screen
             width: "100%",
-            height: "60vh", // 60% height
+            // height: "60vh", // 60% height
             paddingLeft: "2.5vw", // Left padding instead of left margin
             paddingRight: "2.5vw", // Right padding instead of right margin
             gap: "clamp(1rem, 2.5vw, 2rem)", // Gap between left and right boxes
@@ -302,7 +301,7 @@ export default function ContentSection() {
         >
 
           {/* We are Collective - Left side, stacked */}
-          <div className="text-reveal-container relative w-[50vw] h-full flex flex-col justify-center"
+          <div className="text-reveal-container px-5 md:px-0 relative md:w-[50vw] h-full flex flex-col justify-center"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -323,17 +322,17 @@ export default function ContentSection() {
               }}
             >
               {/* Each word gets its own masked container */}
-              <div className="mask-line" style={{ 
+              <div className="mask-line" style={{
                 overflow: 'hidden',
                 height: '1.2em',
                 marginBottom: '0.1em',
                 position: 'relative'
               }}>
                 {"WE".split('').map((letter, index) => (
-                  <span 
-                    key={`we-${index}`} 
-                    className="letter" 
-                    style={{ 
+                  <span
+                    key={`we-${index}`}
+                    className="letter"
+                    style={{
                       display: 'inline-block',
                       transformStyle: 'preserve-3d',
                       position: 'relative'
@@ -343,18 +342,18 @@ export default function ContentSection() {
                   </span>
                 ))}
               </div>
-              
-              <div className="mask-line" style={{ 
+
+              <div className="mask-line" style={{
                 overflow: 'hidden',
                 height: '1.2em',
                 marginBottom: '0.1em',
                 position: 'relative'
               }}>
                 {"ARE".split('').map((letter, index) => (
-                  <span 
-                    key={`are-${index}`} 
-                    className="letter" 
-                    style={{ 
+                  <span
+                    key={`are-${index}`}
+                    className="letter"
+                    style={{
                       display: 'inline-block',
                       transformStyle: 'preserve-3d',
                       position: 'relative'
@@ -364,33 +363,33 @@ export default function ContentSection() {
                   </span>
                 ))}
               </div>
-              
-              <div className="mask-line" style={{ 
+
+              <div className="mask-line" style={{
                 overflow: 'hidden',
                 height: '1.2em',
                 position: 'relative'
               }}>
                 {"COLLECTIVE".split('').map((letter, index) => (
-                  <span 
-                    key={`collective-${index}`} 
-                    className="letter" 
-                    style={{ 
+                  <span
+                    key={`collective-${index}`}
+                    className="letter"
+                    style={{
                       display: 'inline-block',
                       transformStyle: 'preserve-3d',
                       position: 'relative'
                     }}
                   >
-                    {letter}
+                    COLLECTIVE
                   </span>
                 ))}
               </div>
             </div>
           </div>
+
           {/* Box 2: Right - Text Paragraph */}
           <div
-            className="flex items-center justify-center h-full" // vertically center content
+            className="flex md:w-[50vw] md:pr-[1.25vw] px-5 md:px-0 items-center justify-center h-full" // vertically center content
             style={{
-              width: "50vw", // Match left side width
               paddingRight: "1.25vw", // Align with navbar spacing
               position: "relative", // Remove absolute positioning
               boxSizing: "border-box",
@@ -400,7 +399,7 @@ export default function ContentSection() {
           >
             <div
               ref={rightTextRef}
-              className="font-poppins text-gray-700 text-right leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
+              className="font-poppins text-gray-700 text-justify md:text-right leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
               style={{
                 fontFamily: 'var(--font-poppins), sans-serif',
                 fontSize: 'clamp(1rem, 2.1vw, 1.25rem)',
@@ -441,28 +440,13 @@ export default function ContentSection() {
           </div>
         </div>
 
-        {/* Box 3: Bottom - We are Collective and Stats */}
+        {/* Box 3: Bottom - Stats */}
         <div
+          className="w-full md:px-10 h-fit absolute left-0 bottom-[2vw] flex items-center justify-center"
           id="content-section-details"
-          style={{
-            position: "absolute",
-            bottom: "0",
-            left: "0",
-            right: "0",
-            height: "calc(100vh - 12.5vh - 60vh)", // Remaining height after top position and middle height
-            width: "100%", // Full width
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between", // Space between left tagline and right metrics
-            paddingLeft: "2.5vw", // Left padding instead of left margin
-            paddingRight: "3.75vw", // Right padding (2.5vw + 1.25vw to align with navbar)
-            boxSizing: "border-box",
-            margin: 0, // Remove any default margin
-            zIndex: 1, // Lower z-index to stay below other content
-          }}
         >
           <div
-            className="w-full flex items-center justify-between flex-nowrap m-0 p-0 box-border"
+            className="w-full flex items-center justify-between flex-wrap m-0 p-0 box-border"
             style={{
               gap: "clamp(2rem, 4vw, 3rem)",
             }}
