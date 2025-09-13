@@ -192,8 +192,6 @@ export default function HeroSection() {
         alt="Collective AEC Logo"
         className="select-none cursor-pointer"
         style={{
-          mixBlendMode: "difference",
-          filter: "invert(1)",
           maxWidth: "none",
           zIndex: 1002,
           position: "fixed",
@@ -209,19 +207,22 @@ export default function HeroSection() {
       <div
         className="fixed w-full flex items-center justify-between"
         style={{
-          top: "0vh",
-          left: 0,
-          right: 0,
+          // float slightly below the top and center with reduced width so it appears floating
+          top: "1.2vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+            width: "calc(100% - 2.5vw)",
           zIndex: 1001,
           display: "flex",
           alignItems: "center",
           gap: "5vw",
           background: "rgba(255,255,255,0.18)",
-          boxShadow: "0 4px 32px rgba(0,0,0,0.08)",
+          boxShadow: "0 6px 44px rgba(0,0,0,0.10)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(255,255,255,0.25)",
-          padding: "0.5vw 2.5vw",
+          borderBottom: "1px solid rgba(255,255,255,0.12)",
+            padding: "0.35vw 1.6vw",
+            borderRadius: "9999px", // fully pill-shaped (rounded-full)
         }}
       >
         <div
@@ -250,8 +251,9 @@ export default function HeroSection() {
                 window.scrollTo({ top, behavior: "smooth" });
               },
             },
-            { href: "#projects-section", label: "Projects" },
             { href: "#services-overview-section", label: "Our Services" },
+            { href: "#projects-section", label: "Projects" },
+            { href: "/news", label: "News" },
             { href: "/careers", label: "Careers" },
           ].map((nav) => (
             <WaveNavLink key={nav.label} href={nav.href} text={nav.label} onClick={nav.onClick} />
@@ -316,7 +318,7 @@ export default function HeroSection() {
             pointerEvents: "none",
           }}
         >
-          <source src="/DesertBG.mp4" type="video/mp4" />
+    <source src="/WhatsApp Video 2025-09-13 at 11.40.17_6e976e94.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         {!isVideoLoaded && (
