@@ -70,21 +70,6 @@ gsap.registerPlugin(ScrollTrigger);
   //   imageUrl: "https://i.postimg.cc/gJWR6j6w/ASHWA-34-5.png",
   // },
   // {
-  //   title: "ONYX OUTLOOK",
-  //   location: "Vadodara, India",
-  //   imageUrl: "https://i.postimg.cc/xC3mGQK6/ASHWA-34-6.png",
-  // },
-  // {
-  //   title: "QUARTZ QUARTERS",
-  //   location: "Nashik, India",
-  //   imageUrl: "https://i.postimg.cc/zXXCjy2K/ASHWA-34-7.png",
-  // },
-  // {
-  //   title: "GRANITE GROVE",
-  //   location: "Coimbatore, India",
-  //   imageUrl: "https://i.postimg.cc/xTxKF9B7/ASHWA-34-8.png",
-  // },
-  // {
   //   title: "MARBLE MANOR",
   //   location: "Mysore, India",
   //   imageUrl: "https://i.postimg.cc/qBGcyswp/ASHWA-34-9.png",
@@ -100,47 +85,24 @@ gsap.registerPlugin(ScrollTrigger);
   //   imageUrl: "https://i.postimg.cc/Y0t1T0rc/ASHWA-34-11.png",
   // },
   // {
-  //   title: "BRICK BOULEVARD",
-  //   location: "Nagpur, India",
-  //   imageUrl: "https://i.postimg.cc/LXttyLMB/ASHWA-34-12.png",
-  // },
-  // {
-  //   title: "TERRACOTTA TERRACE",
-  //   location: "Patna, India",
-  //   imageUrl: "https://i.postimg.cc/W3Lm6Sx1/ASHWA-34-13.png",
-  // },
-  // {
-  //   title: "CLAY COURTYARD",
-  //   location: "Agra, India",
-  //   imageUrl: "https://i.postimg.cc/fRPfkMKX/ASHWA-34-14.png",
-  // },
-  // {
-  //   title: "CONCRETE CITADEL",
-  //   location: "Solapur, India",
-  //   imageUrl: "https://i.postimg.cc/L4kDvK9K/ASHWA-34-15.png",
-  // }
-// ...existing code...
-
-// --- TEXT CONTENT ---
-const firstParagraphText = `Collective AEC specializes in delivering exceptional commercial and residential projects, blending creativity with technical expertise. Our team of architects, designers, and project managers collaborates closely with clients to turn ideas into reality. From concept development to final execution, we handle every detail, ensuring each project is completed with precision, innovation, and a commitment to quality that sets us apart in the industry.`;
-const secondParagraphText = `Your project’s blueprint. It defines vision, guides execution, and ensures every decision you make shapes a space that truly resonates with its users.`;
-
-// --- SCENE COMPONENTS ---
-
-const IntroScene = React.forwardRef(
-  ({ weTextRef, areTextRef, collectiveTextRef }, ref) => {
+  const IntroScene = React.forwardRef(({ weTextRef, areTextRef, collectiveTextRef }, ref) => {
     // --- START: SLIDESHOW LOGIC ---
-    // Use three different images for the GSAP slideshow
-    const slideshowImages = [
-      "/K6 (3).webp",
-      "/K17 (1).webp",
-      "/K12 (3).webp",
-    ];
+    const slideshowImages = ["/K6 (3).webp", "/K17 (1).webp", "/K12 (3).webp"];
     const imageSet = [...slideshowImages, slideshowImages[0]];
 
+    const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
-      const items = gsap.utils.toArray(".intro-slideshow-item");
-      const images = gsap.utils.toArray(".intro-slideshow-item img");
+      function onResize() {
+        setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 767);
+      }
+      onResize();
+      window.addEventListener('resize', onResize);
+      return () => window.removeEventListener('resize', onResize);
+    }, []);
+
+    useEffect(() => {
+      const items = gsap.utils.toArray('.intro-slideshow-item');
+      const images = gsap.utils.toArray('.intro-slideshow-item img');
       if (items.length <= 1) return;
 
       items.forEach((item, index) => {
@@ -150,205 +112,102 @@ const IntroScene = React.forwardRef(
         }
       });
 
-      const tl = gsap.timeline({
-        repeat: -1,
-        defaults: { ease: "power3.inOut", duration: 1.5 },
-      });
-
+      const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power3.inOut', duration: 1.5 } });
       items.forEach((item, index) => {
         if (index < items.length - 1) {
           tl.to(item, { yPercent: -100 })
-            .to(images[index], { yPercent: 100 }, "<")
-            .to(items[index + 1], { yPercent: 0 }, "<")
-            .to(images[index + 1], { yPercent: 0 }, "<")
+            .to(images[index], { yPercent: 100 }, '<')
+            .to(items[index + 1], { yPercent: 0 }, '<')
+            .to(images[index + 1], { yPercent: 0 }, '<')
             .to({}, { duration: 2 });
         }
       });
 
-      return () => {
-        tl.kill();
-      };
+      return () => tl.kill();
     }, []);
-    // --- END: SLIDESHOW LOGIC ---
 
-    return (
-      <div
-        className="relative bg-gray-2 flex"
-        style={{ minWidth: "125vw", height: "100vh" }}
-      >
-        {/* Left Side */}
-        {/* --- START: CODE CORRECTION FOR ALIGNMENT --- */}
-        <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-start items-start py-0">
-          {/* SUMMARY OF CHANGES:
-            1. Parent container now uses `justify-start` to align children to the top.
-            2. The slideshow container below no longer has `max-w-[35vw]`, allowing it to fill the full width.
-            3. `mt-0` is removed as it's no longer necessary.
-          */}
-          <div className="relative h-[75vh] w-full max-w-[35vw] mb-6 overflow-hidden">
-            {imageSet.map((src, index) => (
-              <div
-                key={index}
-                className="intro-slideshow-item"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  overflow: "hidden",
-                }}
-              >
-                <Image
-                  src={src}
-                  alt={`Slideshow image ${index + 1}`}
-                  fill
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
-                  priority={index === 0}
-                />
-              </div>
-            ))}
-          </div>
-          {/* --- END: CODE CORRECTION FOR ALIGNMENT --- */}
-
-          <div className="mb-2 px-6 flex items-center gap-4">
-            <h2
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); } }}
-                className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
-              style={{
-                fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                fontSize: "clamp(1.28rem, 2.7vw, 3rem)",
-                letterSpacing: "0.3em",
-                  cursor: 'default'
-              }}
-            >
-              OUR <br /> PROJECTS
-            </h2>
-                {/* Decorative arrow restored for style (aria-hidden). Click behavior moved to the right-side H2. */}
-                <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
-                  <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
-                    <svg
-                      className="stroke-white transform -rotate-45 transition-transform duration-300 ease-in-out group-hover:rotate-0"
-                      width="28"
-                      height="28"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M5 12h14" />
-                      <path d="M13 5l7 7-7 7" />
-                    </svg>
-                  </div>
+    // Desktop layout (unchanged)
+    if (!isMobile) {
+      return (
+        <div className="relative bg-gray-2 flex" style={{ minWidth: '125vw', height: '100vh' }}>
+          {/* Left Side */}
+          <div className="relative w-[50vw] min-w-[300px] flex flex-col justify-start items-start py-0">
+            <div className="relative h-[75vh] w-full max-w-[35vw] mb-6 overflow-hidden">
+              {imageSet.map((src, index) => (
+                <div key={index} className="intro-slideshow-item" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden' }}>
+                  <Image src={src} alt={`Slideshow image ${index + 1}`} fill style={{ objectFit: 'cover', objectPosition: 'center' }} priority={index === 0} />
                 </div>
-          </div>
-          <div className="absolute top-0 right-0 h-full flex items-start">
-            <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
-              <span
-                className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight"
-                style={{
-                  fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                  fontSize: "clamp(1rem, 2vw, 1.5rem)",
-                  letterSpacing: "0.3em",
-                  writingMode: "vertical-rl",
-                  transform: "rotate(180deg)",
-                }}
-              >
-                COLLECTIVE
-              </span>
-              {["Residential", "Commercial"].map((item, index) => (
-                <span
-                  key={index}
-                  className="text-sm"
-                  style={{
-                    letterSpacing: "0.3em",
-                    writingMode: "vertical-rl",
-                    transform: "rotate(180deg)",
-                  }}
-                >
-                  {item}
-                </span>
               ))}
             </div>
-            <div className="w-[2px] bg-gray-500 h-full"></div>
+
+            <div className="mb-2 px-6 flex items-center gap-4">
+              <h2 role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); } }} className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.28rem, 2.7vw, 3rem)', letterSpacing: '0.3em', cursor: 'default' }}>OUR <br /> PROJECTS</h2>
+              <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
+                <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
+                  <svg className="stroke-white transform -rotate-45 transition-transform duration-300 ease-in-out group-hover:rotate-0" width="28" height="28" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M13 5l7 7-7 7" /></svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute top-0 right-0 h-full flex items-start">
+              <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
+                <span className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1rem, 2vw, 1.5rem)', letterSpacing: '0.3em', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>COLLECTIVE</span>
+                {['Residential', 'Commercial'].map((item, index) => (
+                  <span key={index} className="text-sm" style={{ letterSpacing: '0.3em', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{item}</span>
+                ))}
+              </div>
+              <div className="w-[2px] bg-gray-500 h-full"></div>
+            </div>
+          </div>
+
+          {/* Right Side */}
+          <div className="relative w-[75vw] mt-[5%]">
+            <div className="text-3xl ml-[5%]" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', letterSpacing: '0.2em', lineHeight: '1.2' }}>FROM HERE, <br /> IT&apos;S ONLY UP</div>
+            <div className="ml-[5%] mt-4 md:mt-8 mb-8 flex items-center gap-4">
+              <div className="flex items-center gap-4">
+                <h2 role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); else window.location.href = '/#contact-us-section'; } }} onClick={() => { const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); else window.location.href = '/#contact-us-section'; }} className="font-normal cursor-pointer" style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(1.2rem, 1.5vw, 2rem)', fontWeight: '400', letterSpacing: '0.05em' }}>Let&apos;s Collaborate</h2>
+                <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
+                  <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out"><svg className="stroke-white transform rotate-0 transition-transform duration-300 ease-in-out group-hover:-rotate-45" width="28" height="28" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M13 5l7 7-7 7" /></svg></div>
+                </div>
+              </div>
+            </div>
+            <div className="font-bruno-ace-sc text-black font-bold text-right tracking-widest leading-tight" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(2rem, 7vw, 5rem)', letterSpacing: '0.3em' }}>
+              <div ref={weTextRef}>WE</div>
+              <div ref={areTextRef}>ARE</div>
+              <div ref={collectiveTextRef}>COLLECTIVE</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Mobile IntroScene
+    return (
+      <div className="relative bg-gray-2 flex flex-col items-center" style={{ height: '100vh', width: '100vw', minWidth: '100vw' }}>
+        {/* Top image: full width, 40% height */}
+        <div style={{ position: 'relative', width: '100%', height: '40vh', overflow: 'hidden' }}>
+          <Image src={imageSet[0]} alt="Project top image" fill style={{ objectFit: 'cover', objectPosition: 'center' }} priority />
+        </div>
+
+        {/* Center horizontal line with centered text (mobile) */}
+        <div style={{ position: 'relative', width: '100%', height: '30vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Horizontal centered line */}
+          <div style={{ position: 'absolute', height: '2px', width: '80%', background: '#737272' }} />
+
+          {/* Text block centered on/around the line */}
+          <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', zIndex: 2 }}>
+            <span style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1rem, 4vw, 1.6rem)', letterSpacing: '0.25em' }}>COLLECTIVE</span>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(0.8rem, 2.7vw, 1rem)', letterSpacing: '0.2em' }}>COMMERCIAL</span>
+              <span style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(0.8rem, 2.7vw, 1rem)', letterSpacing: '0.2em' }}>RESIDENTIAL</span>
+            </div>
           </div>
         </div>
 
-        {/* Right Side */}
-        <div className="relative w-[75vw] mt-[5%]">
-          <div
-            className="text-3xl ml-[5%]"
-            style={{
-              fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-              fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-              letterSpacing: "0.2em",
-              lineHeight: "1.2",
-            }}
-          >
-            FROM HERE, <br /> IT&apos;S ONLY UP
-          </div>
-          <div className="ml-[5%] mt-4 md:mt-8 mb-8 flex items-center gap-4">
-            <div className="flex items-center gap-4">
-            <h2
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  const contactSection = document.getElementById('contact-us-section');
-                  if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                  else window.location.href = '/#contact-us-section';
-                }
-              }}
-              onClick={() => {
-                const contactSection = document.getElementById('contact-us-section');
-                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                else window.location.href = '/#contact-us-section';
-              }}
-              className="font-normal cursor-pointer"
-              style={{
-                fontFamily:
-                  "var(--font-century-gothic), Century Gothic, sans-serif",
-                fontSize: "clamp(1.2rem, 1.5vw, 2rem)",
-                fontWeight: "400",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Let&apos;s Collaborate
-            </h2>
-            {/* Decorative arrow to match style on the left - aria-hidden so it doesn't duplicate action */}
-            <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
-              <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out">
-                <svg
-                  className="stroke-white transform rotate-0 transition-transform duration-300 ease-in-out group-hover:-rotate-45"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M13 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-            </div>
-          </div>
-          <div
-            className="font-bruno-ace-sc text-black font-bold text-right tracking-widest leading-tight"
-            style={{
-              fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-              fontSize: "clamp(2rem, 7vw, 5rem)",
-              letterSpacing: "0.3em",
-            }}
-          >
+        {/* Remaining content below the vertical line */}
+        <div style={{ width: '100%', padding: '4vw 6vw', textAlign: 'center' }}>
+          <div style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1rem, 4vw, 1.6rem)', letterSpacing: '0.15em' }}>FROM HERE, <br /> IT&apos;S ONLY UP</div>
+          <div style={{ marginTop: '2vh', fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.6rem, 6vw, 3rem)', letterSpacing: '0.3em' }}>
             <div ref={weTextRef}>WE</div>
             <div ref={areTextRef}>ARE</div>
             <div ref={collectiveTextRef}>COLLECTIVE</div>
@@ -356,9 +215,8 @@ const IntroScene = React.forwardRef(
         </div>
       </div>
     );
-  }
-);
-IntroScene.displayName = "IntroScene";
+  });
+  IntroScene.displayName = 'IntroScene';
 
 const AboutScene = () => {
   const lastHoveredIndex = useRef(-1);
@@ -648,6 +506,7 @@ const AboutScene = () => {
 const ContactUs = () => {
   return (
     <div
+      className="p-8 pl-48 sm:pl-8 text-center"
       style={{
         width: "100vw",
         height: "100vh",
@@ -657,8 +516,6 @@ const ContactUs = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "2rem",
-        textAlign: "center",
       }}
     >
       <h2
