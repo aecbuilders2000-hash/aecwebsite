@@ -423,7 +423,7 @@ export default function ContentSection() {
                     {word.split('').map((letter, letterIndex) => (
                       <span
                         key={`${wordIndex}-${letterIndex}`}
-                        className="bounce-letter"
+                        className="bounce-letter text-sm sm:text-lg"
                         style={{
                           display: 'inline-block',
                           transformOrigin: 'center bottom',
@@ -446,7 +446,7 @@ export default function ContentSection() {
           id="content-section-details"
         >
           <div
-            className="w-full flex items-center justify-between flex-wrap m-0 p-0 box-border"
+            className="w-full grid grid-cols-2 md:grid-cols-4 m-0 p-0 box-border"
             style={{
               gap: "clamp(2rem, 4vw, 3rem)",
             }}
