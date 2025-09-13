@@ -108,7 +108,13 @@ const services = [
         imageUrl="https://i.postimg.cc/8CnPTjdQ/3d-Visualiser.png"
         serviceName="3D VISUALIZATION"
         pageNumber="005/005"
-        services={["3D Rendering", "3D Floor Plan Services"]}
+        services={[
+          "3D Modeling",
+          "Cinematic Walkthroughs",
+          "AR/VR Services",
+          "Project Renders",
+          "Floor Plan Renders",
+        ]}
         bottomText="Our visualization services bridge the gap between imagination and reality, making complex designs accessible to all stakeholders."
       />
     ),
@@ -150,8 +156,8 @@ export default function ServicesSection() {
 
     // Animate each card (except first)
     services.forEach((_, index) => {
-    if (index === 0) return;
-    const progress = (index - 1) / (services.length - 1);
+      if (index === 0) return;
+      const progress = (index - 1) / (services.length - 1);
       tl.fromTo(
         cards[index],
         { y: "100vh" },

@@ -244,7 +244,7 @@ function WaveNavLink({ href, text }) {
                     mixBlendMode: "difference",
                     fontSize: "clamp(2rem, 9vw, 15.2rem)",
                     left: "50%",
-                    transform: "translateX(-50%)",
+                    // transform: "translateX(-50%)",
                     position: "fixed",
                     maxWidth: "100vw",
                     width: "auto",
