@@ -814,6 +814,17 @@ const ProjectsMosaicPage = () => {
   const [hoveredSrc, setHoveredSrc] = useState(null);
   const [failedImages, setFailedImages] = useState([]);
 
+  // detect mobile to apply small right-shift on mosaic for mobile screens
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    function onResize() {
+      setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 767);
+    }
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   useEffect(() => {
     // This useEffect logic for calculating positions remains the same
     const paddingTop = 10;
@@ -878,6 +889,8 @@ const ProjectsMosaicPage = () => {
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box",
+        // small visual nudge on mobile so the left gap feels reduced
+        marginLeft: isMobile ? '6vw' : '0',
       }}
     >
       {sideItems.map((sideImgs, i) => {
