@@ -18,9 +18,20 @@ const CardServices = ({
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
     // const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
+
+    useEffect(() => {
+        // Mobile detection so we can apply mobile-only layout without changing desktop
+        function onResize() {
+            setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 767);
+        }
+        onResize();
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     useEffect(() => {
         if (!titleRef.current || !cardRef.current) return;
@@ -67,38 +78,65 @@ const CardServices = ({
         };
     }, []);
 
+    // conditional classes/styles: mobile layout is separate from desktop
+    const containerClass = isMobile ? 'flex flex-col w-full' : 'flex w-full';
+    const containerStyle = isMobile
+        ? { minHeight: 'calc(100vh - 5vh)', gap: 'clamp(2rem, 4vw, 4rem)' }
+        : { minHeight: '80vh', gap: 'clamp(2rem, 4vw, 4rem)' };
+
+    const leftColumnStyle = {
+        width: isMobile ? '100%' : '40%',
+        marginTop: isMobile ? '2vh' : '5%'
+    };
+
+    const rightColumnStyle = {
+        width: isMobile ? '100%' : '60%',
+        flex: isMobile ? 1 : undefined
+    };
+
+    const whiteBoxStyle = isMobile
+        ? {
+            position: 'relative',
+            top: '0',
+            right: '0',
+            width: '100%',
+            height: '100%', // fill the right column so it touches bottom
+            padding: 'clamp(2rem, 5vw, 3rem)',
+            gap: 'clamp(1.5rem, 3vh, 2rem)',
+            display: 'flex',
+            flexDirection: 'column'
+        }
+        : {
+            top: '8vh', // Start from same level as intro text
+            right: '1.25vw', // Align to the right
+            width: '80%', // 60% of right side width
+            height: 'calc(100vh - 8vh)', // Extend till end of page
+            padding: 'clamp(3rem, 6vw, 4rem) clamp(3rem, 6vw, 4rem)', // Reduced padding to prevent bottom text touching
+            gap: 'clamp(2rem, 4vh, 3rem)',
+            position: 'absolute'
+        };
+
     return (
         <section
             className="w-screen overflow-hidden bg-gray-100 box-border"
             style={{
-                minHeight: "100vh",
-                paddingTop: "5vh",
-                paddingLeft: "2.5vw",
-                paddingRight: "2.5vw",
+                minHeight: '100vh',
+                paddingTop: '5vh',
+                paddingLeft: '2.5vw',
+                paddingRight: '2.5vw'
             }}
         >
             {/* Main Content Row */}
-            <div
-                className="flex w-full"
-                style={{
-                    minHeight: "80vh",
-                    gap: "clamp(2rem, 4vw, 4rem)",
-                }}
-            >
-                {/* Left Column - 40% */}
-                <div
-                    className="flex flex-col justify-start items-start relative"
-                    style={{
-                        width: "40%",
-                        marginTop: "5%"
-                    }}
-                >
+            <div className={containerClass} style={containerStyle}>
+                {/* Left Column - 40% on desktop, full width on mobile */}
+                <div className="flex flex-col justify-start items-start relative" style={leftColumnStyle}>
                     {/* Service Name with Arrow - AFTER the image */}
                     <div
                         className="flex items-center"
                         style={{
                             // top: "calc(28vh + 18.75vw + 10vh)", // Updated calculation: new image top + image height + larger gap
-                            gap: "clamp(1rem, 2vw, 2rem)",
+                            gap: 'clamp(1rem, 2vw, 2rem)',
+                            marginTop: isMobile ? '2vh' : undefined
                         }}
                     >
                         <span
@@ -129,73 +167,78 @@ const CardServices = ({
                         </span>
 
                         {/* Arrow Circle */}
-                        <button className="flex items-center justify-center cursor-pointer bg-transparent group" style={{ padding: 0, border: 'none', background: 'none' }}>
-                            <div className="bg-black rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 'clamp(35px, 10vw, 60px)', height: 'clamp(35px, 10vw, 60px)' }}>
-                                <svg className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45" width="36" height="36" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M5 12h14" /><path d="M13 5l7 7-7 7" />
+                        <button
+                            className="flex items-center justify-center cursor-pointer bg-transparent group"
+                            style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center' }}
+                        >
+                            <div
+                                className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
+                                style={{ width: 'clamp(35px, 10vw, 60px)', height: 'clamp(35px, 10vw, 60px)' }}
+                            >
+                                <svg
+                                    className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
+                                    width="36"
+                                    height="36"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    style={{ display: 'block' }}
+                                >
+                                    <path d="M5 12h14" />
+                                    <path d="M13 5l7 7-7 7" />
                                 </svg>
                             </div>
                         </button>
                     </div>
-                    {/* Intro Text */}
-                    <p
-                        className="relative font-poppins leading-relaxed text-gray-500 m-0 text-left"
-                        style={{
-                            fontFamily: 'var(--font-poppins), sans-serif',
-                            // top: "8vh", // Reduced from 10vh for more space
-                            marginTop: "2vh",
-                            fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)', // Reduced by ~33% from clamp(1.1rem, 2.2vw, 1.7rem)
-                            width: "30vw", // Reduced from 100% to 30vw
-                        }}
-                    >
-                        {introText}
-                    </p>
-
-                    {/* Image */}
-                    <div
-                        className="relative"
-                        style={{
-                            top: "8vh", // Increased from 25vh for more space after intro text
-                            width: "30vw", // Reduced by 25% (was 25vw)
-                            height: "20vw", // Reduced by 25% (was 25vw) - maintains 1:1 ratio
-                            overflow: "hidden",
-                            borderRadius: "1.5rem", // rounded-3xl
-                        }}
-                    >
-                        <Image
-                            src={imageUrl}
-                            alt="Architecture Service"
-                            fill
-                            sizes="18.75vw"
+                    {/* Intro Text + Image: On mobile these sit side-by-side (each half width). On desktop they stack (text then image). */}
+                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start', marginTop: isMobile ? '2vh' : '0' }}>
+                        <p
+                            className="relative font-poppins leading-relaxed text-gray-500 m-0 text-left"
                             style={{
-                                objectFit: "contain",
-                                objectPosition: "center center",
-                                background: '#fff',
+                                fontFamily: 'var(--font-poppins), sans-serif',
+                                marginTop: isMobile ? '0' : '2vh',
+                                fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
+                                width: isMobile ? '100%' : '30vw'
                             }}
-                        />
+                        >
+                            {introText}
+                        </p>
+
+                        {/* Image */}
+                        <div
+                            className="relative"
+                            style={{
+                                marginLeft: 0,
+                                marginTop: isMobile ? '2vh' : '0vh',
+                                top: isMobile ? '1.5vh' : '8vh',
+                                width: isMobile ? '100%' : '30vw',
+                                height: isMobile ? '45vw' : '20vw',
+                                overflow: 'hidden',
+                                borderRadius: '1.5rem'
+                            }}
+                        >
+                            <Image
+                                src={imageUrl}
+                                alt="Architecture Service"
+                                fill
+                                sizes={isMobile ? '100vw' : '18.75vw'}
+                                style={{
+                                    objectFit: isMobile ? 'contain' : 'cover',
+                                    objectPosition: 'center center',
+                                    background: '#fff'
+                                }}
+                            />
+                        </div>
                     </div>
 
                 </div>
 
                 {/* Right Column - 60% */}
-                <div
-                    className="flex flex-col justify-center relative"
-                    style={{
-                        width: "60%",
-                    }}
-                >
+                <div className="flex flex-col justify-center relative" style={rightColumnStyle}>
                     {/* White Box Container */}
-                    <div
-                        className="absolute bg-white rounded-t-3xl rounded-b-none box-border flex flex-col justify-start"
-                        style={{
-                            top: "8vh", // Start from same level as intro text
-                            right: "1.25vw", // Align to the right
-                            width: "80%", // 60% of right side width
-                            height: "calc(100vh - 8vh)", // Extend till end of page
-                            padding: "clamp(3rem, 6vw, 4rem) clamp(3rem, 6vw, 4rem)", // Reduced padding to prevent bottom text touching
-                            gap: "clamp(2rem, 4vh, 3rem)",
-                        }}
-                    >
+                    <div className="bg-white rounded-t-3xl rounded-b-none box-border flex flex-col justify-start" style={whiteBoxStyle}>
                         {/* Services Header */}
                         <div
                             className="flex justify-between items-baseline"
