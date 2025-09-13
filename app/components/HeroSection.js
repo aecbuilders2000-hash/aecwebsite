@@ -81,7 +81,11 @@ function WaveNavLink({ href, text, onClick }) {
         <span
           key={i}
           className="wave-letter"
-          style={{ display: "inline-block", willChange: "transform", pointerEvents: "none" }}
+          style={{
+            display: "inline-block",
+            willChange: "transform",
+            pointerEvents: "none",
+          }}
         >
           {char === " " ? "\u00A0" : char}
         </span>
@@ -98,7 +102,13 @@ export default function HeroSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
-    gsap.to(".reveal-column", { y: "-100%", duration: 1.2, stagger: 0.2, ease: "power4.inOut", delay: 0.2 });
+    gsap.to(".reveal-column", {
+      y: "-100%",
+      duration: 1.2,
+      stagger: 0.2,
+      ease: "power4.inOut",
+      delay: 0.2,
+    });
 
     if (logoRef.current) {
       gsap.set(logoRef.current, {
@@ -110,24 +120,24 @@ export default function HeroSection() {
         position: "fixed",
         zIndex: 1002,
         // ✅ FIX 1: Change transform origin to the top-left corner.
-        transformOrigin: "left top", 
+        transformOrigin: "left top",
       });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "body",
           start: "top top",
-          end: "30vh", 
+          end: "30vh",
           scrub: 1,
         },
       });
 
       tl.to(logoRef.current, {
-        scale: 0.18,
+        scale: 0.15,
         left: "2.5vw",
         x: "0%",
         // ✅ FIX 2: Set final top position to exactly 2.5vh.
-        top: "2.5vh", 
+        top: "1.5vh",
         bottom: "auto",
         ease: "none",
       });
@@ -172,7 +182,9 @@ export default function HeroSection() {
       },
       { threshold: 0.1 }
     );
-    document.addEventListener("click", () => videoRef.current?.play(), { once: true });
+    document.addEventListener("click", () => videoRef.current?.play(), {
+      once: true,
+    });
     if (heroRef.current) observer.observe(heroRef.current);
 
     return () => {
@@ -211,7 +223,7 @@ export default function HeroSection() {
           top: "1.2vh",
           left: "50%",
           transform: "translateX(-50%)",
-            width: "calc(100% - 2.5vw)",
+          width: "calc(100% - 2.5vw)",
           zIndex: 1001,
           display: "flex",
           alignItems: "center",
@@ -221,8 +233,9 @@ export default function HeroSection() {
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
           borderBottom: "1px solid rgba(255,255,255,0.12)",
-            padding: "0.35vw 1.6vw",
-            borderRadius: "9999px", // fully pill-shaped (rounded-full)
+          paddingLeft: "1.6vw",
+          paddingRight: 0,
+          borderRadius: "9999px", // fully pill-shaped (rounded-full)
         }}
       >
         <div
@@ -230,7 +243,7 @@ export default function HeroSection() {
           className="font-bruno-ace-sc font-normal leading-tight select-none"
           style={{
             fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-            fontSize: "clamp(0.8rem, 1.5vw, 1.2rem)",
+            fontSize: "clamp(0.6rem, 1.1vw, 0.9rem)",
             color: "#000",
             letterSpacing: "0.3em",
             marginRight: "2vw",
@@ -256,14 +269,20 @@ export default function HeroSection() {
             { href: "/news", label: "News" },
             { href: "/careers", label: "Careers" },
           ].map((nav) => (
-            <WaveNavLink key={nav.label} href={nav.href} text={nav.label} onClick={nav.onClick} />
+            <WaveNavLink
+              key={nav.label}
+              href={nav.href}
+              text={nav.label}
+              onClick={nav.onClick}
+            />
           ))}
           <MorphingButton
             text="Let's Collaborate"
             fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
             style={{ margin: "0" }}
             onClick={() => {
-              const contactSection = document.getElementById("contact-us-section");
+              const contactSection =
+                document.getElementById("contact-us-section");
               if (contactSection) {
                 contactSection.scrollIntoView({ behavior: "smooth" });
               }
@@ -288,7 +307,13 @@ export default function HeroSection() {
           <div
             key={i}
             className={`reveal-column reveal-column-${i}`}
-            style={{ flex: 1, background: "#000", height: "100%", transform: "translateY(0)", willChange: "transform" }}
+            style={{
+              flex: 1,
+              background: "#000",
+              height: "100%",
+              transform: "translateY(0)",
+              willChange: "transform",
+            }}
           />
         ))}
       </div>
@@ -296,7 +321,11 @@ export default function HeroSection() {
       <section
         ref={heroRef}
         className="relative flex items-center justify-center overflow-hidden bg-black text-white"
-        style={{ minHeight: "100vh", width: "100vw", borderBottom: "1px solid var(--gray-3)" }}
+        style={{
+          minHeight: "100vh",
+          width: "100vw",
+          borderBottom: "1px solid var(--gray-3)",
+        }}
       >
         <video
           ref={videoRef}
@@ -318,7 +347,10 @@ export default function HeroSection() {
             pointerEvents: "none",
           }}
         >
-    <source src="/WhatsApp Video 2025-09-13 at 11.40.17_6e976e94.mp4" type="video/mp4" />
+          <source
+            src="/WhatsApp Video 2025-09-13 at 11.40.17_6e976e94.mp4"
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         {!isVideoLoaded && (

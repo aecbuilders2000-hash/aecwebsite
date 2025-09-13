@@ -479,7 +479,7 @@ const AboutScene = () => {
   };
 
   return (
-    <div className="w-[120vw] flex">
+    <div className="w-[140vw] flex">
       <div className="w-[100vw] flex">
         {/* Static Parent Container */}
         <div
@@ -981,7 +981,7 @@ const ProjectsMosaicPage = () => {
   return (
     <div
       style={{
-        width: "120vw",
+        width: "140vw",
         height: "100vh",
         background: "#E9ECEF",
         position: "relative",
@@ -989,30 +989,53 @@ const ProjectsMosaicPage = () => {
         boxSizing: "border-box",
       }}
     >
-      {sideItems.map((sideImgs, i) => (
-        <React.Fragment key={i}>
-          {sideImgs.map((item, idx) => {
+      {sideItems.map((sideImgs, i) => {
+        // Determine the single index on this side closest to the equator (50vh)
+        let closestIndex = -1;
+        if (Array.isArray(sideImgs) && sideImgs.length > 0) {
+          let best = { idx: -1, dist: Infinity };
+          sideImgs.forEach((it, k) => {
+            if (!it) return;
+            const itTop = it.top || 50;
+            const d = Math.abs(itTop - 50);
+            if (d < best.dist) best = { idx: k, dist: d };
+          });
+          closestIndex = best.idx;
+        }
+
+        return (
+          <React.Fragment key={i}>
+            {sideImgs.map((item, idx) => {
             if (!item) return null;
             // compute a global index across all side arrays so labels/keys are unique
             const priorCount = sideItems.slice(0, i).reduce((sum, arr) => sum + (arr ? arr.length : 0), 0);
             const globalIndex = priorCount + idx;
             const srcName = item.src ? item.src.split('/').pop().split('?')[0] : `img-${globalIndex}`;
-            // scale coordinates from original 100vw system to 120vw container
-            const containerScale = 120 / 100; // 1.2
+            // scale coordinates from original 100vw system to 140vw container
+            const containerScale = 140 / 100; // 1.4
             const scaledLeft = (item.left || 0) * containerScale;
             const scaledWidth = (item.w || 0) * containerScale;
             // Apply explicit per-index margin overrides (1-based indexes)
             const oneBasedIndex = globalIndex + 1;
             let extraLeftVW = 0;
             let extraRightVW = 0;
-            // As requested: indexes 13 and 19 get a left margin of 10vw; index 7 gets a right margin of 10vw
+            // Special nudge inward for image #1 if it ended up pinned too close to the corner
+            let cornerNudgeVW = 0;
+            // As requested: indexes 13 and 19 get a left margin (increased), index 7 gets a right margin (increased)
             if (oneBasedIndex === 13 || oneBasedIndex === 19) {
-              extraLeftVW = 10;
+              extraLeftVW = 14; // increased from 10
             }
             if (oneBasedIndex === 7) {
-              extraRightVW = 10;
+              extraRightVW = 14; // increased from 10
             }
-            const adjustedLeft = scaledLeft + extraLeftVW - extraRightVW;
+            if (oneBasedIndex === 1) {
+              // move it inward by 12vw from the corner — direction depends on which side the item is on
+              cornerNudgeVW = 12; // increased from 8
+            }
+            // Apply corner nudge: for right-side items (i===1) we move left, otherwise move right
+            const adjustedLeft = i === 1
+              ? scaledLeft - cornerNudgeVW + extraLeftVW - extraRightVW
+              : scaledLeft + cornerNudgeVW + extraLeftVW - extraRightVW;
             // Convex curvature: for left (i===3) and right (i===1) sides,
             // compute a translateX inward proportional to distance from vertical equator (50vh)
             let dynamicBorderRadius = 12; // base px
@@ -1021,8 +1044,13 @@ const ProjectsMosaicPage = () => {
               const itemTop = item.top || 50; // in vh
               const itemLeft = item.left || 50; // in vw-like units
               const distFromEquator = Math.abs(itemTop - 50); // 0..50
-              const normalized = Math.min(1, distFromEquator / 50); // 0..1
-              const maxTranslateVW = 6; // maximum inward translate in vw
+              // Only one item per side (closest to equator) will have zero margin
+              const isClosestToEquator = idx === closestIndex;
+
+              // Map margins for non-closest items to a range [5, 30]vw based on distance
+              const minMarginVW = 5;
+              const maxMarginVW = 30;
+
               // boost for corner items (first/last in column)
               const isCorner = idx === 0 || idx === (sideImgs.length - 1);
               // boost for items near absolute top/bottom (extremes)
@@ -1035,13 +1063,19 @@ const ProjectsMosaicPage = () => {
               const isPosCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
 
               let edgeBoost = 1.0;
-              if (isCorner) edgeBoost = 1.4;
-              if (isExtremePos) edgeBoost = Math.max(edgeBoost, 1.6);
-              if (isPosCorner) edgeBoost = Math.max(edgeBoost, 1.8);
+              if (isCorner) edgeBoost = 1.6;
+              if (isExtremePos) edgeBoost = Math.max(edgeBoost, 1.9);
+              if (isPosCorner) edgeBoost = Math.max(edgeBoost, 2.2);
 
-              translateVW = +((normalized * maxTranslateVW * edgeBoost)).toFixed(2);
-              // increase border-radius slightly towards edges and more for boosted items
-              dynamicBorderRadius = 12 + Math.round(normalized * 28 * edgeBoost);
+              if (isClosestToEquator) {
+                translateVW = 0;
+                dynamicBorderRadius = 12;
+              } else {
+                const normalized = Math.min(1, distFromEquator / 50);
+                // linear mapping to [minMarginVW, maxMarginVW], then apply edgeBoost
+                translateVW = +((minMarginVW + normalized * (maxMarginVW - minMarginVW)) * edgeBoost).toFixed(2);
+                dynamicBorderRadius = 12 + Math.round(normalized * 36 * edgeBoost);
+              }
 
               // If it's a positional corner, add rotation and stronger shadow later
               if (isPosCorner) {
@@ -1060,13 +1094,6 @@ const ProjectsMosaicPage = () => {
 
             // corner visuals
             const isPosCornerFlag = item._isPosCorner === true;
-            const cornerDir = item._cornerDir || null;
-            const rotateAngle = isPosCornerFlag
-              ? cornerDir === 'top-left' || cornerDir === 'bottom-left'
-                ? -4
-                : 4
-              : 0;
-
             const cornerShadow = isPosCornerFlag ? '0 12px 40px rgba(0,0,0,0.28)' : '0 4px 18px rgba(0,0,0,0.13)';
 
             const style = {
@@ -1076,7 +1103,8 @@ const ProjectsMosaicPage = () => {
               width: `${scaledWidth}vw`,
               height: `${item.h}vh`,
               borderRadius: `${dynamicBorderRadius}px`,
-              transform: `${translateStr} rotate(${rotateAngle}deg) ${baseScale}`,
+              // No rotation: only translate (for curvature) and scale (for hover)
+              transform: `${translateStr} ${baseScale}`,
               overflow: "hidden",
               boxShadow: cornerShadow,
               background: "#eee",
@@ -1120,12 +1148,12 @@ const ProjectsMosaicPage = () => {
                 {/* Apply special corner fixes for indexes 7, 13, 19 (1-based) */}
                 {(() => {
                   const oneBased = globalIndex + 1;
-                  const isProblemCorner = oneBased === 7 || oneBased === 13 || oneBased === 19;
+                  const isProblemCorner = oneBased === 1 || oneBased === 7 || oneBased === 13 || oneBased === 19;
                   const cornerOverrides = isProblemCorner
                     ? {
-                        transform: `${style.transform ? style.transform + ' ' : ''} rotate(${oneBased % 2 === 0 ? -4 : 4}deg)`,
-                        boxShadow: '0 18px 48px rgba(0,0,0,0.36)',
-                        zIndex: (style.zIndex || 20) + 10,
+                        // only adjust shadow and zIndex for problem corners; no rotation
+                        boxShadow: '0 22px 64px rgba(0,0,0,0.44)',
+                        zIndex: (style.zIndex || 20) + 18,
                       }
                     : {};
 
@@ -1145,7 +1173,8 @@ const ProjectsMosaicPage = () => {
             );
           })}
         </React.Fragment>
-      ))}
+          );
+        })}
       {/* Center text */}
       <div
         style={{
@@ -1181,8 +1210,8 @@ export default function ProjectsSection() {
   const areTextRef = useRef(null);
   const collectiveTextRef = useRef(null);
 
-  // Only include widths for rendered scenes: IntroScene (125vw), ProjectsMosaicPage (120vw), ContactUs (100vw)
-  const totalContainerWidth = 125 + 120 + 100;
+  // Only include widths for rendered scenes: IntroScene (125vw), ProjectsMosaicPage (140vw), ContactUs (100vw)
+  const totalContainerWidth = 125 + 140 + 100;
 
   useEffect(() => {
     const container = containerRef.current;

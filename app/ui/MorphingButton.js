@@ -329,10 +329,11 @@ function LiquidButtonComponent({
         className={`liquid-button ${className}`}
         style={{
           background: 'none',
-          padding: 'clamp(0.75rem, 1.5vw, 0.9375rem) clamp(1.5rem, 3vw, 1.875rem)',
+          /* slimmer vertical padding for a more compact button */
+          padding: 'clamp(0.4rem, 0.9vw, 0.5rem) clamp(1.25rem, 2.5vw, 1.5rem)',
           borderRadius: '3.125rem',
           position: 'relative',
-          marginTop: 'clamp(0.25rem, 0.5vw, 0.3125rem)',
+          marginTop: 'clamp(0.12rem, 0.25vw, 0.156rem)',
           display: 'inline-block',
           fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
           color: '#FFFFFF',
@@ -341,7 +342,7 @@ function LiquidButtonComponent({
           fontWeight: 100,
           fontSize: 'clamp(1rem, 2vw, 1.125rem)',
           letterSpacing: '0.0625rem',
-          margin: 'clamp(2.5rem, 5vw, 3.125rem)',
+          margin: 'clamp(1.25rem, 2.5vw, 1.6rem)',
           border: 'none',
           cursor: 'pointer',
           ...style
@@ -362,8 +363,8 @@ export function SmallButton(props) {
     <LiquidButtonComponent 
       style={{ 
         fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', 
-        padding: 'clamp(0.6rem, 1.2vw, 0.75rem) clamp(1.25rem, 2.5vw, 1.5625rem)', 
-        margin: 'clamp(1.5rem, 3vw, 1.875rem)',
+        padding: 'clamp(0.35rem, 0.75vw, 0.44rem) clamp(1.1rem, 2.2vw, 1.25rem)', 
+        margin: 'clamp(0.75rem, 1.5vw, 0.94rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
       {...props} 
@@ -376,8 +377,8 @@ export function MediumButton(props) {
     <LiquidButtonComponent 
       style={{ 
         fontSize: 'clamp(0.875rem, 1.75vw, 1rem)', 
-        padding: 'clamp(0.7rem, 1.4vw, 0.875rem) clamp(1.4rem, 2.8vw, 1.75rem)', 
-        margin: 'clamp(2rem, 4vw, 2.5rem)',
+        padding: 'clamp(0.38rem, 0.8vw, 0.47rem) clamp(1.2rem, 2.4vw, 1.4rem)', 
+        margin: 'clamp(1rem, 2vw, 1.25rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
       {...props} 
@@ -390,8 +391,8 @@ export function LargeButton(props) {
     <LiquidButtonComponent 
       style={{ 
         fontSize: 'clamp(1.125rem, 2.25vw, 1.25rem)', 
-        padding: 'clamp(0.8rem, 1.6vw, 1rem) clamp(1.75rem, 3.5vw, 2.1875rem)', 
-        margin: 'clamp(3rem, 6vw, 3.75rem)',
+        padding: 'clamp(0.45rem, 0.9vw, 0.55rem) clamp(1.4rem, 2.8vw, 1.6rem)', 
+        margin: 'clamp(1.5rem, 3vw, 1.9rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
       {...props} 
