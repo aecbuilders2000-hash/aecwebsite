@@ -62,8 +62,8 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className='w-full mt-12 flex flex-col md:flex-row justify-between gap-8'>
-                <div>
+            <div className='w-full mt-8 flex flex-col md:flex-row justify-between gap-8'>
+                <div className='flex flex-col gap-8 w-full md:w-2/5'>
                     <div
                         style={{
                             fontFamily: "var(--font-bruno-ace-sc), sans-serif",
@@ -71,7 +71,7 @@ const Footer = () => {
                             letterSpacing: "0.3em",
                             lineHeight: "1.15",
                         }}
-                        className='tracking-wide w-1/3'
+                        className='tracking-wide w-full'
                     >
                         DESIGN MORE<br />MANAGE LESS
                     </div>
