@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import MorphingButton from '../ui/MorphingButton';
 
 // Wave link copied / aligned with HeroSection version for consistent hover animation & styling
-function WaveNavLink({ href, text, onClick }) {
+function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
   const letters = text.split('');
   const linkRef = useRef(null);
   const router = useRouter();
@@ -40,18 +40,15 @@ function WaveNavLink({ href, text, onClick }) {
       onClick(e);
       return;
     }
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      // If we're already on home, smooth scroll; else navigate to home with hash
-      if (pathname === '/' || pathname === '') {
-        const targetId = href.replace('#', '');
-        const target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        router.push('/' + href);
-      }
+    // If href contains a fragment, handle without adding the fragment to the URL.
+    if (href.includes('#')) {
+      // Restore default behavior: allow browser to navigate with the hash so native scrolling occurs.
+      try {
+        window.location.href = href;
+      } catch (err) {}
       return;
     }
+
     e.preventDefault();
     try {
       router.push(href);
@@ -66,18 +63,32 @@ function WaveNavLink({ href, text, onClick }) {
       ref={linkRef}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
-      style={{
-        fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
-        fontWeight: 600,
-        fontSize: 'clamp(0.5rem, 1vw, 1rem)',
-        color: '#000',
-        textDecoration: 'none',
-        letterSpacing: '0.1em',
-        marginRight: '0.5vw',
-        transition: 'color 0.2s',
-        display: 'inline-block',
-        cursor: 'pointer',
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick(e);
+        }
       }}
+      style={{
+          fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
+          fontWeight: 600,
+          fontSize: 'clamp(0.5rem, 1vw, 1rem)',
+          color: '#000',
+          textDecoration: 'none',
+          letterSpacing: '0.1em',
+          marginRight: '0.5vw',
+          transition: 'color 0.2s',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'clamp(0.35rem, 0.8vw, 0.6rem) clamp(0.5rem, 1vw, 0.9rem)',
+          paddingBottom: 'clamp(0.6rem, 1.2vw, 0.9rem)',
+          marginBottom: 'calc(-1 * clamp(0.15rem, 0.4vw, 0.35rem))',
+          borderRadius: '0.5rem',
+          lineHeight: 1,
+          cursor: 'pointer',
+          ...userStyle,
+        }}
     >
       {letters.map((char, i) => (
         <span
@@ -87,6 +98,7 @@ function WaveNavLink({ href, text, onClick }) {
             display: 'inline-block',
             willChange: 'transform',
             pointerEvents: 'none',
+            padding: '0 0.08rem',
           }}
         >
           {char === ' ' ? '\u00A0' : char}
@@ -135,7 +147,7 @@ function NavbarInner() {
   }, [isMenuOpen]);
 
   const navItems = [
-    { href: '#content-section-details', label: 'About Us', onClick: (e) => { e.preventDefault(); router.push('/#content-section-details'); setIsMenuOpen(false); } },
+    { href: '#content-section-details', label: 'About Us' },
     { href: '#services-overview-section', label: 'Our Services' },
     { href: '#projects-section', label: 'Projects' },
     { href: '/news', label: 'News' },
@@ -154,8 +166,8 @@ function NavbarInner() {
           backdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)', WebkitBackdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)',
           borderBottom: isMobile ? '1px solid rgba(0,0,0,0.06)' : '1px solid rgba(255,255,255,0.12)',
           paddingLeft: '1.6vw', paddingRight: 0,
-          paddingTop: isMobile ? '0.05rem' : undefined, paddingBottom: isMobile ? '0.05rem' : undefined,
-          minHeight: isMobile ? 'clamp(2.4rem, 6vh, 3rem)' : undefined,
+          paddingTop: isMobile ? '0.02rem' : undefined, paddingBottom: isMobile ? '0.02rem' : undefined,
+          minHeight: isMobile ? 'clamp(2rem, 5vh, 2.6rem)' : undefined,
           borderRadius: '9999px', position: 'fixed',
         }}
       >
@@ -163,7 +175,7 @@ function NavbarInner() {
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
-            style={{ width: isMobile ? '32vw' : '8.5vw', maxWidth: '160px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
+            style={{ width: isMobile ? '24vw' : '6.5vw', maxWidth: '120px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
             onClick={() => { router.push('/'); if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </div>
@@ -175,13 +187,14 @@ function NavbarInner() {
           <MorphingButton
             key={isMobile ? 'mobile' : 'desktop'} text="Let's Collaborate"
             fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
-            style={{ margin: 0, fontSize: isMobile ? '0.78rem' : '1.05rem', height: isMobile ? 'clamp(2.4rem, 6vh, 3rem)' : undefined, padding: isMobile ? '0.35rem 0.8rem' : '0.45rem 0.9rem', marginLeft: isMobile ? '0.2rem' : undefined }}
+            style={{ margin: 0, fontSize: isMobile ? '0.72rem' : '1.0rem', height: isMobile ? 'clamp(1.8rem, 4vh, 2.4rem)' : undefined, padding: isMobile ? '0.2rem 0.5rem' : '0.4rem 0.8rem', marginLeft: isMobile ? '0.08rem' : undefined }}
             onClick={() => {
               if (pathname === '/' || pathname === '') {
                 const contactSection = document.getElementById('contact-us-section');
                 if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
               } else {
-                router.push('/#contact-us-section');
+                try { sessionStorage.setItem('scrollToId', 'contact-us-section'); } catch (err) {}
+                router.push('/');
               }
             }}
           />
@@ -215,9 +228,20 @@ function NavbarInner() {
                     href={nav.href}
                     text={nav.label}
                     onClick={(e) => {
-                      if (nav.onClick) nav.onClick(e); else if (nav.href.startsWith('#')) { e.preventDefault(); router.push('/' + nav.href); }
+                      if (nav.onClick) { nav.onClick(e); setIsMenuOpen(false); return; }
+                      if (nav.href.startsWith('#')) {
+                        e.preventDefault();
+                        const frag = nav.href.replace('#', '');
+                        try { sessionStorage.setItem('scrollToId', frag); } catch (err) {}
+                        router.push('/');
+                      } else {
+                        e.preventDefault();
+                        router.push(nav.href);
+                      }
                       setIsMenuOpen(false);
                     }}
+                    // Match HeroSection sliding menu font-size
+                    style={{ fontSize: 'clamp(0.5rem, 3vw, 1rem)' }}
                   />
                 </div>
               ))}

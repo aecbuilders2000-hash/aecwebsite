@@ -8,7 +8,7 @@ import MorphingButton from "../ui/MorphingButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function WaveNavLink({ href, text, onClick }) {
+function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
   const letters = text.split("");
   const linkRef = useRef(null);
   const router = useRouter();
@@ -73,8 +73,16 @@ function WaveNavLink({ href, text, onClick }) {
         letterSpacing: "0.1em",
         marginRight: "0.5vw",
         transition: "color 0.2s",
-        display: "inline-block",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(0.35rem, 0.8vw, 0.6rem) clamp(0.5rem, 1vw, 0.9rem)",
+        paddingBottom: "clamp(0.6rem, 1.2vw, 0.9rem)",
+        marginBottom: "calc(-1 * clamp(0.15rem, 0.4vw, 0.35rem))",
+        borderRadius: "0.5rem",
+        lineHeight: 1,
         cursor: "pointer",
+        ...userStyle,
       }}
     >
       {letters.map((char, i) => (
@@ -85,6 +93,7 @@ function WaveNavLink({ href, text, onClick }) {
             display: "inline-block",
             willChange: "transform",
             pointerEvents: "none",
+            padding: "0 0.08rem",
           }}
         >
           {char === " " ? "\u00A0" : char}
@@ -277,8 +286,12 @@ export default function HeroSection() {
           alignItems: "center",
           gap: "5vw",
           // stronger translucency on mobile so the glass effect is visible
-          background: isMobile ? "rgba(255,255,255,0.36)" : "rgba(255,255,255,0.18)",
-          boxShadow: isMobile ? "0 10px 58px rgba(0,0,0,0.10)" : "0 6px 44px rgba(0,0,0,0.10)",
+          background: isMobile
+            ? "rgba(255,255,255,0.36)"
+            : "rgba(255,255,255,0.18)",
+          boxShadow: isMobile
+            ? "0 10px 58px rgba(0,0,0,0.10)"
+            : "0 6px 44px rgba(0,0,0,0.10)",
           backdropFilter: isMobile ? "blur(20px)" : "blur(16px)",
           WebkitBackdropFilter: isMobile ? "blur(20px)" : "blur(16px)",
           borderBottom: isMobile
@@ -286,9 +299,9 @@ export default function HeroSection() {
             : "1px solid rgba(255,255,255,0.12)",
           paddingLeft: "1.6vw",
           paddingRight: 0,
-          paddingTop: isMobile ? "0.05rem" : undefined,
-          paddingBottom: isMobile ? "0.05rem" : undefined,
-          minHeight: isMobile ? "clamp(2.4rem, 6vh, 3rem)" : undefined,
+          paddingTop: isMobile ? "0.02rem" : undefined,
+          paddingBottom: isMobile ? "0.02rem" : undefined,
+          minHeight: isMobile ? "clamp(2rem, 5vh, 2.6rem)" : undefined,
           borderRadius: "9999px", // fully pill-shaped (rounded-full)
         }}
       >
@@ -297,11 +310,13 @@ export default function HeroSection() {
           className="font-bruno-ace-sc font-normal leading-tight select-none"
           style={{
             fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-            fontSize: "clamp(0.6rem, 1.1vw, 0.9rem)",
+            fontSize: isMobile
+              ? "clamp(0.5rem, 1.8vw, 0.75rem)"
+              : "clamp(0.6rem, 1.1vw, 0.9rem)",
             color: "#000",
             letterSpacing: "0.3em",
-            marginRight: "2vw",
-            marginLeft: isMobile ? "2vw" : 0,
+            marginRight: "1.2vw",
+            marginLeft: isMobile ? "1.2vw" : 0,
           }}
         >
           <div>DESIGN MORE</div>
@@ -348,11 +363,12 @@ export default function HeroSection() {
             fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
             style={{
               margin: "0",
-              fontSize: isMobile ? "0.78rem" : "1.05rem",
-              // on mobile match the navbar height/padding using clamp and rems
-              height: isMobile ? "clamp(2.4rem, 6vh, 3rem)" : undefined,
-              padding: isMobile ? "0.35rem 0.8rem" : "0.45rem 0.9rem",
-              marginLeft: isMobile ? "0.2rem" : undefined,
+              fontSize: isMobile ? "0.72rem" : "1.0rem",
+              // on mobile match the navbar height/padding using clamp and rems (slimmer)
+              height: isMobile ? "clamp(1.8rem, 4vh, 2.4rem)" : undefined,
+              padding: isMobile ? "0.2rem 0.5rem" : "0.4rem 0.8rem",
+              marginLeft: isMobile ? "0.08rem" : undefined,
+              minWidth: isMobile ? "6.5rem" : undefined,
             }}
             onClick={() => {
               const contactSection =
@@ -498,7 +514,7 @@ export default function HeroSection() {
                       setIsMenuOpen(false);
                     }}
                     // ensure larger text inside the menu
-                    style={{ fontSize: "clamp(1rem, 4.5vw, 1.3rem)" }}
+                    style={{ fontSize: "clamp(0.5rem, 3vw, 1rem)" }}
                   />
                 </div>
               ))}

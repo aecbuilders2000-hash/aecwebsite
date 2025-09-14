@@ -155,7 +155,7 @@ export default function NewsSlider({ items }) {
         <section
             id="news-section"
             ref={containerRef}
-            className="w-full px-[clamp(1rem,5vw,5%)] py-[clamp(2.5rem,7vw,5rem)] bg-white relative"
+            className="w-full px-[clamp(1rem,5vw,5%)] py-[clamp(2.5rem,7vw,5rem)] bg-white relative mt-8"
             style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}
         >
             <div className="max-w-7xl mx-auto">
