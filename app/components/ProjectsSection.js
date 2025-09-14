@@ -152,7 +152,7 @@ gsap.registerPlugin(ScrollTrigger);
             <div className="absolute top-0 right-0 h-full flex items-start">
               <div className="flex flex-col gap-8 pr-4 items-end justify-between h-full py-8">
                 <span className="font-bruno-ace-sc text-black font-bold tracking-widest leading-tight" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1rem, 2vw, 1.5rem)', letterSpacing: '0.3em', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>COLLECTIVE</span>
-                {['Residential', 'Commercial'].map((item, index) => (
+                {['Perfection', 'Expertise'].map((item, index) => (
                   <span key={index} className="text-sm" style={{ letterSpacing: '0.3em', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{item}</span>
                 ))}
               </div>
