@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { countries } from '../constants/CountryList';
 import ArrowButton from '../ui/ArrowButton';
 
@@ -15,6 +15,16 @@ const ContactForm = () => {
   );
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' }); // type: 'success' | 'error'
+  const [cooldownRemaining, setCooldownRemaining] = useState(0); // seconds
+  // Cooldown countdown effect
+  useEffect(() => {
+    if (cooldownRemaining <= 0) return;
+    const t = setInterval(() => {
+      setCooldownRemaining((s) => (s > 1 ? s - 1 : 0));
+    }, 1000);
+    return () => clearInterval(t);
+  }, [cooldownRemaining]);
+
 
   // E.164: max 15 digits total including country code (without +)
   // We'll derive country dial code length from countries list (phoneCode).
@@ -74,6 +84,7 @@ const ContactForm = () => {
         type: 'success',
         message: 'Thank you for contacting us. Your message has been received and a member of our team will reach out shortly.'
       });
+      setCooldownRemaining(10); // start 10s cooldown only on success
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
       console.error(err);
@@ -208,12 +219,25 @@ const ContactForm = () => {
 
           {/* Submit */}
           <div className="flex justify-center md:justify-end pt-2">
-            <ArrowButton
-              label={submitting ? 'Sending…' : 'Submit'}
-              type="submit"
-              disabled={submitting}
-              style={{ opacity: submitting ? 0.6 : 1 }}
-            />
+            <div className="flex flex-col items-center md:items-end gap-2 w-full">
+              <ArrowButton
+                label={
+                  submitting
+                    ? 'Sending…'
+                    : cooldownRemaining > 0
+                    ? `Please wait (${cooldownRemaining}s)`
+                    : 'Submit'
+                }
+                type="submit"
+                disabled={submitting || cooldownRemaining > 0}
+                style={{ opacity: submitting || cooldownRemaining > 0 ? 0.6 : 1 }}
+              />
+              {cooldownRemaining > 0 && status.type === 'success' && (
+                <p className="text-xs md:text-sm text-gray-600" aria-live="polite">
+                  For security and quality purposes, another message can be sent in {cooldownRemaining} second{cooldownRemaining !== 1 ? 's' : ''}.
+                </p>
+              )}
+            </div>
           </div>
         </form>
       </div>
