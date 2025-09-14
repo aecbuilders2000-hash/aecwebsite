@@ -397,7 +397,7 @@ export default function ContentSection() {
 
           {/* Box 2: Right - Text Paragraph */}
           <div
-            className="flex md:w-[50vw] md:pr-[1.25vw] px-5 md:px-0 items-center justify-center h-full" // vertically center content
+            className="w-full flex md:w-[50vw] md:pr-[1.25vw] px-5 md:px-0 items-center justify-center h-full" // vertically center content
             style={{
               paddingRight: "1.25vw", // Align with navbar spacing
               position: "relative", // Remove absolute positioning
@@ -408,11 +408,19 @@ export default function ContentSection() {
           >
             <div
               ref={rightTextRef}
-              className="font-poppins text-gray-700 text-justify md:text-right leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
+              className="font-poppins text-gray-700 leading-relaxed m-0 p-0 border-0 box-border outline-none cursor-pointer"
               style={{
                 fontFamily: 'var(--font-poppins), sans-serif',
                 fontSize: 'clamp(1rem, 2.1vw, 1.25rem)',
-                maxWidth: '100%',
+                maxWidth: isMobile ? '100%' : 'min(60ch, 54vw)',
+                width: '100%',
+                textAlign: 'justify',
+                textAlignLast: 'justify',
+                textJustify: 'inter-word',
+                wordSpacing: isMobile ? '0.10em' : '0.22em',
+                hyphens: 'auto',
+                lineHeight: 1.6,
+                padding: isMobile ? '0' : '0.25rem'
               }}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -428,23 +436,27 @@ export default function ContentSection() {
               {`Collective AEC is a specialized collaborative studio offering end-to-end backend support for design firms. We are not an outsourcing company. We are your extended in-house team of architects, designers, visualizers, computational experts, and problem solvers. Our mission is to free design firms from the time-consuming burdens of drafting, automation, and visualization, so they can focus on what matters most: designing, innovating and winning clients.`
                 .split(' ')
                 .map((word, wordIndex) => (
-                  <span key={wordIndex} style={{ display: 'inline-block', marginRight: '0.3em' }}>
-                    {word.split('').map((letter, letterIndex) => (
-                      <span
-                        key={`${wordIndex}-${letterIndex}`}
-                        className="bounce-letter text-sm sm:text-lg"
-                        style={{
-                          display: 'inline-block',
-                          transformOrigin: 'center bottom',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {letter}
-                      </span>
-                    ))}
-                  </span>
-                ))
-              }
+                  <React.Fragment key={wordIndex}>
+                    <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
+                      {word.split('').map((letter, letterIndex) => (
+                        <span
+                          key={`${wordIndex}-${letterIndex}`}
+                          className="bounce-letter text-sm sm:text-lg"
+                          style={{
+                            display: 'inline-block',
+                            verticalAlign: 'bottom',
+                            transformOrigin: 'center bottom',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {letter}
+                        </span>
+                      ))}
+                    </span>
+                    {' '}
+                  </React.Fragment>
+                ))}
+              <span aria-hidden="true" style={{ display: 'inline-block', width: '100%' }} />
             </div>
           </div>
         </div>
