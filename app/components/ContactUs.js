@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { countries } from '../constants/CountryList';
 import ArrowButton from '../ui/ArrowButton';
 
@@ -14,26 +14,73 @@ const ContactForm = () => {
     countries.find((c) => c.value === 'IN') || countries[0]
   );
   const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState({ type: '', message: '' }); // type: 'success' | 'error'
+
+  // E.164: max 15 digits total including country code (without +)
+  // We'll derive country dial code length from countries list (phoneCode).
+  const selectedDialCodeDigits = useMemo(() => {
+    if (!selectedCountry?.phoneCode) return 0;
+    return selectedCountry.phoneCode.replace(/[^0-9]/g, '').length; // e.g. '+91' -> 2
+  }, [selectedCountry]);
+
+  const maxTotalDigits = 15; // E.164 global cap
+  const maxLocalDigits = Math.max(0, maxTotalDigits - selectedDialCodeDigits);
+  const minLocalDigits = 6; // Reasonable lower bound for meaningful numbers (varies by country)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'phone') {
+      // Keep digits only
+      let digits = value.replace(/[^0-9]/g, '');
+      if (digits.length > maxLocalDigits) digits = digits.slice(0, maxLocalDigits);
+      setFormData((prev) => ({ ...prev, phone: digits }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email) {
-      alert('Please fill in required fields (Name & Email).');
+      setStatus({
+        type: 'error',
+        message: 'Please provide both your name and a valid email address before submitting.'
+      });
       return;
     }
+    // Optional phone validation: if provided, ensure length constraints.
+    if (formData.phone) {
+      if (formData.phone.length < minLocalDigits) {
+        setStatus({
+          type: 'error',
+          message: `Phone number is too short. It should have at least ${minLocalDigits} digits (excluding country code).`
+        });
+        return;
+      }
+      if (formData.phone.length > maxLocalDigits) {
+        setStatus({
+          type: 'error',
+          message: 'Phone number is too long for the selected country.'
+        });
+        return;
+      }
+    }
     setSubmitting(true);
+    setStatus({ type: '', message: '' });
     try {
       // TODO: integrate API endpoint (e.g., /api/contact)
-      alert('Message sent (placeholder).');
+      // Simulate success placeholder
+      setStatus({
+        type: 'success',
+        message: 'Thank you for contacting us. Your message has been received and a member of our team will reach out shortly.'
+      });
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
       console.error(err);
-      alert('Failed to send. Please retry.');
+      setStatus({
+        type: 'error',
+        message: 'We were unable to send your message just now. Please try again in a moment or email us directly.'
+      });
     } finally {
       setSubmitting(false);
     }
@@ -56,7 +103,22 @@ const ContactForm = () => {
           <div className="w-full h-px bg-gray-700" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12">
+        <form onSubmit={handleSubmit} className="space-y-12" noValidate>
+          {status.message && (
+            <div
+              className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${
+                status.type === 'success'
+                  ? 'bg-green-50 border-green-300 text-green-800'
+                  : status.type === 'error'
+                  ? 'bg-red-50 border-red-300 text-red-800'
+                  : 'hidden'
+              }`}
+              role={status.type === 'error' ? 'alert' : 'status'}
+              aria-live="polite"
+            >
+              {status.message}
+            </div>
+          )}
           {/* Row 1: Name / Email */}
           <div className="flex flex-col md:flex-row md:items-center w-full md:justify-between gap-8 md:gap-16">
             <div className="flex-1 w-full">
@@ -92,7 +154,14 @@ const ContactForm = () => {
                   value={selectedCountry.value}
                   onChange={(e) => {
                     const country = countries.find((c) => c.value === e.target.value);
-                    setSelectedCountry(country);
+                    if (country) {
+                      setSelectedCountry(country);
+                      // Re-trim phone to new max for new country
+                      setFormData((prev) => {
+                        const digits = prev.phone.slice(0, Math.max(0, 15 - (country.phoneCode || '+').replace(/[^0-9]/g, '').length));
+                        return { ...prev, phone: digits };
+                      });
+                    }
                   }}
                   className="px-2 py-2 border border-gray-300 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-black w-full sm:w-auto"
                 >
@@ -113,9 +182,16 @@ const ContactForm = () => {
                     onChange={handleInputChange}
                     placeholder="Your Phone"
                     className="flex-1 text-black bg-transparent pb-2 text-base md:text-lg placeholder-gray-400 outline-none"
+                    inputMode="numeric"
+                    aria-describedby="phone-help"
                   />
                 </div>
               </div>
+              <p id="phone-help" className="mt-2 text-xs md:text-sm text-gray-600 tracking-wide">
+                {formData.phone
+                  ? `${formData.phone.length}/${maxLocalDigits} digits (local).`
+                  : `Up to ${maxLocalDigits} digits (local part) allowed. Total including country code must not exceed 15.`}
+              </p>
             </div>
             <div className="flex-1 w-full">
               <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Message:</label>
