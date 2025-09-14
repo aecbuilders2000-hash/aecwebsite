@@ -43,7 +43,6 @@ export default function Home() {
       <ClientsSection />
       <ProjectsSection />
       <TestinomialSection />
-      <Services2 />
       <ContactUs />
     </div>
   );

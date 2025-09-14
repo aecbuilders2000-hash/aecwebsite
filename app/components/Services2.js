@@ -136,14 +136,10 @@ const Services2 = () => {
         return () => ctx.revert();
     }, []);
 
-    // Array of vh values for each card
-    const cardVhPositions = [400, 500, 600, 720, 850];
-
-    // Scroll to a fixed vh for each service card
-    const scrollToService = (index) => {
-        const targetVh = cardVhPositions[index] || 500;
-        const y = window.innerHeight * (targetVh / 100);
-        window.scrollTo({ top: y, behavior: "smooth" });
+    // Simple function to handle navigation to services section
+    const handleServiceClick = () => {
+        // Use anchor link to navigate to services section on home page
+        window.location.href = '/#services-section';
     };
 
     return (
@@ -161,7 +157,7 @@ const Services2 = () => {
             < div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
                 {
                     bottomServices.map((service, index) => (
-                        <div key={service.id} className="w-full flex items-stretch bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ height: '13vh' }} onClick={() => scrollToService(index)}>
+                        <div key={service.id} className="w-full flex items-stretch bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ height: '13vh' }} onClick={handleServiceClick}>
                             {/* Image - left (40%) */}
                             <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
                                 <Image src={service.image} alt={service.title} fill className="object-cover" />
@@ -193,7 +189,7 @@ const Services2 = () => {
                                 flexShrink: 0,
                                 flexGrow: 0
                             }}
-                            onClick={() => scrollToService(index)}
+                            onClick={handleServiceClick}
                         >
                             <div className="relative h-full overflow-hidden">
                                 <Image
@@ -240,4 +236,4 @@ const Services2 = () => {
     )
 }
 
-export default Services2
+export default Services2;
