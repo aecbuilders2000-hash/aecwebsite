@@ -2,9 +2,29 @@
 
 import React from 'react'
 import {
-    FaInstagram, FaLinkedin, FaFacebookF, FaYoutube
+    FaInstagram, FaLinkedin, FaFacebookF, FaYoutube,
+    FaWhatsapp
 } from 'react-icons/fa';
 import ArrowButton from '../ui/ArrowButton';
+
+const socialMedia = [
+    {
+        icon: <FaInstagram size="20" />,
+        link: 'https://www.instagram.com/collective_aec',
+    },
+    {
+        icon: <FaWhatsapp size="20" />,
+        link: 'https://api.whatsapp.com/send/?phone=919106878832&text&type=phone_number&app_absent=0',
+    },
+    {
+        icon: <FaLinkedin size="20" />,
+        link: 'https://www.linkedin.com/company/collective-aec/',
+    },
+    {
+        icon: <FaYoutube size="20" />,
+        link: 'https://www.youtube.com/@CollectiveAEC',
+    }
+];
 
 const Footer = () => {
     const serviceLinks = [
@@ -57,16 +77,16 @@ const Footer = () => {
                     COLLECTIVE
                 </h2>
 
-                                <div className="flex py-1 justify-end items-end gap-4">
-                                        <ArrowButton
-                                            label="Let's Collaborate"
-                                            onClick={() => {
-                                                const contactSection = document.getElementById('contact-us-section');
-                                                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                                                else window.location.href = '/#contact-us-section';
-                                            }}
-                                        />
-                                </div>
+                <div className="flex py-1 justify-end items-end gap-4">
+                    <ArrowButton
+                        label="Let's Collaborate"
+                        onClick={() => {
+                            const contactSection = document.getElementById('contact-us-section');
+                            if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                            else window.location.href = '/#contact-us-section';
+                        }}
+                    />
+                </div>
             </div>
 
             <div className='w-full mt-8 flex flex-col md:flex-row justify-between gap-8'>
@@ -130,15 +150,20 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className='mt-2 pt-3 border-t border-neutral-800 flex flex-col md:flex-row items-center justify-between text-xs tracking-widest text-gray-500'>
+            <div className='mt-2 pt-3 border-t border-neutral-800 flex flex-col-reverse gap-2 md:flex-row items-center justify-between text-xs tracking-widest text-gray-500'>
                 <p className='m-0'>&copy; 2025 Collective AEC. All rights reserved.</p>
                 <div>
                     <h4 className='text-xs text-center tracking-[0.25em] text-gray-400 mb-2 uppercase'>Follow Us</h4>
-                    <div className='flex space-x-4 text-xl'>
-                        <FaInstagram className='cursor-pointer hover:text-white text-gray-400 transition-colors' />
-                        <FaLinkedin className='cursor-pointer hover:text-white text-gray-400 transition-colors' />
-                        <FaFacebookF className='cursor-pointer hover:text-white text-gray-400 transition-colors' />
-                        <FaYoutube className='cursor-pointer hover:text-white text-gray-400 transition-colors' />
+                    <div className='flex space-x-4 items-center justify-center text-xl'>
+                        {socialMedia.map((social, index) => (
+                            <button
+                                key={index}
+                                onClick={() => window.open(social.link, '_blank', 'noopener,noreferrer')}
+                                className='text-gray-400 hover:text-white hover:scale-125 transition-colors cursor-pointer focus:outline-none focus:text-white'
+                            >
+                                {social.icon}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
