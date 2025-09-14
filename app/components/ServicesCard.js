@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -19,6 +20,7 @@ const CardServices = ({
     const [selected, setSelected] = useState(services[1]); // Default to second service
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+    const router = useRouter();
     // const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
@@ -290,7 +292,20 @@ const CardServices = ({
                                         }}
                                         onMouseEnter={() => setHoveredIndex(index)}
                                         onMouseLeave={() => setHoveredIndex(null)}
-                                        onClick={() => setSelected(selected === option ? null : option)}
+                                                                            onClick={() => {
+                                                                                // compute slugs and navigate to nested page
+                                                                                const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                                                                                const mainSlug = toSlug(serviceName);
+                                                                                const subSlug = toSlug(option);
+
+                                                                                // Use Next.js App Router for client navigation when available
+                                                                                if (typeof window !== 'undefined' && router && typeof router.push === 'function') {
+                                                                                    router.push(`/services/${mainSlug}/${subSlug}`);
+                                                                                } else {
+                                                                                    // Fallback to toggling selection for non-client environments
+                                                                                    setSelected(selected === option ? null : option);
+                                                                                }
+                                                                            }}
                                     >
                                         {/* Bouncy Black Ball - appears on hover */}
                                         <div

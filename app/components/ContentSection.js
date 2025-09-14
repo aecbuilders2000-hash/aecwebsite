@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { number: "10+", label: "Years of Experience" },
-  { number: "5+", label: "Countries Served" },
-  { number: "456+", label: "Successful Projects" },
-  { number: "127+", label: "Happy Clients" },
+  { number: "20+", label: "Countries Served" },
+  { number: "1000+", label: "Successful Projects" },
+  { number: "200+", label: "Happy Clients" },
 ];
 
 export default function ContentSection() {

@@ -165,7 +165,35 @@ gsap.registerPlugin(ScrollTrigger);
             <div className="text-3xl ml-[5%]" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', letterSpacing: '0.2em', lineHeight: '1.2' }}>FROM HERE, <br /> IT&apos;S ONLY UP</div>
             <div className="ml-[5%] mt-4 md:mt-8 mb-8 flex items-center gap-4">
               <div className="flex items-center gap-4">
-                <h2 role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); else window.location.href = '/#contact-us-section'; } }} onClick={() => { const contactSection = document.getElementById('contact-us-section'); if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' }); else window.location.href = '/#contact-us-section'; }} className="font-normal cursor-pointer" style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(1.2rem, 1.5vw, 2rem)', fontWeight: '400', letterSpacing: '0.05em' }}>Let&apos;s Collaborate</h2>
+                <h2
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      const contactSection = document.getElementById('contact-us-section');
+                      if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                      } else {
+                        try { sessionStorage.setItem('scrollToContact', '1'); } catch (err) {}
+                        window.location.href = '/';
+                      }
+                    }
+                  }}
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact-us-section');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                      try { sessionStorage.setItem('scrollToContact', '1'); } catch (err) {}
+                      window.location.href = '/';
+                    }
+                  }}
+                  className="font-normal cursor-pointer"
+                  style={{ fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(1.2rem, 1.5vw, 2rem)', fontWeight: '400', letterSpacing: '0.05em' }}
+                >
+                  Let&apos;s Collaborate
+                </h2>
                 <div className="flex items-center justify-center bg-transparent group cursor-default" aria-hidden="true" title="Decorative arrow">
                   <div className="bg-black rounded-full flex items-center justify-center w-12 h-12 transition-colors duration-300 ease-in-out"><svg className="stroke-white transform rotate-0 transition-transform duration-300 ease-in-out group-hover:-rotate-45" width="28" height="28" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M13 5l7 7-7 7" /></svg></div>
                 </div>
@@ -546,13 +574,14 @@ const ContactUs = () => {
         <ArrowButton
           label="Let's Collaborate"
           onClick={() => {
-            const contactSection = document.getElementById('contact-us-section');
+            const contactSection = typeof document !== 'undefined' && document.getElementById('contact-us-section');
             if (contactSection) {
               contactSection.scrollIntoView({ behavior: 'smooth' });
-            } else {
-              // fallback: navigate to home with hash
-              window.location.href = '/#contact-us-section';
+              return;
             }
+            try { sessionStorage.setItem('scrollToContact', '1'); } catch (err) {}
+            // navigate to home root without hash so URL stays clean
+            if (typeof window !== 'undefined') window.location.href = '/';
           }}
         />
       </div>

@@ -11,7 +11,7 @@ import ContactUs from "./components/ContactUs";
 import TestinomialSection from "./components/TestinomialSection";
 
 export default function Home() {
-  useLenis();
+  // useLenis();
 
   return (
     <div>
