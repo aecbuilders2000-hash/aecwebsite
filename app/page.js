@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import HeroSection from "./components/HeroSection";
+import useScrollOnLoad from './hooks/useScrollOnLoad';
 import { useLenis } from "../lib/lenis";
 import ServicesSection from "./components/ServicesSection";
 import ProjectsSection from "./components/ProjectsSection";
@@ -12,6 +13,7 @@ import TestinomialSection from "./components/TestinomialSection";
 
 export default function Home() {
   // useLenis();
+  useScrollOnLoad();
 
   return (
     <div>

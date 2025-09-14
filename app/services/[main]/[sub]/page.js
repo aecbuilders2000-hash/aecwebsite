@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ArrowButton from '../../../ui/ArrowButton';
 
-export default function SubservicePage({ params }) {
-  const { main, sub } = params;
+export default async function SubservicePage({ params }) {
+  const { main, sub } = await params;
   const mainData = SERVICES[main];
   if (!mainData) return <div style={{ padding: '2rem' }}>Service not found</div>;
   const subData = mainData.subs?.[sub];
