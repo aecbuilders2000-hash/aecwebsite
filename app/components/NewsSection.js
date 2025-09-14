@@ -17,69 +17,52 @@ const newsItems = [
             "Read the full breakdown and see which approach gives firms the edge."
         ],
         hashtags: ['#Architecture', '#BIM', '#CAD', '#AEC', '#ConstructionInnovation', '#DesignEfficiency', '#Revisit', '#ParametricDesign'],
-        date: 'Sept 2025',
+        date: '2W Ago',
     },
     {
         id: 2,
-        headline: `Sustainable Design Breakthrough`,
+        headline: `Why Mastering Revit Is a Game-Changer`,
         paragraphs: [
-            'Revolutionary Carbon-Neutral Building Materials Hit the Market'
+            "In today's fast-paced AEC industry, efficiency isn't optional - it's the difference betwwn hitting deadlines and losing opportunities",
+            "Firms that master Revit don't just draft; they:"
         ],
         bullets: [
-            "A new generation of bio-based construction materials is transforming how we think about sustainable architecture. These innovative solutions offer 80% lower carbon footprint compared to traditional materials.",
-            "From mycelium-based insulation to recycled plastic structural components, these materials don't compromise on performance while dramatically reducing environmental impact.",
-            "Early adopters report cost savings of up to 25% over traditional materials when factoring in long-term energy efficiency gains."
+            "Deliever projects Faster",
+            "Cut down costly redlines",
+            "Collaborate smarter with teams & consultants",
+            "Build long-term ROI through smoother workflows"
         ],
-        hashtags: ['#Sustainability', '#GreenBuilding', '#Innovation', '#CarbonNeutral', '#EcoFriendly', '#FutureOfConstruction'],
-        date: 'Aug 2025',
+        bottom: [
+            "Bootom line: Revit mastery isn't just about software- it's about transforming the way you deliever projects"
+        ],
+        bullets2: [
+            "Read the full article to see how Revit can give your firm a competitive edge."
+        ],
+        hashtags: ['#Revit', '#BIM', '#Architecture', '#ConstructionTechnology', '#AECInnovation'],
+        date: '2W Ago',
     },
     {
         id: 3,
-        headline: `AI-Powered Design Optimization`,
+        headline: `3 Reasons Your BIM Process Might Be Slowing Projects Down`,
         paragraphs: [
             'Machine Learning Transforms Architectural Workflows in Real-Time'
         ],
         bullets: [
-            "Artificial intelligence is no longer just a buzzword in architecture - it's becoming an essential tool for optimizing building performance and design efficiency.",
-            "New AI algorithms can analyze thousands of design variations in minutes, optimizing for energy efficiency, cost, and structural integrity simultaneously.",
-            "Case studies show 40% reduction in design iteration time and 30% improvement in building performance metrics when AI tools are integrated into the design process."
+            "BIM is meant to speed up delivery but if your timelines are dragging, the issue may not be the software. It's the workflows.",
+            "Here are 3 common culprits: - Messy templates & families, -inefficient collaboration & model management, -Overcomplicated models"
         ],
-        hashtags: ['#AI', '#MachineLearning', '#DesignOptimization', '#SmartBuildings', '#TechInnovation', '#ArchTech'],
-        date: 'Aug 2025',
+        bottom: [
+            "Bottom line: BIM isn't the bottleneck - unoptimized workflows are. Streamline your process and watch delivery times shrink.",
+            "Read the full article for breakdown."
+        ],
+        hashtags: ['#BIM', '#Architecture', '#ConstructionTechnology', '#DesignEfficiency', '#AEC'],
+        date: '2W Ago',
     },
-    {
-        id: 4,
-        headline: `Virtual Reality Collaboration`,
-        paragraphs: [
-            'Immersive Design Reviews Change Client Engagement Forever'
-        ],
-        bullets: [
-            "Virtual and augmented reality technologies are revolutionizing how architects collaborate with clients and stakeholders throughout the design process.",
-            "Real-time immersive walkthroughs allow clients to experience spaces before construction begins, reducing change orders by up to 60%.",
-            "Multi-user VR environments enable global teams to collaborate as if they're in the same room, breaking down geographical barriers in design."
-        ],
-        hashtags: ['#VirtualReality', '#AR', '#ImmersiveDesign', '#ClientEngagement', '#Collaboration', '#DigitalTwin'],
-        date: 'July 2025',
-    },
-    {
-        id: 5,
-        headline: `Smart Cities Initiative Launch`,
-        paragraphs: [
-            'IoT Integration Shapes the Future of Urban Planning'
-        ],
-        bullets: [
-            "The integration of Internet of Things (IoT) sensors and smart city technologies is creating unprecedented opportunities for data-driven urban design.",
-            "Real-time monitoring of traffic patterns, air quality, and energy usage provides architects with crucial data for designing more responsive urban environments.",
-            "Pilot projects show 45% improvement in energy efficiency and 35% reduction in urban heat island effects when IoT data informs design decisions."
-        ],
-        hashtags: ['#SmartCities', '#IoT', '#UrbanPlanning', '#DataDriven', '#SustainableUrban', '#TechIntegration'],
-        date: 'July 2025',
-    }
 ];
 
 // Helper to normalize legacy items that still have a raw HTML 'content' field.
 function normalizeItem(item) {
-    if (item.paragraphs || item.bullets) return item; // already structured
+    if (item.paragraphs || item.bullets || item.bottom) return item; // already structured
     if (item.content) {
         const raw = item.content;
         // Extract list items
@@ -201,8 +184,8 @@ export default function NewsSlider({ items }) {
                                         key={index}
                                         onClick={() => goToSlide(index)}
                                         className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentIndex
-                                                ? 'bg-black scale-125'
-                                                : 'bg-neutral-300 hover:bg-neutral-400'} focus:outline-none focus:ring-2 focus:ring-black/40`}
+                                            ? 'bg-black scale-125'
+                                            : 'bg-neutral-300 hover:bg-neutral-400'} focus:outline-none focus:ring-2 focus:ring-black/40`}
                                         aria-label={`Go to slide ${index + 1}`}
                                         aria-current={index === currentIndex ? 'true' : 'false'}
                                     />
@@ -268,6 +251,16 @@ export default function NewsSlider({ items }) {
                                     <ul className="list-disc pl-5 mb-3 last:mb-0 space-y-2">
                                         {currentItem.bullets.map((b, i) => (
                                             <li key={i}>{b}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                                {currentItem.bottom && currentItem.bottom.map((p, i) => (
+                                    <p key={`bottom-${i}`} className="mb-3 last:mb-0 font-medium">{p}</p>
+                                ))}
+                                {currentItem.bullets2 && (
+                                    <ul className="list-disc pl-5 mb-3 last:mb-0 space-y-2">
+                                        {currentItem.bullets2.map((b, i) => (
+                                            <li key={`bullets2-${i}`}>{b}</li>
                                         ))}
                                     </ul>
                                 )}
