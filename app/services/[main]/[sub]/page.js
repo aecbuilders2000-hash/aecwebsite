@@ -11,10 +11,11 @@ export default function SubservicePage({ params }) {
   if (!subData) return <div style={{ padding: '2rem' }}>Subservice not found</div>;
 
   return (
-    <main style={{ minHeight: '100vh', padding: 'clamp(1.25rem, 4vw, 2.5rem)', paddingTop: 'clamp(3rem, 8vh, 6rem)' }}>
+    <main className='text-black' style={{ minHeight: '100vh', padding: 'clamp(1.25rem, 4vw, 2.5rem)', paddingTop: 'clamp(3rem, 8vh, 6rem)' }}>
       <section style={{ maxWidth: '72rem', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr', gap: 'clamp(1rem, 3vw, 2rem)' }}>
         <header>
-          <h1 style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.5rem, 4.5vw, 2.6rem)', margin: 0 }}>{subData.title}</h1>
+          <h1 className='text-black' style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif', fontSize: 'clamp(1.5rem, 4.5vw, 2.6rem)', margin: 0 }}>{subData.title}
+          </h1>
           {subData.subtitle && <p style={{ marginTop: '0.5rem', color: 'rgba(0,0,0,0.6)' }}>{subData.subtitle}</p>}
         </header>
 
