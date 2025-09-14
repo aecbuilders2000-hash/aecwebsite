@@ -7,7 +7,7 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-    {
+  {
     id: 1,
     title: "BIM Services",
     subtitle: "& Consulting",
@@ -31,11 +31,11 @@ const services = [
     description: "Complete architectural design from concept to construction",
     position: "bottom"
   },
-    {
+  {
     id: 4,
     title: "Structural",
     subtitle: "Engineering",
-    image: "/Structure Service.png", 
+    image: "/Structure Service.png",
     description: "Advanced structural analysis and engineering solutions",
     position: "bottom"
   },
@@ -64,20 +64,20 @@ export default function ServicesOverview() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup - softer initial states for seamless reveal
-      gsap.set(textRef.current, { 
-        opacity: 0, 
+      gsap.set(textRef.current, {
+        opacity: 0,
         y: 20
       });
-      
-      gsap.set(topCardsRef.current, { 
-        opacity: 0, 
-        y: 15, 
+
+      gsap.set(topCardsRef.current, {
+        opacity: 0,
+        y: 15,
         scale: 0.98
       });
-      
-      gsap.set(bottomCardsRef.current, { 
-        opacity: 0, 
-        y: 15, 
+
+      gsap.set(bottomCardsRef.current, {
+        opacity: 0,
+        y: 15,
         scale: 0.98
       });
 
@@ -119,19 +119,19 @@ export default function ServicesOverview() {
         duration: 0.4, // Reduced from 0.6 to 0.4
         ease: "power2.out"
       }, "-=0.3") // Increased overlap from -=0.4 to -=0.3
-      // Then animate all 7 service cards as a unified group
-      .to([...topCardsRef.current, ...bottomCardsRef.current], {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.4, // Reduced from 1 to 0.4 (60% faster)
-        stagger: {
-          amount: 0.15, // Reduced from 0.4 to 0.15 (62.5% faster)
-          from: "start",
-          ease: "power2.inOut"
-        },
-        ease: "back.out(1.4)" // Changed to back.out for snappier feel
-      }, "-=0.1"); // Reduced overlap from -=0.2 to -=0.1
+        // Then animate all 7 service cards as a unified group
+        .to([...topCardsRef.current, ...bottomCardsRef.current], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.4, // Reduced from 1 to 0.4 (60% faster)
+          stagger: {
+            amount: 0.15, // Reduced from 0.4 to 0.15 (62.5% faster)
+            from: "start",
+            ease: "power2.inOut"
+          },
+          ease: "back.out(1.4)" // Changed to back.out for snappier feel
+        }, "-=0.1"); // Reduced overlap from -=0.2 to -=0.1
 
     }, sectionRef);
 
@@ -167,13 +167,13 @@ export default function ServicesOverview() {
       </div>
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between">
-        
-    {/* Top Section */}
-  <div className="flex flex-col md:flex-row justify-between items-start" style={{ paddingTop: "12vh", height: "55vh" }}>
-          
+
+        {/* Top Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start" style={{ paddingTop: "12vh", height: "55vh" }}>
+
           {/* Left: Title and Description - full width on mobile */}
           <div className="w-full md:w-3/5 pr-8 flex flex-col justify-start h-full">
-            <h2 
+            <h2
               ref={titleRef}
               className="font-bruno-ace-sc font-bold text-black leading-tight mb-6"
               style={{
@@ -185,17 +185,17 @@ export default function ServicesOverview() {
               }}
             >
               {"OUR SERVICES".split(' ').map((word, wordIndex) => (
-                <div key={wordIndex} className="word" style={{ 
+                <div key={wordIndex} className="word" style={{
                   display: wordIndex === 0 ? 'block' : 'block',
                   overflow: 'hidden',
                   height: '1.2em',
                   marginBottom: wordIndex < 1 ? '0.1em' : '0'
                 }}>
                   {word.split('').map((letter, letterIndex) => (
-                    <span 
-                      key={letterIndex} 
-                      className="letter" 
-                      style={{ 
+                    <span
+                      key={letterIndex}
+                      className="letter"
+                      style={{
                         display: 'inline-block',
                         transformStyle: 'preserve-3d'
                       }}
@@ -220,7 +220,7 @@ export default function ServicesOverview() {
               What we can do for you?
             </p> */}
 
-            <p 
+            <p
               className="font-poppins text-gray-700 leading-relaxed"
               style={{
                 fontFamily: 'var(--font-poppins), sans-serif',
@@ -228,8 +228,8 @@ export default function ServicesOverview() {
                 maxWidth: '90%'
               }}
             >
-              From design conceptualization to construction documentation, 
-              we provide comprehensive AEC solutions tailored to your project needs. 
+              From design conceptualization to construction documentation,
+              we provide comprehensive AEC solutions tailored to your project needs.
               Our expert team delivers precision, innovation, and excellence in every detail.
             </p>
           </div>
@@ -242,7 +242,7 @@ export default function ServicesOverview() {
                   key={service.id}
                   ref={el => topCardsRef.current[index] = el}
                   className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
-                  style={{ 
+                  style={{
                     height: "clamp(25vh, 35vh, 40vh)",
                     width: "17.5vw",
                     minHeight: "25vh",
@@ -258,14 +258,14 @@ export default function ServicesOverview() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    
+
                     {/* Curtain reveal text overlay */}
                     <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
-                      <h3 className="font-bruno-ace-sc font-bold text-black text-center mb-4" 
-                          style={{ 
-                            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                            fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)' 
-                          }}>
+                      <h3 className="font-bruno-ace-sc font-bold text-black text-center mb-4"
+                        style={{
+                          fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                          fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)'
+                        }}>
                         {service.title}
                       </h3>
                       <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
@@ -280,11 +280,11 @@ export default function ServicesOverview() {
                       <span className="text-white font-bold text-lg">{service.id}</span>
                     </div>
                     <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                      <h3 className="font-bruno-ace-sc font-bold text-white mb-1" 
-                          style={{ 
-                            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                            fontSize: 'clamp(1rem, 1.5vw, 1.2rem)' 
-                          }}>
+                      <h3 className="font-bruno-ace-sc font-bold text-white mb-1"
+                        style={{
+                          fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                          fontSize: 'clamp(1rem, 1.5vw, 1.2rem)'
+                        }}>
                         {service.title}
                       </h3>
                     </div>
@@ -320,7 +320,7 @@ export default function ServicesOverview() {
               key={service.id}
               ref={el => bottomCardsRef.current[index] = el}
               className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
-              style={{ 
+              style={{
                 height: "clamp(25vh, 35vh, 40vh)",
                 width: "17.5vw",
                 minHeight: "25vh",
@@ -339,11 +339,11 @@ export default function ServicesOverview() {
                 />
                 {/* Curtain reveal text overlay */}
                 <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
-                  <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4" 
-                      style={{ 
-                        fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                        fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)' 
-                      }}>
+                  <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4"
+                    style={{
+                      fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                      fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)'
+                    }}>
                     {service.title}
                   </h3>
                   <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
@@ -358,11 +358,11 @@ export default function ServicesOverview() {
                   <span className="text-white font-bold text-lg">{service.id}</span>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                  <h3 className="font-bruno-ace-sc font-bold text-black mb-1" 
-                      style={{ 
-                        fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                        fontSize: 'clamp(1rem, 1.5vw, 1.3rem)' 
-                      }}>
+                  <h3 className="font-bruno-ace-sc font-bold text-black mb-1"
+                    style={{
+                      fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
+                      fontSize: 'clamp(1rem, 1.5vw, 1.3rem)'
+                    }}>
                     {service.title}
                   </h3>
                 </div>

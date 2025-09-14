@@ -1,11 +1,17 @@
 'use client';
 
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import {
     FaInstagram, FaLinkedin, FaFacebookF, FaYoutube,
     FaWhatsapp
 } from 'react-icons/fa';
 import ArrowButton from '../ui/ArrowButton';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const socialMedia = [
     {
@@ -27,12 +33,15 @@ const socialMedia = [
 ];
 
 const Footer = () => {
+    const footerRef = useRef(null);
+    const scrollContainerRef = useRef(null);
     const serviceLinks = [
         { label: 'BIM Services', slug: 'bim-services' },
         { label: 'MEP Design', slug: 'mep-services' },
         { label: 'Architectural Design', slug: 'architectural-design' },
         { label: 'Structural Design', slug: 'structural-design' },
         { label: '3D Visualization', slug: '3d-visualization' },
+        { label: 'Project Management', slug: 'project-management' },
     ];
 
     const expertise = [
@@ -49,7 +58,8 @@ const Footer = () => {
         'Commercial',
         'Mixed Use',
         'Healthcare',
-        'Interiors'
+        'Interiors',
+        'Industrial'
     ];
 
     const goService = (slug) => {
@@ -62,6 +72,41 @@ const Footer = () => {
             }
         }
     };
+
+    // Horizontal scroll pin effect
+    useEffect(() => {
+        const footer = footerRef.current;
+        const scrollContainer = scrollContainerRef.current;
+
+        if (!footer || !scrollContainer) return;
+
+        // Calculate total width of scrollable content
+        const totalWidth = scrollContainer.scrollWidth;
+        const containerWidth = scrollContainer.offsetWidth;
+        const scrollDistance = totalWidth - containerWidth;
+
+        // Only apply horizontal scroll if content is wider than container
+        if (scrollDistance > 0) {
+            const scrollTrigger = ScrollTrigger.create({
+                trigger: footer,
+                start: "top bottom",
+                end: `+=${scrollDistance}`,
+                scrub: 1,
+                pin: true,
+                anticipatePin: 1,
+                onUpdate: (self) => {
+                    const progress = self.progress;
+                    gsap.set(scrollContainer, {
+                        x: -scrollDistance * progress
+                    });
+                }
+            });
+
+            return () => {
+                scrollTrigger.kill();
+            };
+        }
+    }, []);
 
     return (
         <footer className='text-white bg-black pt-12 pb-8 px-[5%] border-t border-neutral-800'>
@@ -110,18 +155,18 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className='w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-16'>
-                    <div>
+                    <div className='flex flex-col'>
                         <h3 className='text-sm tracking-[0.25em] text-gray-400 mb-4 uppercase'>Expertise</h3>
-                        <ul className='space-y-2 text-sm'>
+                        <ul className='space-y-2 text-sm flex-1'>
                             {expertise.map(item => (
                                 <li key={item} className='text-gray-300 hover:text-white transition-colors cursor-pointer'>{item}</li>
                             ))}
                         </ul>
                     </div>
 
-                    <div>
+                    <div className='flex flex-col'>
                         <h3 className='text-sm tracking-[0.25em] text-gray-400 mb-4 uppercase'>Services</h3>
-                        <ul className='space-y-2 text-sm'>
+                        <ul className='space-y-2 text-sm flex-1'>
                             {serviceLinks.map(s => (
                                 <li
                                     key={s.slug}
@@ -138,14 +183,35 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div>
+                    <div className='flex flex-col'>
                         <h3 className='text-sm tracking-[0.25em] text-gray-400 mb-4 uppercase'>Projects</h3>
-                        <ul className='space-y-2 text-sm'>
+                        <ul className='space-y-2 text-sm flex-1'>
                             {projectTypes.map(p => (
-                                <li key={p} className='text-gray-300 hover:text-white transition-colors cursor-pointer'>{p}</li>
+                                <li
+                                    key={p}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const projectsSection = document.getElementById('projects-section');
+                                        if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth' });
+                                        else window.location.href = '/#projects-section';
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            const projectsSection = document.getElementById('projects-section');
+                                            if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth' });
+                                            else window.location.href = '/#projects-section';
+                                        }
+                                    }}
+                                    tabIndex={0}
+                                    role='link'
+                                    aria-label={`Jump to ${p} projects`}
+                                    className='text-gray-300 hover:text-white transition-colors cursor-pointer focus:outline-none focus:text-white'
+                                >
+                                    {p}
+                                </li>
                             ))}
                         </ul>
-
                     </div>
                 </div>
             </div>
