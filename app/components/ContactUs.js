@@ -80,7 +80,7 @@ const ContactForm = () => {
     
     try {
       // Get Google Script URL from environment variable
-      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
+      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_CONTACT_GOOGLE_SCRIPT_URL;
       
       if (!GOOGLE_SCRIPT_URL) {
         throw new Error('Google Script URL not configured');
