@@ -119,7 +119,35 @@ const Footer = () => {
                         letterSpacing: "0.3em",
                     }}
                 >
-                    COLLECTIVE
+                    <span
+                        role="link"
+                        tabIndex={0}
+                        aria-label="Go to top of home page"
+                        onClick={() => {
+                            if (typeof window !== 'undefined') {
+                                if (window.location.pathname === '/') {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                } else {
+                                    window.location.href = '/';
+                                }
+                            }
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                if (typeof window !== 'undefined') {
+                                    if (window.location.pathname === '/') {
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    } else {
+                                        window.location.href = '/';
+                                    }
+                                }
+                            }
+                        }}
+                        className="outline-none focus:opacity-90"
+                    >
+                        COLLECTIVE
+                    </span>
                 </h2>
 
                 <div className="flex py-1 justify-end items-end gap-4">
