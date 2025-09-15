@@ -31,7 +31,7 @@ export default function CustomCursor() {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
       
-      console.log('Mouse position:', e.clientX, e.clientY); // Debug log
+      // console.log('Mouse position:', e.clientX, e.clientY); // Debug log
 
       // Show cursor when mouse moves (removed conditional)
       gsap.to(cursor, {

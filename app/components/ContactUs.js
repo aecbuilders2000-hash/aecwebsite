@@ -77,17 +77,44 @@ const ContactForm = () => {
     }
     setSubmitting(true);
     setStatus({ type: '', message: '' });
+    
     try {
-      // TODO: integrate API endpoint (e.g., /api/contact)
-      // Simulate success placeholder
+      // Get Google Script URL from environment variable
+      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
+      
+      if (!GOOGLE_SCRIPT_URL) {
+        throw new Error('Google Script URL not configured');
+      }
+      
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone ? `${formData.phone}` : '',
+        country: selectedCountry.label,
+        message: formData.message
+      };
+
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        mode: 'no-cors' // Required for Google Apps Script
+      });
+
+      console.log('Form submission response:', response);
+      // Since we're using no-cors mode, we can't read the response
+      // So we assume success if no error was thrown
       setStatus({
         type: 'success',
-        message: 'Thank you for contacting us. Your message has been received and a member of our team will reach out shortly.'
+        message: '🎉 Thank you for reaching out! Your message has been successfully submitted. Our team will review your inquiry and get back to you within 24-48 hours. We appreciate your interest in Collective AEC!'
       });
       setCooldownRemaining(10); // start 10s cooldown only on success
       setFormData({ name: '', email: '', phone: '', message: '' });
+      
     } catch (err) {
-      console.error(err);
+      console.error('Form submission error:', err);
       setStatus({
         type: 'error',
         message: 'We were unable to send your message just now. Please try again in a moment or email us directly.'
@@ -114,7 +141,7 @@ const ContactForm = () => {
           <div className="w-full h-px bg-gray-700" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate>
           {status.message && (
             <div
               className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${
