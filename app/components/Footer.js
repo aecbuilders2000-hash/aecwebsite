@@ -151,7 +151,9 @@ const Footer = () => {
                         <p className='m-0'>144 Avadh Viceroy, Sarthana Jakat Naka,</p>
                         <p className='m-0'>Varachha, Surat, Gujarat 395010</p>
                         <p className='mt-5'>Phone: +91 910 687 8832</p>
-                        <p className='m-0'>Email: info@collectiveaec.com</p>
+                        <p className='m-0'>
+                            Email: <a href="mailto:info@collectiveaec.com" className="underline underline-offset-2 hover:text-white">info@collectiveaec.com</a>
+                        </p>
                     </div>
                 </div>
                 <div className='w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-16'>
