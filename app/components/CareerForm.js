@@ -52,6 +52,23 @@ const CareerForm = () => {
     return () => clearInterval(t);
   }, [cooldownRemaining]);
 
+  // Debug: Override alert to catch any alerts
+  useEffect(() => {
+    const originalAlert = window.alert;
+    window.alert = function(message) {
+      console.error('🚨 ALERT DETECTED:', message);
+      console.trace('Alert called from:', new Error().stack);
+      // Optionally show the message in our status instead
+      setStatus({ type: 'error', message: `Alert detected: ${message}` });
+      // Uncomment the next line if you want to see the actual alert
+      // originalAlert(message);
+    };
+    
+    return () => {
+      window.alert = originalAlert;
+    };
+  }, []);
+
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -77,18 +94,87 @@ const CareerForm = () => {
     setResumeFile(file);
   };
 
+  // Convert file to base64
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        // Remove the data:mime/type;base64, prefix
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  // Test function to check if Google Apps Script is responding
+  const testGoogleScript = async () => {
+    // console.log('🧪 Testing Google Apps Script connection...');
+    try {
+      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_CAREER_GOOGLE_SCRIPT_URL;
+      // console.log('🧪 Testing Google Apps Script URL:', GOOGLE_SCRIPT_URL);
+      
+      if (!GOOGLE_SCRIPT_URL) {
+        console.error('❌ No Google Apps Script URL configured!');
+        setStatus({ type: 'error', message: 'Google Apps Script URL not configured' });
+        return;
+      }
+      
+      // Test with a simple GET request
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'GET'
+      });
+      
+      const text = await response.text();
+      // console.log('🧪 Google Apps Script GET test response:', text);
+      console.log('🧪 Response status:', response.status);
+      console.log('🧪 Response ok:', response.ok);
+      
+      if (response.ok) {
+        setStatus({ type: 'success', message: `✅ Google Apps Script is working! Response: ${text}` });
+      } else {
+        setStatus({ type: 'error', message: `❌ Google Apps Script test failed. Status: ${response.status}` });
+      }
+      
+    } catch (error) {
+      console.error('🧪 Google Apps Script test failed:', error);
+      setStatus({ type: 'error', message: `❌ Google Apps Script test failed: ${error.message}` });
+    }
+  };
+
   const handleSubmit = async (e) => {
+    // console.log('🚀 handleSubmit function called!', e);
+    // console.log('🚀 Event listeners on form:', e.target.getEventListeners ? e.target.getEventListeners() : 'Cannot check listeners');
+    
+    // Prevent all form submission behaviors
     e.preventDefault();
+    e.stopPropagation();
+    
+    // console.log('🚀 preventDefault and stopPropagation called');
+    
+    // Check if we're already submitting
+    if (submitting) {
+      // console.log('⚠️ Already submitting, ignoring duplicate submission');
+      return;
+    }
+    
+    // console.log('🚀 Form submission handling begins');
+    
     // Basic validations
     if (!formData.name || !formData.email) {
+      // console.log('❌ Validation failed: missing name or email');
       setStatus({ type: 'error', message: 'Please provide both your name and a valid email address.' });
       return;
     }
+    
     if (!resumeFile) {
+      // console.log('❌ Validation failed: no resume file');
       setFileError('Please upload your resume (PDF or DOCX).');
       setStatus({ type: 'error', message: 'Attach a resume to proceed.' });
       return;
     }
+    
     if (formData.phone) {
       if (formData.phone.length < minLocalDigits) {
         setStatus({ type: 'error', message: `Phone number is too short (min ${minLocalDigits} digits local).` });
@@ -99,32 +185,120 @@ const CareerForm = () => {
         return;
       }
     }
+    
     if (cooldownRemaining > 0) {
       setStatus({ type: 'error', message: 'Please wait for the cooldown to finish before submitting again.' });
       return;
     }
+
     setSubmitting(true);
     setStatus({ type: '', message: '' });
+    // console.log('✅ All validations passed, starting submission process');
+
     try {
-      // TODO: integrate API submission
+      // Get Google Script URL from environment variable
+      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_CAREER_GOOGLE_SCRIPT_URL;
+      // console.log('🔗 Google Script URL:', GOOGLE_SCRIPT_URL);
+      
+      if (!GOOGLE_SCRIPT_URL) {
+        throw new Error('Career Google Script URL not configured');
+      }
+
+      // Convert file to base64
+      // console.log('📄 Starting file conversion to base64...');
+      const fileBase64 = await fileToBase64(resumeFile);
+      // console.log('✅ File converted to base64, length:', fileBase64.length, 'characters');
+      
+      // Format phone number to prevent Google Sheets formula interpretation
+      let phoneForSheet = '';
+      if (formData.phone) {
+        // Remove the + and format without it to prevent #ERROR! in sheets
+        phoneForSheet = `${selectedCountry.phoneCode} ${formData.phone}`.replace(/^\+/, '');
+      }
+
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: phoneForSheet,
+        country: selectedCountry.label,
+        experience: formData.experience,
+        resumeFile: fileBase64,
+        fileName: resumeFile.name,
+        fileType: resumeFile.type
+      };
+
+      // console.log('📦 Payload prepared:', {
+      //   name: payload.name,
+      //   email: payload.email,
+      //   fileName: payload.fileName,
+      //   fileType: payload.fileType,
+      //   fileSize: `${(resumeFile.size / 1024).toFixed(1)} KB`,
+      //   hasResumeFile: !!payload.resumeFile,
+      //   payloadSize: `${JSON.stringify(payload).length} characters`
+      // });
+
+      // console.log('🚀 Sending request to Google Apps Script...');
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        mode: 'no-cors' // Required for Google Apps Script
+      });
+
+      // console.log('📨 Response received from Google Apps Script:', response);
+      console.log('📊 Response details:', {
+        status: response.status,
+        statusText: response.statusText,
+        type: response.type,
+        ok: response.ok,
+        redirected: response.redirected
+      });
+
+      // Note: With no-cors mode, we can't read the response body
+      // But we can assume success if no error was thrown
+      console.log('✅ Request sent successfully (no-cors mode)');
+      
+      // Since we can't read the response in no-cors mode, 
+      // we assume success if no error was thrown
+
+      // console.log('🎉 Setting success status and resetting form...');
       setStatus({
         type: 'success',
-        message: 'Your application has been received. Our team will review your profile and get back to you if there is a potential match.'
+        message: '🎉 Your application has been successfully submitted! Your resume has been uploaded to our system. Our team will review your profile and get back to you if there is a potential match. Thank you for your interest in joining Collective AEC!'
       });
       setCooldownRemaining(10); // 10s cooldown after success
-      // Reset minimal fields (keep resume intentionally optional to reattach)
-  setFormData({ name: '', email: '', phone: '', experience: '0' });
+      
+      // Reset form
+      setFormData({ name: '', email: '', phone: '', experience: '0' });
       setResumeFile(null);
+      // Clear file input
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput) fileInput.value = '';
+      // console.log('✅ Form reset complete');
+      
     } catch (err) {
-      console.error(err);
-      setStatus({ type: 'error', message: 'We were unable to submit your application just now. Please try again shortly.' });
+      console.error('❌ Career form submission error:', err);
+      console.error('❌ Error details:', {
+        message: err.message,
+        stack: err.stack,
+        name: err.name
+      });
+      setStatus({ 
+        type: 'error', 
+        message: err.message.includes('not configured') 
+          ? 'Career form is not properly configured. Please try again later or contact us directly.'
+          : 'We were unable to submit your application just now. Please try again shortly or contact us directly.' 
+      });
     } finally {
+      // console.log('🏁 Setting submitting to false');
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-start md:items-center justify-center p-4 sm:p-8">
+    <div className="min-h-screen text-black bg-gray-50 flex items-start md:items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-6xl">
         {/* Header */}
         <div className="mb-10 sm:mb-16">
@@ -140,7 +314,18 @@ const CareerForm = () => {
           <div className="w-full h-px bg-gray-700" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12" noValidate>
+        {/* Temporary Test Button */}
+        {/* <div className="mb-4">
+          <button 
+            type="button"
+            onClick={testGoogleScript}
+            className="px-4 py-2 text-black bg-blue-500 rounded hover:bg-blue-600"
+          >
+            🧪 Test Google Script Connection
+          </button>
+        </div> */}
+
+        <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate autoComplete="off">
           {status.message && (
             <div
               className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${
@@ -309,6 +494,10 @@ const CareerForm = () => {
                   type="submit"
                   disabled={submitting || cooldownRemaining > 0}
                   style={{ opacity: submitting || cooldownRemaining > 0 ? 0.6 : 1 }}
+                  onClick={(e) => {
+                    // console.log('🎯 ArrowButton clicked, will trigger form submission');
+                    // Let the form handle the submission, don't prevent default here
+                  }}
                 />
                 {cooldownRemaining > 0 && status.type === 'success' && (
                   <p className="text-xs md:text-sm text-gray-600" aria-live="polite">

@@ -22,7 +22,7 @@ export default function CustomCursor() {
       transformOrigin: 'center center'
     });
 
-    console.log('CustomCursor initialized'); // Debug log
+    // console.log('CustomCursor initialized'); // Debug log
 
     let animationId;
     let lastTime = Date.now();

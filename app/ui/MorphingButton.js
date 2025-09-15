@@ -6,11 +6,11 @@ const LiquidButton = class LiquidButton {
   constructor(button) {
     const { width, height } = button.getBoundingClientRect();
     const buttonStyles = window.getComputedStyle(button);
-    console.log()
+    // console.log()
     const options = button.dataset || {};
 
     this.font = `${buttonStyles['font-size']} ${buttonStyles['font-family']}`;
-    console.log(this.font);
+    // console.log(this.font);
     this.tension = options.tension || 0.4;
     this.width = width;
     this.height = height;
