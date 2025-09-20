@@ -13,7 +13,7 @@ const services = [
     subtitle: "& Consulting",
     image: "https://i.postimg.cc/pLRdCNV7/BIMService.png",
     description: "Advanced Building Information Modeling solutions",
-    position: "bottom"
+    position: "bottom",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const services = [
     subtitle: "& Coordination",
     image: "https://i.postimg.cc/sxmY2YTD/MEPService.png",
     description: "Mechanical, Electrical, and Plumbing system design",
-    position: "bottom"
+    position: "bottom",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const services = [
     subtitle: "Design Services",
     image: "/Architecture Service.png",
     description: "Complete architectural design from concept to construction",
-    position: "bottom"
+    position: "bottom",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const services = [
     subtitle: "Engineering",
     image: "/Structure Service.png",
     description: "Advanced structural analysis and engineering solutions",
-    position: "bottom"
+    position: "bottom",
   },
   {
     id: 5,
@@ -45,9 +45,8 @@ const services = [
     subtitle: "& Rendering",
     image: "https://i.postimg.cc/8CnPTjdQ/3d-Visualiser.png",
     description: "Photorealistic visualizations and architectural renderings",
-    position: "bottom"
+    position: "bottom",
   },
-
 ];
 
 export default function ServicesOverview() {
@@ -58,36 +57,38 @@ export default function ServicesOverview() {
   const bottomCardsRef = useRef([]);
 
   // Split services into top and bottom arrays
-  const topServices = services.filter(service => service.position === "top");
-  const bottomServices = services.filter(service => service.position === "bottom");
+  const topServices = services.filter((service) => service.position === "top");
+  const bottomServices = services.filter(
+    (service) => service.position === "bottom"
+  );
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup - softer initial states for seamless reveal
       gsap.set(textRef.current, {
         opacity: 0,
-        y: 20
+        y: 20,
       });
 
       gsap.set(topCardsRef.current, {
         opacity: 0,
         y: 15,
-        scale: 0.98
+        scale: 0.98,
       });
 
       gsap.set(bottomCardsRef.current, {
         opacity: 0,
         y: 15,
-        scale: 0.98
+        scale: 0.98,
       });
 
       // Set up letter reveal animation
-      const titleLetters = titleRef.current?.querySelectorAll('.letter');
+      const titleLetters = titleRef.current?.querySelectorAll(".letter");
       if (titleLetters) {
         gsap.set(titleLetters, {
           rotationX: -90,
           transformOrigin: "50% 100%",
-          opacity: 0
+          opacity: 0,
         });
       }
 
@@ -97,8 +98,8 @@ export default function ServicesOverview() {
           trigger: sectionRef.current,
           start: "top 75%",
           end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       });
 
       // Animate title letters first
@@ -108,31 +109,38 @@ export default function ServicesOverview() {
           opacity: 1,
           duration: 0.4, // Reduced from 0.6 to 0.4
           stagger: 0.03, // Reduced from 0.05 to 0.03 for faster reveal
-          ease: "back.out(1.7)"
+          ease: "back.out(1.7)",
         });
       }
 
       // Then animate text
-      tl.to(textRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4, // Reduced from 0.6 to 0.4
-        ease: "power2.out"
-      }, "-=0.3") // Increased overlap from -=0.4 to -=0.3
-        // Then animate all 7 service cards as a unified group
-        .to([...topCardsRef.current, ...bottomCardsRef.current], {
+      tl.to(
+        textRef.current,
+        {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.4, // Reduced from 1 to 0.4 (60% faster)
-          stagger: {
-            amount: 0.15, // Reduced from 0.4 to 0.15 (62.5% faster)
-            from: "start",
-            ease: "power2.inOut"
+          duration: 0.4, // Reduced from 0.6 to 0.4
+          ease: "power2.out",
+        },
+        "-=0.3"
+      ) // Increased overlap from -=0.4 to -=0.3
+        // Then animate all 7 service cards as a unified group
+        .to(
+          [...topCardsRef.current, ...bottomCardsRef.current],
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.4, // Reduced from 1 to 0.4 (60% faster)
+            stagger: {
+              amount: 0.15, // Reduced from 0.4 to 0.15 (62.5% faster)
+              from: "start",
+              ease: "power2.inOut",
+            },
+            ease: "back.out(1.4)", // Changed to back.out for snappier feel
           },
-          ease: "back.out(1.4)" // Changed to back.out for snappier feel
-        }, "-=0.1"); // Reduced overlap from -=0.2 to -=0.1
-
+          "-=0.1"
+        ); // Reduced overlap from -=0.2 to -=0.1
     }, sectionRef);
 
     return () => ctx.revert();
@@ -157,47 +165,55 @@ export default function ServicesOverview() {
         height: "100vh",
         width: "100vw",
         paddingLeft: "2.5vw",
-        paddingRight: "2.5vw"
+        paddingRight: "2.5vw",
       }}
     >
       {/* Ambient background effects */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+        <div
+          className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
       </div>
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between">
-
         {/* Top Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start" style={{ paddingTop: "12vh", height: "55vh" }}>
-
+        <div
+          className="flex flex-col md:flex-row justify-between items-start"
+          style={{ paddingTop: "12vh", height: "55vh" }}
+        >
           {/* Left: Title and Description - full width on mobile */}
           <div className="w-full md:w-3/5 pr-8 flex flex-col justify-start h-full">
             <h2
               ref={titleRef}
               className="font-bruno-ace-sc font-bold text-black leading-tight mb-6"
               style={{
-                fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                fontSize: 'clamp(1.7rem, 3.3vw, 3.3rem)',
-                letterSpacing: '0.3em',
-                transformStyle: 'preserve-3d',
-                perspective: '1000px'
+                fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)",
+                letterSpacing: "0.3em",
+                transformStyle: "preserve-3d",
+                perspective: "1000px",
               }}
             >
-              {"OUR SERVICES".split(' ').map((word, wordIndex) => (
-                <div key={wordIndex} className="word" style={{
-                  display: wordIndex === 0 ? 'block' : 'block',
-                  overflow: 'hidden',
-                  height: '1.2em',
-                  marginBottom: wordIndex < 1 ? '0.1em' : '0'
-                }}>
-                  {word.split('').map((letter, letterIndex) => (
+              {"OUR SERVICES".split(" ").map((word, wordIndex) => (
+                <div
+                  key={wordIndex}
+                  className="word"
+                  style={{
+                    display: wordIndex === 0 ? "block" : "block",
+                    overflow: "hidden",
+                    height: "1.2em",
+                    marginBottom: wordIndex < 1 ? "0.1em" : "0",
+                  }}
+                >
+                  {word.split("").map((letter, letterIndex) => (
                     <span
                       key={letterIndex}
                       className="letter"
                       style={{
-                        display: 'inline-block',
-                        transformStyle: 'preserve-3d'
+                        display: "inline-block",
+                        transformStyle: "preserve-3d",
                       }}
                     >
                       {letter}
@@ -223,102 +239,80 @@ export default function ServicesOverview() {
             <p
               className="font-poppins text-gray-700 leading-relaxed"
               style={{
-                fontFamily: 'var(--font-poppins), sans-serif',
-                fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
-                maxWidth: '90%'
+                fontFamily: "var(--font-poppins), sans-serif",
+                fontSize: "clamp(0.73rem, 1.47vw, 1.13rem)",
+                maxWidth: "90%",
               }}
             >
-              From design conceptualization to construction documentation,
-              we provide comprehensive AEC solutions tailored to your project needs.
-              Our expert team delivers precision, innovation, and excellence in every detail.
+              From design conceptualization to construction documentation, we
+              provide comprehensive AEC solutions tailored to your project
+              needs. Our expert team delivers precision, innovation, and
+              excellence in every detail.
             </p>
-          </div>
-
-          {/* Right: Top 2 Service Cards (desktop only) */}
-          <div className="w-2/5 hidden md:flex md:items-start md:h-full md:justify-start" style={{ paddingTop: "0" }}>
-            <div className="md:flex" style={{ gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
-              {topServices.map((service, index) => (
-                <div
-                  key={service.id}
-                  ref={el => topCardsRef.current[index] = el}
-                  className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
-                  style={{
-                    height: "clamp(25vh, 35vh, 40vh)",
-                    width: "17.5vw",
-                    minHeight: "25vh",
-                    maxHeight: "40vh",
-                    flexShrink: 0,
-                    flexGrow: 0
-                  }}
-                >
-                  <div className="relative h-full overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-
-                    {/* Curtain reveal text overlay */}
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
-                      <h3 className="font-bruno-ace-sc font-bold text-black text-center mb-4"
-                        style={{
-                          fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                          fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)'
-                        }}>
-                        {service.title}
-                      </h3>
-                      <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
-                        {service.subtitle}
-                      </p>
-                      <p className="font-poppins text-white/80 text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
-                        {service.description}
-                      </p>
-                    </div>
-
-                    <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-white font-bold text-lg">{service.id}</span>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                      <h3 className="font-bruno-ace-sc font-bold text-white mb-1"
-                        style={{
-                          fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                          fontSize: 'clamp(1rem, 1.5vw, 1.2rem)'
-                        }}>
-                        {service.title}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
         {/* Mobile: stacked horizontal cards (one per row) */}
-        <div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
+        <div
+          className="w-full md:hidden flex flex-col"
+          style={{ gap: "clamp(0.25rem, 1vw, 0.8rem)", height: "75vh" }}
+        >
           {bottomServices.map((service, index) => (
-            <div key={service.id} className="w-full flex items-stretch bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ height: '13vh' }} onClick={() => scrollToService(index)}>
+            <div
+              key={service.id}
+              className="w-full flex items-stretch text-center bg-white/90 rounded-2xl overflow-hidden shadow-md"
+              style={{ minHeight: "13vh" }}
+              onClick={() => scrollToService(index)}
+            >
               {/* Image - left (40%) */}
-              <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
+              {/* <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
                 <Image src={service.image} alt={service.title} fill className="object-cover" />
-              </div>
+              </div> */}
               {/* Text - right (60%) */}
-              <div className="w-3/5 p-4 flex flex-col justify-center" style={{ padding: 'clamp(0.5rem, 1.6vw, 0.9rem)' }}>
-                <h3 className="font-bruno-ace-sc font-bold text-gray-900" style={{ fontSize: 'clamp(1rem, 2.6vw, 1.25rem)', lineHeight: 1.1, fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{service.title}</h3>
-                <p className="font-poppins text-gray-700 mt-2" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)' }}>{service.subtitle}</p>
-                <p className="font-poppins text-gray-600 mt-2 leading-relaxed" style={{ fontSize: 'clamp(0.8rem, 1.7vw, 0.95rem)' }}>{service.description}</p>
+              <div
+                className="w-full p-4 flex flex-col justify-center"
+                style={{ padding: "clamp(0.5rem, 1.6vw, 0.9rem)" }}
+              >
+                <h3
+                  className="font-bruno-ace-sc font-bold text-gray-900"
+                  style={{
+                    fontSize: "clamp(1rem, 2.6vw, 1.25rem)",
+                    lineHeight: 1.1,
+                    fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                  }}
+                >
+                  {service.title}
+                </h3>
+                <p
+                  className="font-poppins text-gray-700 mt-2"
+                  style={{ fontSize: "clamp(0.85rem, 1.8vw, 1rem)" }}
+                >
+                  {service.subtitle}
+                </p>
+                <p
+                  className="font-poppins text-gray-600 mt-2 leading-relaxed"
+                  style={{ fontSize: "clamp(0.8rem, 1.7vw, 0.95rem)" }}
+                >
+                  {service.description}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
         {/* Bottom: 5 Service Cards (desktop) */}
-        <div className="hidden md:flex items-end justify-start w-full" style={{ paddingBottom: "8vh", height: "45vh", gap: 'clamp(0.5rem, 1.5vw, 1.5rem)' }}>
+        <div
+          className="hidden md:flex items-end justify-start w-full"
+          style={{
+            paddingBottom: "8vh",
+            height: "45vh",
+            gap: "clamp(0.5rem, 1.5vw, 1.5rem)",
+          }}
+        >
           {bottomServices.map((service, index) => (
             <div
               key={service.id}
-              ref={el => bottomCardsRef.current[index] = el}
+              ref={(el) => (bottomCardsRef.current[index] = el)}
               className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
               style={{
                 height: "clamp(25vh, 35vh, 40vh)",
@@ -326,45 +320,40 @@ export default function ServicesOverview() {
                 minHeight: "25vh",
                 maxHeight: "40vh",
                 flexShrink: 0,
-                flexGrow: 0
+                flexGrow: 0,
               }}
               onClick={() => scrollToService(index)}
             >
               <div className="relative h-full overflow-hidden">
-                <Image
+                {/* <Image
                   src={service.image}
                   alt={service.title}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
+                /> */}
                 {/* Curtain reveal text overlay */}
-                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
-                  <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4"
+                <div className="absolute inset-0 bg-white group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
+                  <h3
+                    className="font-bruno-ace-sc font-bold text-black text-center mb-4"
                     style={{
-                      fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                      fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)'
-                    }}>
+                      fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                      fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
+                    }}
+                  >
                     {service.title}
                   </h3>
-                  <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                  <p
+                    className="font-poppins text-black text-sm text-center mb-3"
+                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                  >
                     {service.subtitle}
                   </p>
-                  <p className="font-poppins text-white/80 text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                  <p
+                    className="font-poppins text-black text-xs text-center leading-relaxed"
+                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                  >
                     {service.description}
                   </p>
-                </div>
-
-                <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-white font-bold text-lg">{service.id}</span>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                  <h3 className="font-bruno-ace-sc font-bold text-black mb-1"
-                    style={{
-                      fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                      fontSize: 'clamp(1rem, 1.5vw, 1.3rem)'
-                    }}>
-                    {service.title}
-                  </h3>
                 </div>
               </div>
             </div>
