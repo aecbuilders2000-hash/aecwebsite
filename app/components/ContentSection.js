@@ -415,7 +415,10 @@ export default function ContentSection() {
                 maxWidth: isMobile ? '100%' : 'min(60ch, 54vw)',
                 width: '100%',
                 textAlign: 'justify',
-                textAlignLast: 'justify',
+                // Keep main text justified, but left-align the final (last) line
+                textAlignLast: 'left',
+                WebkitTextAlignLast: 'left',
+                MozTextAlignLast: 'left',
                 textJustify: 'inter-word',
                 wordSpacing: isMobile ? '0.10em' : '0.22em',
                 hyphens: 'auto',
@@ -456,7 +459,7 @@ export default function ContentSection() {
                     {' '}
                   </React.Fragment>
                 ))}
-              <span aria-hidden="true" style={{ display: 'inline-block', width: '100%' }} />
+              {/* Removed the forced full-width spacer so the real last line can be left-aligned */}
             </div>
           </div>
         </div>

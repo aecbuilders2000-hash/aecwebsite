@@ -67,11 +67,11 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
       style={{
         fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
         fontWeight: 600,
-        fontSize: "clamp(0.5rem, 1vw, 1rem)",
+  fontSize: "clamp(0.45rem, 0.9vw, 0.9rem)",
         color: "#000",
         textDecoration: "none",
         letterSpacing: "0.1em",
-        marginRight: "0.5vw",
+  marginRight: "0.3vw",
         transition: "color 0.2s",
         display: "inline-flex",
         alignItems: "center",
@@ -105,11 +105,10 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
 
 export default function HeroSection() {
   const heroRef = useRef(null);
-  const videoRef = useRef(null);
   const logoRef = useRef(null);
   const topLeftTextRef = useRef(null);
   const navRef = useRef(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -198,32 +197,47 @@ export default function HeroSection() {
       });
     }
 
-    const observer = new window.IntersectionObserver(
-      ([entry]) => {
-        if (videoRef.current) {
-          if (entry.isIntersecting) {
-            videoRef.current.play().catch(() => {});
-          } else {
-            videoRef.current.pause();
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-    document.addEventListener("click", () => videoRef.current?.play(), {
-      once: true,
-    });
-    if (heroRef.current) observer.observe(heroRef.current);
-
+    // No video playback handling for the image slider. Clean up ScrollTrigger and resize.
     return () => {
-      observer.disconnect();
-      document.removeEventListener("click", () => videoRef.current?.play());
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
-  const handleVideoLoad = () => setIsVideoLoaded(true);
+  // Slider images (from public/). Use four sample images.
+  const sliderImages = [
+    '/BG1.jpeg',
+    '/BG2.jpeg',
+    '/BG1.jpeg',
+    '/BG2.jpeg',
+  ];
+
+  // Build a GSAP-based horizontal "wipe" slider (re-uses pattern from ProjectsSection)
+  useEffect(() => {
+    const items = gsap.utils.toArray('.hero-slideshow-item');
+    const images = gsap.utils.toArray('.hero-slideshow-item img');
+    if (items.length <= 1) return;
+
+    // Initial positions: all except first start off to the right
+    items.forEach((item, index) => {
+      if (index !== 0) {
+        gsap.set(item, { xPercent: 100 });
+        gsap.set(images[index], { xPercent: -100 });
+      }
+    });
+
+    const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power3.inOut', duration: 1.2 } });
+    for (let i = 0; i < items.length - 1; i++) {
+      tl
+        .to(items[i], { xPercent: -100 })
+        .to(images[i], { xPercent: 100 }, '<')
+        .to(items[i + 1], { xPercent: 0 }, '<')
+        .to(images[i + 1], { xPercent: 0 }, '<')
+        .to({}, { duration: 2 });
+    }
+
+    return () => tl.kill();
+  }, []);
 
   // Close menu when clicking outside or pressing Escape (includes centered toggle)
   useEffect(() => {
@@ -326,7 +340,7 @@ export default function HeroSection() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "3vw",
+            gap: isMobile ? "3vw" : "0.5vw",
             position: "relative",
           }}
         >
@@ -559,45 +573,48 @@ export default function HeroSection() {
           borderBottom: "1px solid var(--gray-3)",
         }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          onLoadedData={handleVideoLoad}
-          webkit-playsinline="true"
+        {/* Background image slider (horizontal wipe - GSAP driven) */}
+        <div
+          aria-hidden="true"
           style={{
-            position: "fixed",
+            position: 'fixed',
             top: 0,
             left: 0,
-            width: "100vw",
-            height: "100vh",
+            width: '100vw',
+            height: '100vh',
             zIndex: 0,
-            objectFit: "cover",
-            pointerEvents: "none",
+            pointerEvents: 'none',
+            overflow: 'hidden',
           }}
         >
-          <source
-            src="/WhatsApp Video 2025-09-13 at 11.40.17_6e976e94.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-        {!isVideoLoaded && (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: `url('/image.png') center/cover no-repeat`,
-              zIndex: -1,
-            }}
-          />
-        )}
+          {sliderImages.map((src, i) => (
+            <div
+              key={i}
+              className="hero-slideshow-item"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                willChange: 'transform',
+              }}
+            >
+              <img
+                src={src}
+                alt={`Hero slide ${i + 1}`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                  transform: 'translateX(0%)',
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </section>
     </>
   );
