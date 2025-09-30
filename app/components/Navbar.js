@@ -69,13 +69,19 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
       style={{
         fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
         fontWeight: 600,
-        fontSize: 'clamp(0.5rem, 1vw, 1rem)',
+        fontSize: 'clamp(0.45rem, 0.9vw, 0.9rem)',
         color: '#000',
         textDecoration: 'none',
         letterSpacing: '0.1em',
-        marginRight: '0.5vw',
+        marginRight: '0.3vw',
         transition: 'color 0.2s',
-        display: 'inline-block',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'clamp(0.32rem, 0.7vw, 0.55rem) clamp(0.45rem, 0.9vw, 0.8rem)',
+        paddingBottom: 'clamp(0.5rem, 1vw, 0.8rem)',
+        borderRadius: '0.45rem',
+        lineHeight: 1,
         cursor: 'pointer',
         ...userStyle,
       }}
@@ -148,15 +154,15 @@ function NavbarInner() {
       <div
         className="fixed flex items-center justify-between z-[1001]"
         style={{
-          top: isMobile ? '1.2vh' : '0.9vh',
+          top: isMobile ? '1.6vh' : '1.2vh',
           left: '50%', transform: 'translateX(-50%)', width: 'calc(100% - 2.5vw)', gap: '5vw',
           background: isMobile ? 'rgba(255,255,255,0.36)' : 'rgba(255,255,255,0.18)',
           boxShadow: isMobile ? '0 10px 58px rgba(0,0,0,0.10)' : '0 6px 44px rgba(0,0,0,0.10)',
           backdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)', WebkitBackdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)',
           borderBottom: isMobile ? '1px solid rgba(0,0,0,0.06)' : '1px solid rgba(255,255,255,0.12)',
-          paddingLeft: '1.2vw', paddingRight: 0,
+          paddingLeft: '1.6vw', paddingRight: 0,
           paddingTop: isMobile ? '0.02rem' : undefined, paddingBottom: isMobile ? '0.02rem' : undefined,
-          minHeight: isMobile ? 'clamp(2rem, 5vh, 2.6rem)' : '2.6rem',
+          minHeight: isMobile ? 'clamp(1.8rem, 4vh, 2.4rem)' : undefined,
           borderRadius: '9999px', position: 'fixed',
         }}
       >
@@ -164,19 +170,19 @@ function NavbarInner() {
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
-            style={{ width: isMobile ? '18vw' : '5.2vw', maxWidth: '110px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
+            style={{ width: isMobile ? '14vw' : '4.2vw', maxWidth: '90px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
             onClick={() => { router.push('/'); if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '2vw' : '5vw', position: 'relative', flex: 1, justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '2.5vw' : '1vw', position: 'relative', flex: 1, justifyContent: 'flex-end' }}>
           {!isMobile && navItems.map((item) => (
             <WaveNavLink key={item.label} href={item.href} text={item.label} onClick={item.onClick} />
           ))}
           <MorphingButton
             key={isMobile ? 'mobile' : 'desktop'} text="Let's Collaborate"
             fontFamily="var(--font-century-gothic), Century Gothic, sans-serif"
-            style={{ margin: 0, fontSize: isMobile ? '0.72rem' : '0.95rem', height: isMobile ? 'clamp(1.8rem, 4.2vh, 2.2rem)' : '2.2rem', padding: isMobile ? '0.2rem 0.6rem' : '0.35rem 0.7rem', marginLeft: isMobile ? '0.1rem' : undefined }}
+            style={{ margin: 0, fontSize: isMobile ? '0.72rem' : '1.0rem', height: isMobile ? 'clamp(1.8rem, 4vh, 2.4rem)' : undefined, padding: isMobile ? '0.2rem 0.5rem' : '0.4rem 0.8rem', marginLeft: isMobile ? '0.08rem' : undefined }}
             onClick={() => {
               if (pathname === '/' || pathname === '') {
                 const contactSection = document.getElementById('contact-us-section');
@@ -210,13 +216,13 @@ function NavbarInner() {
             ref={menuRef}
             style={{ position: 'absolute', left: 0, top: 0, width: '100%', transform: isMenuOpen ? 'translateY(0%)' : 'translateY(-100%)', transition: 'transform 360ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease', opacity: isMenuOpen ? 1 : 0, background: 'rgba(255,255,255,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '6vh' }}
           >
-            <nav style={{ width: '100%', textAlign: 'center', fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(0.8rem, 3.2vw, 1.1rem)' }}>
+            <nav style={{ width: '100%', textAlign: 'center', fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif', fontSize: 'clamp(0.72rem, 2.8vw, 1rem)' }}>
               {navItems.map((nav) => (
                 <div key={nav.label} style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
                   <WaveNavLink
                     href={nav.href}
                     text={nav.label}
-                    style={{ fontSize: 'clamp(0.9rem, 3.4vw, 1.15rem)', padding: '0.4rem 0' }}
+                    style={{ fontSize: 'clamp(0.8rem, 3vw, 1rem)', padding: '0.3rem 0' }}
                     onClick={(e) => {
                       if (nav.onClick) nav.onClick(e); else if (nav.href.startsWith('#')) { e.preventDefault(); router.push('/' + nav.href); }
                       setIsMenuOpen(false);
