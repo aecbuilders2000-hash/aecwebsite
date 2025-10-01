@@ -176,18 +176,7 @@ const Footer = () => {
                         DESIGN MORE<br />MANAGE LESS
                     </div>
                     <div className='mt-6 text-sm text-gray-300 flex flex-col'>
-                        <a
-                            href="https://www.google.com/search?sca_esv=5b71cfa89013eb9f&sxsrf=AE3TifM6XxgXu625q9gdVbkAySzaKA5xXQ%3A1757913719968&kgmid=%2Fg%2F11b7k1j235&q=Avadh%20Viceroy&shndl=30&shem=lcuae%2Clsptbl1%2Cuaasie&source=sh%2Fx%2Floc%2Funi%2Fm1%2F1&kgs=3bcfbe87711983a6"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block underline underline-offset-2 hover:text-white"
-                            aria-label="Open location in Google Maps: 144 Avadh Viceroy, Sarthana Jakat Naka, Varachha, Surat, Gujarat 395010"
-                            title="Open in Google Maps"
-                        >
-                            <p className='m-0'>144 Avadh Viceroy, Sarthana Jakat Naka,</p>
-                            <p className='m-0'>Varachha, Surat, Gujarat 395010</p>
-                        </a>
-                        <p className='mt-5'>Phone: +91 910 687 8832</p>
+                        <p className='m-0'>Carlsbad, California</p>
                         <p className='m-0'>
                             Email: <a href="mailto:info@collectiveaec.com" className="underline underline-offset-2 hover:text-white">info@collectiveaec.com</a>
                         </p>

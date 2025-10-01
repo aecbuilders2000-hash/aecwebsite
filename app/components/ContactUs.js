@@ -11,7 +11,7 @@ const ContactForm = () => {
     message: ''
   });
   const [selectedCountry, setSelectedCountry] = useState(
-    countries.find((c) => c.value === 'IN') || countries[0]
+    countries.find((c) => c.value === 'US') || countries[0]
   );
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' }); // type: 'success' | 'error'
