@@ -292,20 +292,20 @@ const CardServices = ({
                                         }}
                                         onMouseEnter={() => setHoveredIndex(index)}
                                         onMouseLeave={() => setHoveredIndex(null)}
-                                                                            onClick={() => {
-                                                                                // compute slugs and navigate to nested page
-                                                                                const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                                                                                const mainSlug = toSlug(serviceName);
-                                                                                const subSlug = toSlug(option);
+                                        onClick={() => {
+                                            // compute slugs and navigate to nested page
+                                            const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                                            const mainSlug = toSlug(serviceName);
+                                            const subSlug = toSlug(option);
 
-                                                                                // Use Next.js App Router for client navigation when available
-                                                                                if (typeof window !== 'undefined' && router && typeof router.push === 'function') {
-                                                                                    router.push(`/services/${mainSlug}/${subSlug}`);
-                                                                                } else {
-                                                                                    // Fallback to toggling selection for non-client environments
-                                                                                    setSelected(selected === option ? null : option);
-                                                                                }
-                                                                            }}
+                                            // Use Next.js App Router for client navigation when available
+                                            if (typeof window !== 'undefined' && router && typeof router.push === 'function') {
+                                                router.push(`/services/${mainSlug}/${subSlug}`);
+                                            } else {
+                                                // Fallback to toggling selection for non-client environments
+                                                setSelected(selected === option ? null : option);
+                                            }
+                                        }}
                                     >
                                         {/* Bouncy Black Ball - appears on hover */}
                                         <div
