@@ -6,6 +6,7 @@ import AudioManager from "./components/AudioManager";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import LayoutWrapper from "./components/LayoutWrapper";
+import ShaderWrapper from "./ui/ShaderWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,7 +78,8 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
       </head>
       <body className={`${geistSans.variable} bg-white ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
-        <CustomCursor />
+        <ShaderWrapper />
+        {/* <CustomCursor /> */}
         <AudioManager />
         <Navbar />
         <div className="flex flex-col min-h-screen">

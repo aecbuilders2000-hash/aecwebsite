@@ -1,4 +1,6 @@
-import React from 'react'
+"use client";
+import React, { useRef } from 'react'
+import gsap from 'gsap';
 
 const frameworkSteps = [
   {
@@ -24,6 +26,75 @@ const frameworkSteps = [
 ];
 
 const CollectiveAECFramework = () => {
+  const waveTimeouts = useRef([]);
+  const lastHoveredIndex = useRef(-1);
+
+  const createWaveEffect = (
+    centerIndex,
+    allLetters,
+    mouseX,
+    mouseY,
+    containerRect
+  ) => {
+    waveTimeouts.current.forEach((timeout) => clearTimeout(timeout));
+    waveTimeouts.current = [];
+
+    const maxDistance = 120;
+    const maxDelay = 150;
+
+    allLetters.forEach((letter, index) => {
+      const letterRect = letter.getBoundingClientRect();
+      const letterCenterX =
+        letterRect.left + letterRect.width / 2 - containerRect.left;
+      const letterCenterY =
+        letterRect.top + letterRect.height / 2 - containerRect.top;
+
+      const deltaX = mouseX - letterCenterX;
+      const deltaY = mouseY - letterCenterY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance <= maxDistance) {
+        const delay = (distance / maxDistance) * maxDelay;
+        const intensity = 1 - distance / maxDistance;
+
+        const timeout = setTimeout(() => {
+          gsap.to(letter, {
+            y: -25 * intensity,
+            scale: 1.1 + 0.4 * intensity,
+            rotation: (Math.random() - 0.5) * 8 * intensity,
+            duration: 0.4,
+            ease: "back.out(2.5)",
+          });
+
+          gsap.to(letter, {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.8,
+            delay: 0.1,
+            ease: "elastic.out(1, 0.4)",
+          });
+        }, delay);
+
+        waveTimeouts.current.push(timeout);
+      }
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const allLetters = Array.from(
+      e.currentTarget.querySelectorAll(".bounce-letter")
+    );
+
+    if (Date.now() - (lastHoveredIndex.current || 0) > 50) {
+      lastHoveredIndex.current = Date.now();
+      createWaveEffect(0, allLetters, mouseX, mouseY, rect);
+    }
+  };
+
   return (
     <section className="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -57,9 +128,30 @@ const CollectiveAECFramework = () => {
               </div>
               
               {/* Description */}
-              <p className="text-gray-700 text-base lg:text-lg leading-relaxed pl-12">
-                {step.description}
-              </p>
+              <div 
+                className="text-gray-700 text-base lg:text-lg leading-relaxed pl-12 cursor-pointer"
+                onMouseMove={handleMouseMove}
+              >
+                {step.description.split(" ").map((word, wordIndex) => (
+                  <span
+                    key={wordIndex}
+                    style={{ display: "inline-block", marginRight: "0.4em" }}
+                  >
+                    {word.split("").map((letter, letterIndex) => (
+                      <span
+                        key={`${wordIndex}-${letterIndex}`}
+                        className="bounce-letter"
+                        style={{
+                          display: "inline-block",
+                          transformOrigin: "center bottom",
+                        }}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>

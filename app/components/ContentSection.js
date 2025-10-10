@@ -121,7 +121,7 @@ export default function ContentSection() {
 
       // Increase pin duration for smoother scrub effect
       const pinDuration =
-        (topRectRef.current.offsetHeight || window.innerHeight * 0.5) * 2;
+        (topRectRef.current.offsetHeight || window.innerHeight * 0.5) * 2.5;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: contentRef.current,
@@ -225,10 +225,9 @@ export default function ContentSection() {
   return (
     <section
       ref={contentRef}
-      className="relative bg-black h-fit min-h-screen overflow-hidden border-t border-b border-gray-3"
+      className="relative h-fit min-h-screen overflow-hidden"
       style={{
         width: "100vw",
-        background: "var(--gray-2)", // Using E9ECEF from your color palette
         color: "var(--gray-9)",
         zIndex: 10,
       }}
@@ -236,7 +235,7 @@ export default function ContentSection() {
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
-        className="absolute top-0 left-0 flex items-end overflow-hidden z-20 bg-gray-2"
+        className="absolute top-0 left-0 flex items-end overflow-hidden z-20 bg-gray-100"
         style={{
           width: "100vw",
           height: "50vh",
@@ -261,7 +260,7 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
-        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20 bg-gray-2"
+        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20 bg-gray-100"
         style={{
           width: "100vw",
           height: "50vh",

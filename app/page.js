@@ -21,20 +21,17 @@ export default function Home() {
       <HeroSection />
       {/* Content Section with GSAP pin/reveal animation (self-contained) */}
       <ContentSection />
-      <section
+      <section className="bg-gray-100"
         style={{
-          minHeight: "100vh",
+          minHeight: "125vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "var(--gray-2)",
           color: "var(--gray-9)",
-          borderTop: "1px solid var(--gray-3)",
-          borderBottom: "1px solid var(--gray-3)",
         }}
       >
         <h2 style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
-          Buffer Section
+          {/* Buffer Section */}
         </h2>
       </section>
       {/* <CardServices /> */}

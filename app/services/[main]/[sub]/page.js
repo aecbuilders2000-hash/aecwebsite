@@ -1,3 +1,5 @@
+"use client";
+import { useRef } from 'react';
 import SERVICES from '../../../constants/ServicesData';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,13 +8,89 @@ import Services2 from '../../../components/Services2.js';
 import WhyCollective from '../../../components/WhyCollective.js';
 import CollectiveAECFramework from '../../../components/CollectiveAECFramework.js';
 import SubServicesHero from './SubServicesHero.js';
+import gsap from 'gsap';
+import { use } from 'react';
 
-export default async function SubservicePage({ params }) {
-  const { main, sub } = await params;
+export default function SubservicePage({ params }) {
+  const resolvedParams = use(params);
+  const { main, sub } = resolvedParams;
+  
+  const waveTimeouts = useRef([]);
+  const lastHoveredIndex = useRef(-1);
+
+  const createWaveEffect = (
+    centerIndex,
+    allLetters,
+    mouseX,
+    mouseY,
+    containerRect
+  ) => {
+    waveTimeouts.current.forEach((timeout) => clearTimeout(timeout));
+    waveTimeouts.current = [];
+
+    const maxDistance = 120;
+    const maxDelay = 150;
+
+    allLetters.forEach((letter, index) => {
+      const letterRect = letter.getBoundingClientRect();
+      const letterCenterX =
+        letterRect.left + letterRect.width / 2 - containerRect.left;
+      const letterCenterY =
+        letterRect.top + letterRect.height / 2 - containerRect.top;
+
+      const deltaX = mouseX - letterCenterX;
+      const deltaY = mouseY - letterCenterY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance <= maxDistance) {
+        const delay = (distance / maxDistance) * maxDelay;
+        const intensity = 1 - distance / maxDistance;
+
+        const timeout = setTimeout(() => {
+          gsap.to(letter, {
+            y: -25 * intensity,
+            scale: 1.1 + 0.4 * intensity,
+            rotation: (Math.random() - 0.5) * 8 * intensity,
+            duration: 0.4,
+            ease: "back.out(2.5)",
+          });
+
+          gsap.to(letter, {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.8,
+            delay: 0.1,
+            ease: "elastic.out(1, 0.4)",
+          });
+        }, delay);
+
+        waveTimeouts.current.push(timeout);
+      }
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const allLetters = Array.from(
+      e.currentTarget.querySelectorAll(".bounce-letter")
+    );
+
+    if (Date.now() - (lastHoveredIndex.current || 0) > 50) {
+      lastHoveredIndex.current = Date.now();
+      createWaveEffect(0, allLetters, mouseX, mouseY, rect);
+    }
+  };
+
   const mainData = SERVICES[main];
   if (!mainData) return <div style={{ padding: '2rem' }}>Service not found</div>;
   const subData = mainData.subs?.[sub];
   if (!subData) return <div style={{ padding: '2rem' }}>Subservice not found</div>;
+
+  const sectionDescription = subData?.sectionDescription || subData?.description || "Service description";
+  const trustText = "Trusted by 300+ Leading Architectural and Engineering Companies";
 
   return (
     <main className='text-black min-h-screen pt-12 pb-8'>
@@ -72,7 +150,7 @@ export default async function SubservicePage({ params }) {
         </section>
       </div> */}
 
-      <SubServicesHero />
+      <SubServicesHero subData={subData} mainData={mainData} />
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto px-6 lg:px-12">
@@ -82,25 +160,71 @@ export default async function SubservicePage({ params }) {
               {/* Title */}
               <div>
                 <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-gray-900 leading-tight mb-4">
-                  BIM <span className="text-gray-600">Consulting Services</span>
+                  {subData.title}
                 </h2>
                 <div className="w-24 h-1 bg-black"></div>
               </div>
 
               {/* Description */}
-              <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                At Collective AEC, we redefine precision through intelligent BIM solutions. From establishing
-                seamless Common Data Environments to crafting customized BIM Execution Plans (BEP), our
-                approach ensures every project begins with clarity and innovation. Our expert team transforms
-                your BIM goals into built realities delivering accuracy, collaboration, and forward-thinking
-                results through advanced BIM modelling, Revit drafting, and parametric design expertise.
-              </p>
+              <div 
+                className="text-gray-700 text-base lg:text-lg leading-relaxed cursor-pointer"
+                onMouseMove={handleMouseMove}
+              >
+                {sectionDescription.split(" ").map((word, wordIndex) => (
+                  <span
+                    key={wordIndex}
+                    style={{ display: "inline-block", marginRight: "0.4em" }}
+                  >
+                    {word.split("").map((letter, letterIndex) => (
+                      <span
+                        key={`${wordIndex}-${letterIndex}`}
+                        className="bounce-letter"
+                        style={{
+                          display: "inline-block",
+                          transformOrigin: "center bottom",
+                        }}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
 
               {/* Trust Statement */}
               <div className="pt-4">
-                <p className="text-gray-900 text-lg lg:text-xl font-medium">
-                  Trusted by <span className="font-bold text-black">300+</span> Leading Architectural and Engineering Companies
-                </p>
+                <div 
+                  className="text-gray-900 text-lg lg:text-xl font-medium cursor-pointer"
+                  onMouseMove={handleMouseMove}
+                >
+                  {trustText.split(" ").map((word, wordIndex) => {
+                    // Check if word contains "300+"
+                    const isBold = word.includes("300+");
+                    return (
+                      <span
+                        key={wordIndex}
+                        style={{ 
+                          display: "inline-block", 
+                          marginRight: "0.4em",
+                          fontWeight: isBold ? "bold" : "medium"
+                        }}
+                      >
+                        {word.split("").map((letter, letterIndex) => (
+                          <span
+                            key={`${wordIndex}-${letterIndex}`}
+                            className="bounce-letter"
+                            style={{
+                              display: "inline-block",
+                              transformOrigin: "center bottom",
+                            }}
+                          >
+                            {letter}
+                          </span>
+                        ))}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -108,8 +232,8 @@ export default async function SubservicePage({ params }) {
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl">
                 <img
-                  src="https://i.postimg.cc/sxQ296Dc/IMG-20251009-WA0001.jpg"
-                  alt="BIM Consulting Services Illustration"
+                  src={subData.image || "https://i.postimg.cc/sxQ296Dc/IMG-20251009-WA0001.jpg"}
+                  alt={`${subData.title} Illustration`}
                   className="w-full h-auto object-contain rounded-lg"
                   loading="lazy"
                 />
