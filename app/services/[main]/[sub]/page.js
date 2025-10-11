@@ -11,6 +11,8 @@ import SubServicesHero from './SubServicesHero.js';
 import gsap from 'gsap';
 import { use } from 'react';
 import WhyCollectiveIsRightPartner from '../../../components/WhyCollectiveIsRightPartner.js';
+import ContactForm from '../../../contact-us/ContactUsForm.js';
+import ClientsMarquee from '../../../components/ClientsSection.js';
 
 export default function SubservicePage({ params }) {
   const resolvedParams = use(params);
@@ -252,11 +254,16 @@ export default function SubservicePage({ params }) {
 
       <SquareCard />
 
-      <div className='flex justify-center mt-12'>
+      <div className='flex justify-center my-12'>
         <Link className='no-underline' href="/#contact-us-section" style={{ textDecoration: 'none' }}>
           <ArrowButton label="Contact us" />
         </Link>
       </div>
+
+      <ClientsMarquee />
+
+      <ContactForm />
+
     </main>
   );
 }
