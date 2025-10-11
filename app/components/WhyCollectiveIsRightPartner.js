@@ -1,7 +1,10 @@
 "use client";
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LiquidShader from '../ui/LiquidShader';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const frameworkSteps = [
   {
@@ -29,6 +32,7 @@ const frameworkSteps = [
 const WhyCollectiveIsRightPartner = () => {
   const waveTimeouts = useRef([]);
   const lastHoveredIndex = useRef(-1);
+  const containerRef = useRef(null);
 
   const createWaveEffect = (
     centerIndex,
@@ -43,7 +47,7 @@ const WhyCollectiveIsRightPartner = () => {
     const maxDistance = 120;
     const maxDelay = 150;
 
-    allLetters.forEach((letter, index) => {
+  allLetters.forEach((letter) => {
       const letterRect = letter.getBoundingClientRect();
       const letterCenterX =
         letterRect.left + letterRect.width / 2 - containerRect.left;
@@ -96,8 +100,36 @@ const WhyCollectiveIsRightPartner = () => {
     }
   };
 
+  // Slide-in animations: left columns from left, right columns from right
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const rows = gsap.utils.toArray('.wcrp-row');
+      rows.forEach((row) => {
+        const col = row.querySelector('.wcrp-col');
+        if (!col) return;
+        const dir = col.getAttribute('data-dir') || 'left';
+        gsap.set(col, { opacity: 0, x: dir === 'left' ? -60 : 60 });
+
+        gsap.to(col, {
+          opacity: 1,
+          x: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 80%',
+            end: 'bottom 60%',
+            toggleActions: 'play none none reverse',
+          }
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-8 lg:py-12 bg-gray-50 relative overflow-hidden">
+    <section ref={containerRef} className="py-8 lg:py-12 bg-gray-50 relative overflow-hidden">
       {/* Ripple shader background (pointer-events-none so it doesn't block interactions) */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <LiquidShader />
@@ -124,9 +156,12 @@ const WhyCollectiveIsRightPartner = () => {
             <div className="space-y-12">
               {
                 frameworkSteps.map((step, i) => (
-                  <div key={i} className="flex flex-col md:flex-row items-center">
+                  <div key={i} className="flex flex-col md:flex-row items-center wcrp-row">
                     {/* text column */}
-                    <div className={`${i % 2 === 0 ? 'md:order-1 md:pr-8 text-left' : 'md:order-2 md:pl-8 text-right'} md:w-1/2 w-full`}>
+                    <div
+                      className={`${i % 2 === 0 ? 'md:order-1 md:pr-8 text-left' : 'md:order-2 md:pl-8 text-right'} md:w-1/2 w-full wcrp-col will-change-transform`}
+                      data-dir={i % 2 === 0 ? 'left' : 'right'}
+                    >
                       <div className="max-w-xl mx-auto md:mx-0" onMouseMove={handleMouseMove}>
                         <span className="text-sm tracking-widest text-gray-500">{step.num}</span>
                         <h3 className="mt-2 text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{step.title}</h3>

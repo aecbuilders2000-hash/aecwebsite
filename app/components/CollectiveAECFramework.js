@@ -1,7 +1,10 @@
 "use client";
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LiquidShader from '../ui/LiquidShader';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const frameworkSteps = [
     {
@@ -29,6 +32,31 @@ const frameworkSteps = [
 const CollectiveAECFramework = () => {
     const waveTimeouts = useRef([]);
     const lastHoveredIndex = useRef(-1);
+    const containerRef = useRef(null);
+
+    // Staggered rise-in animation when section enters viewport
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const steps = gsap.utils.toArray('.framework-step');
+            gsap.set(steps, { opacity: 0, y: 25 });
+
+            gsap.to(steps, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: 'power3.out',
+                stagger: 0.10,
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 75%',
+                    scrub: 2,
+                    // markers: true,
+                },
+            });
+        }, containerRef);
+
+        return () => ctx.revert();
+    }, []);
 
     const createWaveEffect = (
         centerIndex,
@@ -43,7 +71,7 @@ const CollectiveAECFramework = () => {
         const maxDistance = 120;
         const maxDelay = 150;
 
-        allLetters.forEach((letter, index) => {
+    allLetters.forEach((letter) => {
             const letterRect = letter.getBoundingClientRect();
             const letterCenterX =
                 letterRect.left + letterRect.width / 2 - containerRect.left;
@@ -97,7 +125,7 @@ const CollectiveAECFramework = () => {
     };
 
     return (
-        <section className="py-8 lg:py-12 bg-gray-50 relative overflow-hidden">
+        <section ref={containerRef} className="py-8 lg:py-12 bg-gray-50 relative overflow-hidden">
             {/* Ripple shader background (pointer-events-none so it doesn't block interactions) */}
             <div className="absolute inset-0 -z-10 pointer-events-none">
                 <LiquidShader />
@@ -112,8 +140,8 @@ const CollectiveAECFramework = () => {
 
                 {/* Framework Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
-                    {frameworkSteps.map((step, index) => (
-                        <div key={step.number} className="space-y-4">
+                    {frameworkSteps.map((step) => (
+                        <div key={step.number} className="space-y-4 framework-step will-change-transform">
                             {/* Step Number and Title */}
                             <div className="flex items-baseline gap-3">
                                 <span className="text-2xl lg:text-3xl font-bold text-gray-900">
