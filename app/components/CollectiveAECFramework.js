@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from 'react'
 import gsap from 'gsap';
+import LiquidShader from '../ui/LiquidShader';
 
 const frameworkSteps = [
   {
@@ -97,6 +98,10 @@ const CollectiveAECFramework = () => {
 
   return (
     <section className="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
+      {/* Ripple shader background (pointer-events-none so it doesn't block interactions) */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <LiquidShader />
+      </div>
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-64 h-64 border border-gray-400 rounded-full"></div>
@@ -108,53 +113,72 @@ const CollectiveAECFramework = () => {
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Title */}
         <div className="text-center mb-16 lg:mb-20">
-          <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-bold text-gray-900 leading-tight">
+          <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-bruno text-gray-900 leading-tight">
             Collective AEC Framework
           </h2>
         </div>
 
-        {/* Framework Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
-          {frameworkSteps.map((step, index) => (
-            <div key={step.number} className="space-y-4">
-              {/* Step Number and Title */}
-              <div className="flex items-baseline gap-3">
-                <span className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  {step.number}.
-                </span>
-                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  {step.title}
-                </h3>
-              </div>
-              
-              {/* Description */}
-              <div 
-                className="text-gray-700 text-base lg:text-lg leading-relaxed pl-12 cursor-pointer"
-                onMouseMove={handleMouseMove}
-              >
-                {step.description.split(" ").map((word, wordIndex) => (
-                  <span
-                    key={wordIndex}
-                    style={{ display: "inline-block", marginRight: "0.4em" }}
-                  >
-                    {word.split("").map((letter, letterIndex) => (
-                      <span
-                        key={`${wordIndex}-${letterIndex}`}
-                        className="bounce-letter"
-                        style={{
-                          display: "inline-block",
-                          transformOrigin: "center bottom",
-                        }}
-                      >
-                        {letter}
-                      </span>
-                    ))}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+         {/* Alternating steps: Understand, Analyse, Optimize, Automate */}
+      <section className="py-12 lg:py-20">
+        <div className="mx-auto px-6 lg:px-12 max-w-7xl">
+          <div className="space-y-12">
+            {
+              [
+                {
+                  num: '01.',
+                  title: 'Understand',
+                  text: 'We begin by immersing ourselves in your project vision, understanding goals, workflows, and existing BIM practices to identify alignment and improvement opportunities.'
+                },
+                {
+                  num: '02.',
+                  title: 'Analyse',
+                  text: 'Our team conducts a detailed review of your current BIM processes, models, and coordination methods to uncover inefficiencies and performance gaps across design and construction stages.'
+                },
+                {
+                  num: '03.',
+                  title: 'Optimize',
+                  text: 'We refine and restructure workflows for precision and scalability — standardizing Revit drafting templates, enhancing collaboration models, and integrating parametric design strategies that drive smarter project delivery.'
+                },
+                {
+                  num: '04.',
+                  title: 'Automate',
+                  text: 'Leveraging automation within BIM/Revit, we streamline repetitive tasks, improve modelling accuracy, and accelerate documentation, empowering your team to focus on creativity, innovation, and better project outcomes.'
+                }
+              ].map((step, i) => (
+                <div key={i} className="flex flex-col md:flex-row items-center">
+                  {/* text column */}
+                  <div className={`${i % 2 === 0 ? 'md:order-1 md:pr-8 text-left' : 'md:order-2 md:pl-8 text-right'} md:w-1/2 w-full`}> 
+                    <div className="max-w-xl mx-auto md:mx-0" onMouseMove={handleMouseMove}>
+                      <span className="text-sm tracking-widest text-gray-500">{step.num}</span>
+                      <h3 className="mt-2 text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{step.title}</h3>
+                      <div className="mt-4 text-gray-700 leading-relaxed">
+                        {step.text.split(' ').map((word, wordIndex) => (
+                          <span key={wordIndex} style={{ display: 'inline-block', marginRight: '0.4em' }}>
+                            {word.split('').map((letter, letterIndex) => (
+                              <span
+                                key={`${wordIndex}-${letterIndex}`}
+                                className="bounce-letter"
+                                style={{ display: 'inline-block', transformOrigin: 'center bottom' }}
+                              >
+                                {letter}
+                              </span>
+                            ))}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* spacer / visual column - empty on purpose to push text left/right */}
+                  <div className={`${i % 2 === 0 ? 'md:order-2' : 'md:order-1'} md:w-1/2 w-full`}>
+                    {/* optional space for visuals or to keep alignment */}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
+      </section>
       </div>
     </section>
   )

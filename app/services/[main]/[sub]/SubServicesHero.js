@@ -98,7 +98,7 @@ const SubServicesHero = ({ subData, mainData }) => {
                         <div className="space-y-8">
                             {/* Title */}
                             <div>
-                                <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight mb-4"><span className="text-white">{heroTitle}</span>
+                                <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-bruno font-bold leading-tight mb-4"><span className="text-white">{heroTitle}</span>
                                 </h1>
                             </div>
 
@@ -143,7 +143,7 @@ const SubServicesHero = ({ subData, mainData }) => {
             <section className="bg-white py-8 lg:py-12">
                 <div className="mx-auto px-6 lg:px-12">
                     <div className="max-w-7xl">
-                        <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-bold text-gray-900 mb-8">
+                        <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-bruno font-bold text-gray-900 mb-8">
                             {mainData?.title || "Service"}
                         </h2>
                         <div

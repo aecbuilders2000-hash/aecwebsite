@@ -159,7 +159,7 @@ export default function SubservicePage({ params }) {
             <div className="space-y-8">
               {/* Title */}
               <div>
-                <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-gray-900 leading-tight mb-4">
+                <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bruno font-bold text-gray-900 leading-tight mb-4">
                   {subData.title}
                 </h2>
                 <div className="w-24 h-1 bg-black"></div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -49,7 +49,7 @@ const services = [
   },
 ];
 
-export default function OurSevices() {
+export default function ServicesOverview() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const textRef = useRef(null);
@@ -156,6 +156,34 @@ export default function OurSevices() {
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
+  // Mobile tap-to-toggle state: first tap toggles invert, second tap triggers scroll
+  const [activeMobile, setActiveMobile] = useState(null);
+  const activeTimeout = useRef(null);
+
+  const mobileCardClick = (index) => {
+    if (activeMobile === index) {
+      // second tap: perform navigation/scroll
+      setActiveMobile(null);
+      if (activeTimeout.current) {
+        clearTimeout(activeTimeout.current);
+        activeTimeout.current = null;
+      }
+      scrollToService(index);
+    } else {
+      // first tap: toggle active state to show invert
+      setActiveMobile(index);
+      if (activeTimeout.current) clearTimeout(activeTimeout.current);
+      activeTimeout.current = setTimeout(() => setActiveMobile(null), 3000);
+    }
+  };
+
+  // cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (activeTimeout.current) clearTimeout(activeTimeout.current);
+    };
+  }, []);
+
   return (
     <section
       id="services-overview-section"
@@ -260,19 +288,12 @@ export default function OurSevices() {
           {bottomServices.map((service, index) => (
             <div
               key={service.id}
-              className="w-full flex items-stretch text-center bg-black text-white rounded-2xl overflow-hidden shadow-md"
+              className="group relative w-full flex items-stretch text-center rounded-2xl overflow-hidden shadow-md bg-black text-white"
               style={{ minHeight: "13vh" }}
-              onClick={() => scrollToService(index)}
+              onClick={() => mobileCardClick(index)}
             >
-              {/* Image - left (40%) */}
-              {/* <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
-                <Image src={service.image} alt={service.title} fill className="object-cover" />
-              </div> */}
-              {/* Text - right (60%) */}
-              <div
-                className="w-full p-4 flex flex-col justify-center"
-                style={{ padding: "clamp(0.5rem, 1.6vw, 0.9rem)" }}
-              >
+              {/* Black overlay with white text, inverts on hover or when activeMobile === index (for touch) */}
+              <div className={`absolute inset-0 z-10 backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-4 ${activeMobile === index ? 'bg-white text-black' : 'bg-black text-white'} group-hover:bg-white group-hover:text-black`}>
                 <h3
                   className="font-bruno-ace-sc font-bold"
                   style={{
@@ -313,7 +334,7 @@ export default function OurSevices() {
             <div
               key={service.id}
               ref={(el) => (bottomCardsRef.current[index] = el)}
-              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
+              className="group relative bg-black backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
               style={{
                 height: "clamp(25vh, 35vh, 40vh)",
                 width: "17.5vw",

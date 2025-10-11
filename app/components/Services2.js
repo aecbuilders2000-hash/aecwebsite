@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -48,7 +48,7 @@ const services = [
 
 ];
 
-const SquareCard = () => {
+const Services2 = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const textRef = useRef(null);
@@ -58,26 +58,6 @@ const SquareCard = () => {
     // Split services into top and bottom arrays
     const topServices = services.filter(service => service.position === "top");
     const bottomServices = services.filter(service => service.position === "bottom");
-
-    // mobile tap-to-toggle state
-    const [activeMobile, setActiveMobile] = useState(null);
-    const activeTimeout = useRef(null);
-
-    const mobileCardClick = (index) => {
-        if (activeMobile === index) {
-            setActiveMobile(null);
-            if (activeTimeout.current) {
-                clearTimeout(activeTimeout.current);
-                activeTimeout.current = null;
-            }
-            // perform original click action
-            handleServiceClick();
-        } else {
-            setActiveMobile(index);
-            if (activeTimeout.current) clearTimeout(activeTimeout.current);
-            activeTimeout.current = setTimeout(() => setActiveMobile(null), 3000);
-        }
-    };
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -173,16 +153,20 @@ const SquareCard = () => {
                 paddingRight: "2.5vw"
             }}
         >
-            {/* Mobile: stacked horizontal cards (one per row) - now start black and invert on hover like desktop */}
+            {/* Mobile: stacked horizontal cards (one per row) */}
             < div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
                 {
                     bottomServices.map((service, index) => (
-                        <div key={service.id} className="group relative w-full flex items-stretch text-center rounded-2xl overflow-hidden shadow-md" style={{ minHeight: '13vh' }} onClick={() => mobileCardClick(index)}>
-                            {/* Black overlay with white text, inverts on hover or when activeMobile === index */}
-                            <div className={`absolute inset-0 bg-black backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-4 ${activeMobile === index ? 'invert' : 'group-hover:invert'}`}>
-                                <h3 className="font-bruno font-bruno-ace-sc font-bold text-white" style={{ fontSize: 'clamp(1rem, 2.6vw, 1.25rem)', lineHeight: 1.1, fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{service.title}</h3>
-                                <p className="font-poppins text-white mt-2" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)' }}>{service.subtitle}</p>
-                                <p className="font-poppins text-white mt-2 leading-relaxed" style={{ fontSize: 'clamp(0.8rem, 1.7vw, 0.95rem)' }}>{service.description}</p>
+                        <div key={service.id} className="w-full flex items-stretch text-center bg-black text-white rounded-2xl overflow-hidden shadow-md" style={{ minHeight: '13vh' }} onClick={handleServiceClick}>
+                            {/* Image - left (40%) */}
+                            {/* <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
+                                <Image src={service.image} alt={service.title} fill className="object-cover" />
+                            </div> */}
+                            {/* Text - right (60%) */}
+                            <div className="w-full p-4 flex flex-col justify-center" style={{ padding: 'clamp(0.5rem, 1.6vw, 0.9rem)' }}>
+                                <h3 className="font-bruno-ace-sc font-bold" style={{ fontSize: 'clamp(1rem, 2.6vw, 1.25rem)', lineHeight: 1.1, fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{service.title}</h3>
+                                <p className="font-poppins mt-2" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)' }}>{service.subtitle}</p>
+                                <p className="font-poppins mt-2 leading-relaxed" style={{ fontSize: 'clamp(0.8rem, 1.7vw, 0.95rem)' }}>{service.description}</p>
                             </div>
                         </div>
                     ))
@@ -216,7 +200,7 @@ const SquareCard = () => {
                                 /> */}
                                 {/* Curtain reveal text overlay */}
                                 <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
-                                    <h3 className="font-bruno font-bruno-ace-sc font-bold text-white text-center mb-4"
+                                    <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4"
                                         style={{
                                             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                                             fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)'
@@ -239,4 +223,4 @@ const SquareCard = () => {
     )
 }
 
-export default SquareCard;
+export default Services2;

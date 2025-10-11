@@ -133,11 +133,11 @@ const WhyCollective = () => {
     return (
         <section className="py-20 min-h-screen flex items-center justify-center bg-gray-50">
             <div className="container mx-auto px-6 lg:px-12 text-center" ref={containerRef}>
-                <h2 className="text-[clamp(1.5rem,3.5vw,2.5rem)] font-bold text-gray-900 mb-6 leading-tight transition-transform">
+                <h2 className="text-[clamp(1.5rem,3.5vw,2.5rem)] font-bruno font-bold text-gray-900 mb-10 leading-tight transition-transform">
                     Why <span className="text-black">Collective AEC</span> is the Right Partner for BIM Consulting
                 </h2>
 
-                <div className="max-w-3xl mx-auto text-gray-600 mb-12 text-base lg:text-lg">
+                <div className="max-w-4xl mx-auto text-gray-600 mb-40 text-base lg:text-lg">
                     <div 
                         className="cursor-pointer mb-2"
                         onMouseMove={handleMouseMove}

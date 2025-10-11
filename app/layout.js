@@ -78,8 +78,8 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
       </head>
       <body className={`${geistSans.variable} bg-white ${geistMono.variable} ${brunoAceSC.variable} ${brunoAce.variable} ${centuryGothic.variable} ${poppins.variable}`}>
-        <ShaderWrapper />
-        {/* <CustomCursor /> */}
+        {/* <ShaderWrapper /> */}
+        <CustomCursor />
         <AudioManager />
         <Navbar />
         <div className="flex flex-col min-h-screen">
