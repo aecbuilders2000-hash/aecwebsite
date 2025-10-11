@@ -48,7 +48,7 @@ export default function RippleSimulation() {
       uniform int iFrame;
       uniform vec4 iMouse;
 
-      const float delta = 1.0;
+      const float delta = 1.5;
 
       void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         if (iFrame == 0) { fragColor = vec4(0.0); return; }
@@ -70,9 +70,9 @@ export default function RippleSimulation() {
         pVel += delta * (-2.0 * pressure + pU + pD) / 8.0;
         pressure += delta * pVel;
 
-        pVel -= 0.005 * delta * pressure;
-        pVel *= 1.0 - 0.002 * delta;
-        pressure *= 0.9;
+        pVel -= 0.002 * delta * pressure;
+        pVel *= 1.0 - 0.0005 * delta;
+        pressure *= 0.98;
 
         fragColor = vec4(pressure, pVel, (pR - pL) / 2.0, (pU - pD) / 2.0);
 
@@ -109,7 +109,7 @@ export default function RippleSimulation() {
         float spec2 = pow(max(0.0, dot(normal, light2)), 50.0);
         vec3 color2 = vec3(0.0, 0.847, 0.976); // #00D8F940.0);
 
-        vec3 color = baseColor * brightness + 4.0 * spec1 * color1 + 4.0 * spec2 * color2;
+        vec3 color = baseColor * brightness;
         float alpha = 0.6 * smoothstep(0.01, 0.1, abs(data.x));
 
         color = clamp(color, 0.0, 1.0);

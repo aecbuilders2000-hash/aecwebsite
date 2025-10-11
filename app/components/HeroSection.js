@@ -290,11 +290,11 @@ export default function HeroSection() {
         ref={navRef}
         className="fixed w-full flex items-center justify-between"
         style={{
-          // float slightly below the top and center with reduced width so it appears floating
-          top: isMobile ? "1.6vh" : "1.2vh",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "calc(100% - 2.5vw)",
+          // full width at the very top
+          top: 0,
+          left: 0,
+          transform: "none",
+          width: "100%",
           zIndex: 1001,
           display: "flex",
           alignItems: "center",
@@ -313,10 +313,10 @@ export default function HeroSection() {
             : "1px solid rgba(255,255,255,0.12)",
           paddingLeft: "1.6vw",
           paddingRight: 0,
-          paddingTop: isMobile ? "0.02rem" : undefined,
-          paddingBottom: isMobile ? "0.02rem" : undefined,
-          minHeight: isMobile ? "clamp(2rem, 5vh, 2.6rem)" : undefined,
-          borderRadius: "9999px", // fully pill-shaped (rounded-full)
+          paddingTop: isMobile ? "0.4rem" : "0.3rem",
+          paddingBottom: isMobile ? "0.4rem" : "0.3rem",
+          minHeight: isMobile ? "7vh" : "7vh",
+          borderRadius: 0, // no rounded corners for full width
         }}
       >
         <div

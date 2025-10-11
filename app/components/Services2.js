@@ -157,13 +157,13 @@ const Services2 = () => {
             < div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
                 {
                     bottomServices.map((service, index) => (
-                        <div key={service.id} className="w-full flex items-stretch bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ height: '13vh' }} onClick={handleServiceClick}>
+                        <div key={service.id} className="w-full flex items-stretch text-center bg-white/90 rounded-2xl overflow-hidden shadow-md" style={{ minHeight: '13vh' }} onClick={handleServiceClick}>
                             {/* Image - left (40%) */}
-                            <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
+                            {/* <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
                                 <Image src={service.image} alt={service.title} fill className="object-cover" />
-                            </div>
+                            </div> */}
                             {/* Text - right (60%) */}
-                            <div className="w-3/5 p-4 flex flex-col justify-center" style={{ padding: 'clamp(0.5rem, 1.6vw, 0.9rem)' }}>
+                            <div className="w-full p-4 flex flex-col justify-center" style={{ padding: 'clamp(0.5rem, 1.6vw, 0.9rem)' }}>
                                 <h3 className="font-bruno-ace-sc font-bold text-gray-900" style={{ fontSize: 'clamp(1rem, 2.6vw, 1.25rem)', lineHeight: 1.1, fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{service.title}</h3>
                                 <p className="font-poppins text-gray-700 mt-2" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)' }}>{service.subtitle}</p>
                                 <p className="font-poppins text-gray-600 mt-2 leading-relaxed" style={{ fontSize: 'clamp(0.8rem, 1.7vw, 0.95rem)' }}>{service.description}</p>
@@ -192,14 +192,14 @@ const Services2 = () => {
                             onClick={handleServiceClick}
                         >
                             <div className="relative h-full overflow-hidden">
-                                <Image
+                                {/* <Image
                                     src={service.image}
                                     alt={service.title}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                />
+                                /> */}
                                 {/* Curtain reveal text overlay */}
-                                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6">
+                                <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
                                     <h3 className="font-bruno-ace-sc font-bold text-white text-center mb-4"
                                         style={{
                                             fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
@@ -207,25 +207,12 @@ const Services2 = () => {
                                         }}>
                                         {service.title}
                                     </h3>
-                                    <p className="font-poppins text-white/90 text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                                    <p className="font-poppins text-white text-sm text-center mb-3" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                                         {service.subtitle}
                                     </p>
-                                    <p className="font-poppins text-white/80 text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                                    <p className="font-poppins text-white text-xs text-center leading-relaxed" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                                         {service.description}
                                     </p>
-                                </div>
-
-                                <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <span className="text-white font-bold text-lg">{service.id}</span>
-                                </div>
-                                <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-300">
-                                    <h3 className="font-bruno-ace-sc font-bold text-black mb-1"
-                                        style={{
-                                            fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
-                                            fontSize: 'clamp(1rem, 1.5vw, 1.3rem)'
-                                        }}>
-                                        {service.title}
-                                    </h3>
                                 </div>
                             </div>
                         </div>

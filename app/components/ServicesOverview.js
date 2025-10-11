@@ -332,9 +332,9 @@ export default function ServicesOverview() {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 /> */}
                 {/* Curtain reveal text overlay */}
-                <div className="absolute inset-0 bg-white group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
+                <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
                   <h3
-                    className="font-bruno-ace-sc font-bold text-black text-center mb-4"
+                    className="font-bruno-ace-sc font-bold text-white text-center mb-4"
                     style={{
                       fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                       fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
@@ -343,13 +343,13 @@ export default function ServicesOverview() {
                     {service.title}
                   </h3>
                   <p
-                    className="font-poppins text-black text-sm text-center mb-3"
+                    className="font-poppins text-white text-sm text-center mb-3"
                     style={{ fontFamily: "var(--font-poppins), sans-serif" }}
                   >
                     {service.subtitle}
                   </p>
                   <p
-                    className="font-poppins text-black text-xs text-center leading-relaxed"
+                    className="font-poppins text-white text-xs text-center leading-relaxed"
                     style={{ fontFamily: "var(--font-poppins), sans-serif" }}
                   >
                     {service.description}
