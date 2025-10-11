@@ -10,6 +10,7 @@ import CollectiveAECFramework from '../../../components/CollectiveAECFramework.j
 import SubServicesHero from './SubServicesHero.js';
 import gsap from 'gsap';
 import { use } from 'react';
+import WhyCollectiveIsRightPartner from '../../../components/WhyCollectiveIsRightPartner.js';
 
 export default function SubservicePage({ params }) {
   const resolvedParams = use(params);
@@ -238,11 +239,14 @@ export default function SubservicePage({ params }) {
                   loading="lazy"
                 />
               </div>
-            </div>        </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <WhyCollective />
+
+      <WhyCollectiveIsRightPartner />
 
       <CollectiveAECFramework />
 
