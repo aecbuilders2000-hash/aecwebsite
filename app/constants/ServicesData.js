@@ -19,7 +19,7 @@
 const SERVICES = {
   "bim-services": {
     title: "BIM Services",
-    image: "https://i.postimg.cc/Y2yyNqYB/BIMSERVICES.jpg",
+    image: "https://i.postimg.cc/XY1ncRfz/BimBG.jpg",
     description: "Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management",
     subs: {
       "bim-consulting-services": {
@@ -193,7 +193,7 @@ const SERVICES = {
   },
   architectural: {
     title: "Architectural Design",
-    image: "https://i.postimg.cc/sfNsBz2Y/ARCHSERVICE.jpg",
+    image: "https://i.postimg.cc/vZ2GLJ7w/Architecture-BG.jpg",
     description: "Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality",
     subs: {
       "architectural-design-services": {
@@ -252,7 +252,7 @@ const SERVICES = {
   },
   structural: {
     title: "Structural Design",
-    image: "https://i.postimg.cc/ryPMdTpR/STRUCTURESERVICE.jpg",
+    image: "https://i.postimg.cc/QdYjk2Q2/Structure-BG.jpg",
     description: "Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects",
     subs: {
       "structural-steel-detailing": {
@@ -325,8 +325,7 @@ const SERVICES = {
   },
   "3d-visualization": {
     title: "3D Visualization",
-    image: "https://i.postimg.cc/L6gRLWqq/3-DVISUALIZATION.jpg",
-    image: "/3d-Visualiser.png",
+    image: "https://i.postimg.cc/htZKbkLs/3DBG.jpg",
     description: "Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins",
     subs: {
       "3d-modeling": {

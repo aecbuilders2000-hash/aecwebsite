@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef } from 'react'
-import ArrowButton from '../../../ui/ArrowButton';
 import Image from 'next/image';
 import gsap from 'gsap';
 
@@ -81,23 +80,19 @@ const SubServicesHero = ({ subData, mainData }) => {
     return (
         <>
             {/* Hero Section - Image Background */}
-            <section className="text-white py-16 lg:py-24 relative overflow-hidden min-h-[600px]">
+            <section className="text-white py-8 lg:py-24 relative overflow-hidden">
                 {/* Background Image */}
                 <Image
-                    src="https://i.postimg.cc/HnqbQ7Hs/IMG-20251009-WA0004.jpg"
+                    src={mainData?.image || "https://i.postimg.cc/P5Z3fZ6r/BIMBG.jpg"}
                     alt="BIM Consulting Services Background"
                     fill
                     className="object-cover"
-                    priority
-                    style={{
-                        filter: 'brightness(0.7) contrast(1.1)',
-                    }}
                 />
-                
+
                 {/* Dark Overlay for better text readability */}
                 <div className="absolute inset-0 bg-black/40 z-[1]"></div>
 
-                <div className="container mx-auto px-6 lg:px-12 relative z-10">
+                <div className="mx-auto px-6 lg:px-12 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                         {/* Left Content */}
                         <div className="space-y-8">
@@ -108,7 +103,7 @@ const SubServicesHero = ({ subData, mainData }) => {
                             </div>
 
                             {/* Description */}
-                            <div 
+                            <div
                                 className="text-white text-base lg:text-lg leading-relaxed cursor-pointer"
                                 onMouseMove={handleMouseMove}
                             >
@@ -136,24 +131,7 @@ const SubServicesHero = ({ subData, mainData }) => {
                             {/* Call to Action */}
                             <div className="flex pt-1 justify-start items-start gap-4">
                                 <div className="flex pt-1 justify-end items-end gap-4">
-                                    <ArrowButton
-                                        style={{
-                                            color: 'black',
-                                            backgroundColor: 'white',
-                                            // borderRadius: '0.375rem',
-                                        }}
-                                        label="Let's Collaborate"
-                                        onClick={() => {
-                                            const contactSection = typeof document !== 'undefined' && document.getElementById('contact-us-section');
-                                            if (contactSection) {
-                                                contactSection.scrollIntoView({ behavior: 'smooth' });
-                                                return;
-                                            }
-                                            try { sessionStorage.setItem('scrollToContact', '1'); } catch (err) { }
-                                            // navigate to home root without hash so URL stays clean
-                                            if (typeof window !== 'undefined') window.location.href = '/';
-                                        }}
-                                    />
+                                    <ArrButton />
                                 </div>
                             </div>
                         </div>
@@ -168,7 +146,7 @@ const SubServicesHero = ({ subData, mainData }) => {
                         <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-bold text-gray-900 mb-8">
                             {mainData?.title || "Service"}
                         </h2>
-                        <div 
+                        <div
                             className="text-gray-700 text-lg lg:text-xl leading-relaxed cursor-pointer"
                             onMouseMove={handleMouseMove}
                         >
@@ -198,5 +176,74 @@ const SubServicesHero = ({ subData, mainData }) => {
         </>
     )
 }
+
+
+const ArrButton = () => (
+    <button
+        className="flex items-center justify-between bg-black border-none rounded-full cursor-pointer font-century-gothic transition-all duration-300 ease-in-out shadow-lg"
+        style={{
+            fontFamily: 'var(--font-century-gothic), Century Gothic, sans-serif',
+            zIndex: 1001,
+            padding: 'clamp(0.3rem, 1vw, 0.6rem)',
+            paddingLeft: 'clamp(0.6rem, 2vw, 1.5rem)',
+            gap: 'clamp(0.4rem, 1.5vw, 1rem)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+        }}
+        onMouseEnter={e => {
+            e.target.style.backgroundColor = '#fff';
+            const textSpan = e.target.querySelector('.button-text');
+            const circle = e.target.querySelector('.arrow-circle');
+            const arrow = e.target.querySelector('.arrow-icon');
+            if (textSpan) {
+                textSpan.style.color = '#000';
+                textSpan.style.backgroundColor = 'transparent';
+            }
+            if (circle) circle.style.backgroundColor = '#000';
+            if (arrow) {
+                arrow.style.stroke = '#fff';
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }}
+        onMouseLeave={e => {
+            e.target.style.backgroundColor = '#000';
+            const textSpan = e.target.querySelector('.button-text');
+            const circle = e.target.querySelector('.arrow-circle');
+            const arrow = e.target.querySelector('.arrow-icon');
+            if (textSpan) textSpan.style.color = '#fff';
+            if (circle) circle.style.backgroundColor = '#fff';
+            if (arrow) {
+                arrow.style.stroke = '#000';
+                arrow.style.backgroundColor = 'transparent';
+                arrow.style.transform = 'rotate(-45deg)';
+            }
+        }}
+    >
+        <span
+            className="button-text bg-transparent text-white whitespace-nowrap transition-colors duration-300 ease-in-out font-bold"
+            style={{ fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)' }}
+        >
+            Let's collaborate
+        </span>
+        <div
+            className="arrow-circle bg-white rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-in-out"
+            style={{ width: 'clamp(20px, 6vw, 36px)', height: 'clamp(20px, 6vw, 36px)' }}
+        >
+            <svg
+                className="arrow-icon stroke-black transition-all duration-300 ease-in-out"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ transform: 'rotate(-45deg)', width: 'clamp(10px, 3vw, 16px)', height: 'clamp(10px, 3vw, 16px)' }}
+            >
+                <path d="M7 7h10v10" />
+                <path d="M7 17L17 7" />
+            </svg>
+        </div>
+    </button>
+);
 
 export default SubServicesHero

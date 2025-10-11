@@ -4,7 +4,7 @@ import SERVICES from '../../../constants/ServicesData';
 import Image from 'next/image';
 import Link from 'next/link';
 import ArrowButton from '../../../ui/ArrowButton';
-import Services2 from '../../../components/Services2.js';
+import SquareCard from './SquareCard.js';
 import WhyCollective from '../../../components/WhyCollective.js';
 import CollectiveAECFramework from '../../../components/CollectiveAECFramework.js';
 import SubServicesHero from './SubServicesHero.js';
@@ -14,7 +14,7 @@ import { use } from 'react';
 export default function SubservicePage({ params }) {
   const resolvedParams = use(params);
   const { main, sub } = resolvedParams;
-  
+
   const waveTimeouts = useRef([]);
   const lastHoveredIndex = useRef(-1);
 
@@ -166,7 +166,7 @@ export default function SubservicePage({ params }) {
               </div>
 
               {/* Description */}
-              <div 
+              <div
                 className="text-gray-700 text-base lg:text-lg leading-relaxed cursor-pointer"
                 onMouseMove={handleMouseMove}
               >
@@ -193,7 +193,7 @@ export default function SubservicePage({ params }) {
 
               {/* Trust Statement */}
               <div className="pt-4">
-                <div 
+                <div
                   className="text-gray-900 text-lg lg:text-xl font-medium cursor-pointer"
                   onMouseMove={handleMouseMove}
                 >
@@ -203,8 +203,8 @@ export default function SubservicePage({ params }) {
                     return (
                       <span
                         key={wordIndex}
-                        style={{ 
-                          display: "inline-block", 
+                        style={{
+                          display: "inline-block",
                           marginRight: "0.4em",
                           fontWeight: isBold ? "bold" : "medium"
                         }}
@@ -246,7 +246,7 @@ export default function SubservicePage({ params }) {
 
       <CollectiveAECFramework />
 
-      <Services2 />
+      <SquareCard />
 
       <div className='flex justify-center mt-12'>
         <Link className='no-underline' href="/#contact-us-section" style={{ textDecoration: 'none' }}>

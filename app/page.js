@@ -7,10 +7,9 @@ import ServicesSection from "./components/ServicesSection";
 import ProjectsSection from "./components/ProjectsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
-import ServicesOverview from "./components/ServicesOverview";
+import OurServices from "./components/OurSevices";
 import ContactUs from "./contact-us/ContactUsForm";
 import TestinomialSection from "./components/TestinomialSection";
-import Services2 from "./components/Services2";
 
 export default function Home() {
   // useLenis();
@@ -35,7 +34,7 @@ export default function Home() {
         </h2>
       </section>
       {/* <CardServices /> */}
-      <ServicesOverview />
+      <OurServices />
       <ServicesSection />
       <ClientsSection />
       <ProjectsSection />

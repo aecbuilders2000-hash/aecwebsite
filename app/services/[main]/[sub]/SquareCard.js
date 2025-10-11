@@ -48,7 +48,7 @@ const services = [
 
 ];
 
-const Services2 = () => {
+const SquareCard = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const textRef = useRef(null);
@@ -223,4 +223,4 @@ const Services2 = () => {
     )
 }
 
-export default Services2;
+export default SquareCard;

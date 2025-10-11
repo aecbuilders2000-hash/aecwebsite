@@ -49,7 +49,7 @@ const services = [
   },
 ];
 
-export default function ServicesOverview() {
+export default function OurSevices() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const textRef = useRef(null);
