@@ -221,7 +221,7 @@ const CardServices = ({
                                 borderRadius: '1.5rem'
                             }}
                         >
-                            {/* <Image
+                            <Image
                                 src={imageUrl}
                                 alt="Architecture Service"
                                 fill
@@ -231,7 +231,7 @@ const CardServices = ({
                                     objectPosition: 'center center',
                                     background: '#fff'
                                 }}
-                            /> */}
+                            />
                         </div>
                     </div>
 
