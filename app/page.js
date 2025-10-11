@@ -8,7 +8,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
 import ServicesOverview from "./components/ServicesOverview";
-import ContactUs from "./components/ContactUs";
+import ContactUs from "./contact-us/ContactUsForm";
 import TestinomialSection from "./components/TestinomialSection";
 import Services2 from "./components/Services2";
 

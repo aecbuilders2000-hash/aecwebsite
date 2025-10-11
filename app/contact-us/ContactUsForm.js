@@ -16,6 +16,7 @@ const ContactForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' }); // type: 'success' | 'error'
   const [cooldownRemaining, setCooldownRemaining] = useState(0); // seconds
+  const [errors, setErrors] = useState({ name: '', email: '', phone: '' });
   // Cooldown countdown effect
   useEffect(() => {
     if (cooldownRemaining <= 0) return;
@@ -37,6 +38,20 @@ const ContactForm = () => {
   const maxLocalDigits = Math.max(0, maxTotalDigits - selectedDialCodeDigits);
   const minLocalDigits = 6; // Reasonable lower bound for meaningful numbers (varies by country)
 
+  // Validators
+  const isValidEmail = (value) => {
+    const v = String(value || '').trim();
+    // Reasonable email pattern (case-insensitive)
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(v);
+  };
+
+  const isValidPhoneLocal = (digits) => {
+    // Optional field: valid when empty or within bounds
+    if (!digits) return true;
+    return digits.length >= minLocalDigits && digits.length <= maxLocalDigits;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'phone') {
@@ -44,36 +59,40 @@ const ContactForm = () => {
       let digits = value.replace(/[^0-9]/g, '');
       if (digits.length > maxLocalDigits) digits = digits.slice(0, maxLocalDigits);
       setFormData((prev) => ({ ...prev, phone: digits }));
+      setErrors((prev) => ({
+        ...prev,
+        phone: isValidPhoneLocal(digits)
+          ? ''
+          : `Phone must be ${minLocalDigits}-${maxLocalDigits} digits (local part) for ${selectedCountry?.value || 'selected country'}.`
+      }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
+      if (name === 'email') {
+        setErrors((prev) => ({ ...prev, email: value ? (isValidEmail(value) ? '' : 'Please enter a valid email address.') : 'Email is required.' }));
+      }
+      if (name === 'name') {
+        setErrors((prev) => ({ ...prev, name: value.trim() ? '' : 'Name is required.' }));
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
-      setStatus({
-        type: 'error',
-        message: 'Please provide both your name and a valid email address before submitting.'
-      });
+    // Field-level validation
+    const nameOk = Boolean(formData.name.trim());
+    const emailOk = isValidEmail(formData.email);
+    const phoneOk = isValidPhoneLocal(formData.phone);
+
+    const nextErrors = {
+      name: nameOk ? '' : 'Name is required.',
+      email: formData.email ? (emailOk ? '' : 'Please enter a valid email address.') : 'Email is required.',
+      phone: phoneOk ? '' : `Phone must be ${minLocalDigits}-${maxLocalDigits} digits (local part).`
+    };
+    setErrors(nextErrors);
+
+    if (!nameOk || !emailOk || !phoneOk) {
+      setStatus({ type: 'error', message: 'Please correct the highlighted fields and try again.' });
       return;
-    }
-    // Optional phone validation: if provided, ensure length constraints.
-    if (formData.phone) {
-      if (formData.phone.length < minLocalDigits) {
-        setStatus({
-          type: 'error',
-          message: `Phone number is too short. It should have at least ${minLocalDigits} digits (excluding country code).`
-        });
-        return;
-      }
-      if (formData.phone.length > maxLocalDigits) {
-        setStatus({
-          type: 'error',
-          message: 'Phone number is too long for the selected country.'
-        });
-        return;
-      }
     }
     setSubmitting(true);
     setStatus({ type: '', message: '' });
@@ -111,7 +130,8 @@ const ContactForm = () => {
         message: '🎉 Thank you for reaching out! Your message has been successfully submitted. Our team will review your inquiry and get back to you within 24-48 hours. We appreciate your interest in Collective AEC!'
       });
       setCooldownRemaining(10); // start 10s cooldown only on success
-      setFormData({ name: '', email: '', phone: '', message: '' });
+  setFormData({ name: '', email: '', phone: '', message: '' });
+  setErrors({ name: '', email: '', phone: '' });
       
     } catch (err) {
       console.error('Form submission error:', err);
@@ -127,7 +147,7 @@ const ContactForm = () => {
   return (
     <div
       id="contact-us-section"
-      className="min-h-screen bg-gray-50 flex items-start md:items-center justify-center p-4 sm:p-8"
+      className="min-h-screen bg-gray-50 text-black flex items-start md:items-center justify-center p-4 sm:p-8"
     >
       <div className="w-full max-w-6xl">
         {/* Header */}
@@ -141,7 +161,7 @@ const ContactForm = () => {
           <div className="w-full h-px bg-gray-700" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate>
+  <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate>
           {status.message && (
             <div
               className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${
@@ -160,33 +180,50 @@ const ContactForm = () => {
           {/* Row 1: Name / Email */}
           <div className="flex flex-col md:flex-row md:items-center w-full md:justify-between gap-8 md:gap-16">
             <div className="flex-1 w-full">
-              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Name:</label>
+              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold" htmlFor="name">Name:</label>
               <input
+                id="name"
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your Name"
-                className="w-full text-black bg-transparent border-b-2 border-gray-300 pb-2 text-base md:text-lg placeholder-gray-400 focus:border-black outline-none transition-colors"
+                className={`w-full text-black bg-transparent border-b-2 pb-2 text-base md:text-lg placeholder-gray-400 outline-none transition-colors ${errors.name ? 'border-red-500 focus:border-red-600' : 'border-gray-300 focus:border-black'}`}
+                autoComplete="name"
+                required
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? 'name-error' : undefined}
               />
+              {errors.name && (
+                <p id="name-error" className="mt-2 text-xs md:text-sm text-red-600">{errors.name}</p>
+              )}
             </div>
             <div className="flex-1 w-full">
-              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Email:</label>
+              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold" htmlFor="email">Email:</label>
               <input
+                id="email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Your Email"
-                className="w-full text-black bg-transparent border-b-2 border-gray-300 pb-2 text-base md:text-lg placeholder-gray-400 focus:border-black outline-none transition-colors"
+                placeholder="you@example.com"
+                className={`w-full text-black bg-transparent border-b-2 pb-2 text-base md:text-lg placeholder-gray-400 outline-none transition-colors ${errors.email ? 'border-red-500 focus:border-red-600' : 'border-gray-300 focus:border-black'}`}
+                autoComplete="email"
+                inputMode="email"
+                required
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'email-error' : undefined}
               />
+              {errors.email && (
+                <p id="email-error" className="mt-2 text-xs md:text-sm text-red-600">{errors.email}</p>
+              )}
             </div>
           </div>
 
           {/* Row 2: Phone / Message */}
           <div className="flex flex-col md:flex-row md:items-start w-full md:justify-between gap-8 md:gap-16">
             <div className="flex-1 w-full">
-              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Phone:</label>
+              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold" htmlFor="phone">Phone:</label>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <select
                   value={selectedCountry.value}
@@ -199,6 +236,10 @@ const ContactForm = () => {
                         const digits = prev.phone.slice(0, Math.max(0, 15 - (country.phoneCode || '+').replace(/[^0-9]/g, '').length));
                         return { ...prev, phone: digits };
                       });
+                      setErrors((prev) => ({
+                        ...prev,
+                        phone: ''
+                      }));
                     }
                   }}
                   className="px-2 py-2 border border-gray-300 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-black w-full sm:w-auto"
@@ -214,6 +255,7 @@ const ContactForm = () => {
                 </select>
                 <div className="flex-1 flex items-center border-b-2 border-gray-300 focus-within:border-black transition-colors">
                   <input
+                    id="phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -221,15 +263,23 @@ const ContactForm = () => {
                     placeholder="Your Phone"
                     className="flex-1 text-black bg-transparent pb-2 text-base md:text-lg placeholder-gray-400 outline-none"
                     inputMode="numeric"
-                    aria-describedby="phone-help"
+                    aria-describedby={errors.phone ? 'phone-error' : 'phone-help'}
+                    aria-invalid={!!errors.phone}
+                    pattern={`\\d{${minLocalDigits},${maxLocalDigits}}`}
+                    title={`Enter ${minLocalDigits}-${maxLocalDigits} digits (local part only).`}
+                    maxLength={maxLocalDigits}
                   />
                 </div>
               </div>
-              <p id="phone-help" className="mt-2 text-xs md:text-sm text-gray-600 tracking-wide">
+              {errors.phone ? (
+                <p className="mt-2 text-xs md:text-sm text-red-600" id="phone-error">{errors.phone}</p>
+              ) : (
+                <p id="phone-help" className="mt-2 text-xs md:text-sm text-gray-600 tracking-wide">
                 {formData.phone
                   ? `${formData.phone.length}/${maxLocalDigits} digits (local).`
                   : `Up to ${maxLocalDigits} digits (local part) allowed. Total including country code must not exceed 15.`}
-              </p>
+                </p>
+              )}
             </div>
             <div className="flex-1 w-full">
               <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Message:</label>
