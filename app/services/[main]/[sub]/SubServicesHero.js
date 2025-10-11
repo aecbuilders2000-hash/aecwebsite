@@ -222,7 +222,7 @@ const ArrButton = () => (
             className="button-text bg-transparent text-white whitespace-nowrap transition-colors duration-300 ease-in-out font-bold"
             style={{ fontSize: 'clamp(0.7rem, 1.8vw, 0.95rem)' }}
         >
-            Let's collaborate
+            Let&apos;s collaborate
         </span>
         <div
             className="arrow-circle bg-white rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-in-out"
