@@ -16,7 +16,8 @@ const services = [
       <CardServices
         introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
         imageUrl="https://i.postimg.cc/Y2yyNqYB/BIMSERVICES.jpg"
-        serviceName="BIM SERVICES"
+  serviceName="BIM SERVICES"
+  mainSlug="bim"
         pageNumber="001/005"
         services={[
           "BIM Consulting Services",
@@ -39,7 +40,8 @@ const services = [
       <CardServices
         introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
         imageUrl="https://i.postimg.cc/J4HmZFyX/MEPSERVICE.jpg"
-        serviceName="MEP"
+  serviceName="MEP"
+  mainSlug="mep"
         pageNumber="002/005"
         services={[
           "MEP BIM Services",
@@ -62,7 +64,8 @@ const services = [
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
         imageUrl="https://i.postimg.cc/sfNsBz2Y/ARCHSERVICE.jpg"
-        serviceName="ARCHITECTURAL"
+  serviceName="ARCHITECTURAL"
+  mainSlug="architectural"
         pageNumber="003/005"
         services={[
           "Architectural Design Services",
@@ -83,7 +86,8 @@ const services = [
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
         imageUrl="https://i.postimg.cc/ryPMdTpR/STRUCTURESERVICE.jpg"
-        serviceName="STRUCTURAL"
+  serviceName="STRUCTURAL"
+  mainSlug="structural"
         pageNumber="004/005"
         services={[
           "Structural Steel Detailing",
@@ -106,7 +110,8 @@ const services = [
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
         imageUrl="https://i.postimg.cc/L6gRLWqq/3-DVISUALIZATION.jpg"
-        serviceName="3D VISUALIZATION"
+  serviceName="3D VISUALIZATION"
+  mainSlug="3d-visualization"
         pageNumber="005/005"
         services={[
           "3D Modeling",

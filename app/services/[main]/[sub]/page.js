@@ -6,6 +6,8 @@ import Link from 'next/link';
 import ArrowButton from '../../../ui/ArrowButton';
 import SquareCard from './SquareCard.js';
 import WhyCollective from '../../../components/WhyCollective.js';
+import Process from '../../../components/Process.js';
+import KeyOfferings from '../../../components/KeyOfferings';
 import CollectiveAECFramework from '../../../components/CollectiveAECFramework.js';
 import SubServicesHero from './SubServicesHero.js';
 import gsap from 'gsap';
@@ -87,9 +89,45 @@ export default function SubservicePage({ params }) {
     }
   };
 
-  const mainData = SERVICES[main];
+  // Resolve main and sub with fallbacks to tolerate small slug changes (e.g. "bim-services" vs "bim")
+  const slugify = (s) => String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  let mainKey = main;
+  let mainData = SERVICES[mainKey];
+  if (!mainData) {
+    // Try removing common suffixes or matching the first token
+    const alt = main.replace(/-services?$/i, '');
+    if (SERVICES[alt]) mainKey = alt;
+    else {
+      // Try to match by slugifying the top-level titles
+      const found = Object.keys(SERVICES).find((k) => slugify(SERVICES[k].title) === slugify(main));
+      if (found) mainKey = found;
+    }
+    mainData = SERVICES[mainKey];
+  }
   if (!mainData) return <div style={{ padding: '2rem' }}>Service not found</div>;
-  const subData = mainData.subs?.[sub];
+
+  // Resolve subservice: try exact key first, then slug-match by title/subtitle/heroTitle
+  let subKey = sub;
+  let subData = mainData.subs?.[subKey];
+  if (!subData) {
+    const allSubs = Object.entries(mainData.subs || {});
+    const candidate = allSubs.find(([k, v]) => {
+      const s = slugify(k);
+      if (s === slugify(sub)) return true;
+      if (slugify(v.title) === slugify(sub)) return true;
+      if (v.subtitle && slugify(v.subtitle) === slugify(sub)) return true;
+      if (v.heroTitle && slugify(v.heroTitle) === slugify(sub)) return true;
+      return false;
+    });
+    if (candidate) {
+      subKey = candidate[0];
+      subData = candidate[1];
+    }
+  }
   if (!subData) return <div style={{ padding: '2rem' }}>Subservice not found</div>;
 
   const sectionDescription = subData?.sectionDescription || subData?.description || "Service description";
@@ -246,7 +284,13 @@ export default function SubservicePage({ params }) {
         </div>
       </section>
 
-      <WhyCollective />
+      {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
+      <KeyOfferings points={subData.keyOfferings || subData.points || []} />
+
+      {/* Render Process (dynamic) if present, then Key Offerings */}
+      <Process steps={subData.process || []} />
+
+  <WhyCollective />
 
       <WhyCollectiveIsRightPartner />
 

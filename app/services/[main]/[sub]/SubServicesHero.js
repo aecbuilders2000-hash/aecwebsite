@@ -143,32 +143,14 @@ const SubServicesHero = ({ subData, mainData }) => {
             <section className="bg-white py-8 lg:py-12">
                 <div className="mx-auto px-6 lg:px-12">
                     <div className="max-w-7xl">
-                        <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-bruno font-bold text-gray-900 mb-8">
+                        {/* <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-bruno font-bold text-gray-900 mb-8">
                             {mainData?.title || "Service"}
-                        </h2>
-                        <div
-                            className="text-gray-700 text-lg lg:text-xl leading-relaxed cursor-pointer"
-                            onMouseMove={handleMouseMove}
-                        >
-                            {whiteSectionText.split(" ").map((word, wordIndex) => (
-                                <span
-                                    key={wordIndex}
-                                    style={{ display: "inline-block", marginRight: "0.4em" }}
-                                >
-                                    {word.split("").map((letter, letterIndex) => (
-                                        <span
-                                            key={`${wordIndex}-${letterIndex}`}
-                                            className="bounce-letter"
-                                            style={{
-                                                display: "inline-block",
-                                                transformOrigin: "center bottom",
-                                            }}
-                                        >
-                                            {letter}
-                                        </span>
-                                    ))}
-                                </span>
-                            ))}
+                        </h2> */}
+                        <div className="text-gray-700 text-lg lg:text-xl leading-relaxed" aria-hidden="true">
+                            {/* content intentionally removed but height preserved */}
+                            <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
+                                {whiteSectionText}
+                            </div>
                         </div>
                     </div>
                 </div>

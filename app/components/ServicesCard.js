@@ -15,6 +15,7 @@ const CardServices = ({
     pageNumber = "001/007",
     services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"],
     bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
+    , mainSlug: mainSlugProp = null
 }) => {
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
@@ -295,7 +296,8 @@ const CardServices = ({
                                         onClick={() => {
                                             // compute slugs and navigate to nested page
                                             const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                                            const mainSlug = toSlug(serviceName);
+                                            // Use explicit mainSlug if provided (matches ServicesData.js keys), otherwise fall back to slugifying the serviceName
+                                            const mainSlug = mainSlugProp || toSlug(serviceName);
                                             const subSlug = toSlug(option);
 
                                             // Use Next.js App Router for client navigation when available
