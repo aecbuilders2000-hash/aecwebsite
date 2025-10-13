@@ -291,7 +291,7 @@ export default function SubservicePage({ params }) {
       {/* Render Process (dynamic) if present, then Key Offerings */}
       <Process steps={subData.process || []} />
 
-      <WhyCollective />
+      <WhyCollective title={subData.title} />
 
       <WhyCollectiveIsRightPartner title={subData.title} />
 
