@@ -214,9 +214,9 @@ const CardServices = ({
                             style={{
                                 marginLeft: 0,
                                 marginTop: isMobile ? '2vh' : '0vh',
-                                top: isMobile ? '1.5vh' : '8vh',
-                                width: isMobile ? '100%' : '30vw',
-                                height: isMobile ? '45vw' : '20vw',
+                                top: isMobile ? '1.5vh' : '0vh',
+                                width: isMobile ? '100%' : '40vw',
+                                height: isMobile ? '55vw' : '30vw',
                                 overflow: 'hidden',
                                 borderRadius: '1.5rem'
                             }}
@@ -225,7 +225,7 @@ const CardServices = ({
                                 src={imageUrl}
                                 alt="Architecture Service"
                                 fill
-                                sizes={isMobile ? '100vw' : '18.75vw'}
+                                sizes={isMobile ? '100vw' : '40vw'}
                                 style={{
                                     objectFit: isMobile ? 'contain' : 'cover',
                                     objectPosition: 'center center',

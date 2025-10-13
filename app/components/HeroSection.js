@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MorphingButton from "../ui/MorphingButton";
+import * as THREE from 'three';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,6 +114,7 @@ export default function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const toggleRef = useRef(null);
+  const heroBgRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -204,40 +206,188 @@ export default function HeroSection() {
     };
   }, []);
 
-  // Slider images (from public/). Use four sample images.
-  const sliderImages = [
-    '/BG1.jpeg',
-    '/BG2.jpeg',
-    '/BG1.jpeg',
-    '/BG2.jpeg',
-  ];
+  // Single hero background image
+  const heroImage = '/BG1.jpeg';
 
-  // Build a GSAP-based horizontal "wipe" slider (re-uses pattern from ProjectsSection)
-  useEffect(() => {
-    const items = gsap.utils.toArray('.hero-slideshow-item');
-    const images = gsap.utils.toArray('.hero-slideshow-item img');
-    if (items.length <= 1) return;
+  // Pixel distortion effect (Three.js) - initialize without any GUI controls
+  React.useEffect(() => {
+    if (!heroBgRef.current) return;
 
-    // Initial positions: all except first start off to the right
-    items.forEach((item, index) => {
-      if (index !== 0) {
-        gsap.set(item, { xPercent: 100 });
-        gsap.set(images[index], { xPercent: -100 });
+    let rafId;
+    const container = heroBgRef.current;
+
+    // --- Shaders (copied & minimal) ---
+    const fragmentShader = `
+      uniform float time;
+      uniform sampler2D uDataTexture;
+      uniform sampler2D uTexture;
+      uniform vec4 resolution;
+      varying vec2 vUv;
+      void main() {
+        vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);
+        vec4 offset = texture2D(uDataTexture, vUv);
+        gl_FragColor = texture2D(uTexture, newUV - 0.02 * offset.rg);
       }
-    });
+    `;
 
-    const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power3.inOut', duration: 1.2 } });
-    for (let i = 0; i < items.length - 1; i++) {
-      tl
-        .to(items[i], { xPercent: -100 })
-        .to(images[i], { xPercent: 100 }, '<')
-        .to(items[i + 1], { xPercent: 0 }, '<')
-        .to(images[i + 1], { xPercent: 0 }, '<')
-        .to({}, { duration: 2 });
-    }
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+      }
+    `;
 
-    return () => tl.kill();
-  }, []);
+    // --- Sketch implementation (adapted) ---
+    const sketch = {
+      renderer: null,
+      scene: null,
+      camera: null,
+      material: null,
+      plane: null,
+      texture: null,
+      dataTexture: null,
+      size: 32,
+      time: 0,
+      mouse: { x: 0, y: 0, prevX: 0, prevY: 0, vX: 0, vY: 0 },
+      settings: { grid: 32, mouse: 0.13, strength: 0.15, relaxation: 0.9 },
+      init() {
+        this.scene = new THREE.Scene();
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.setSize(width, height);
+        this.renderer.setClearColor(0x000000, 0);
+        container.appendChild(this.renderer.domElement);
+
+        const frustumSize = 1;
+        this.camera = new THREE.OrthographicCamera(frustumSize / -2, frustumSize / 2, frustumSize / 2, frustumSize / -2, -1000, 1000);
+        this.camera.position.set(0, 0, 2);
+
+        this.regenerateGrid();
+
+        // load texture image
+        const img = new Image();
+        img.src = heroImage;
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const tex = new THREE.Texture(img);
+          tex.needsUpdate = true;
+          this.texture = tex;
+          this.createMaterial();
+          this.render();
+        };
+
+        window.addEventListener('resize', this.onResize.bind(this));
+        window.addEventListener('mousemove', (e) => {
+          const rect = container.getBoundingClientRect();
+          this.mouse.x = (e.clientX - rect.left) / rect.width;
+          this.mouse.y = (e.clientY - rect.top) / rect.height;
+          this.mouse.vX = this.mouse.x - this.mouse.prevX;
+          this.mouse.vY = this.mouse.y - this.mouse.prevY;
+          this.mouse.prevX = this.mouse.x;
+          this.mouse.prevY = this.mouse.y;
+        });
+      },
+      regenerateGrid() {
+        this.size = Math.max(4, Math.floor(this.settings.grid));
+        const width = this.size;
+        const height = this.size;
+        const size = width * height;
+        const data = new Float32Array(4 * size);
+        for (let i = 0; i < size; i++) {
+          const stride = i * 4;
+          data[stride] = (Math.random() * 2 - 1) * 125;
+          data[stride + 1] = (Math.random() * 2 - 1) * 125;
+          data[stride + 2] = 0;
+          data[stride + 3] = 1;
+        }
+        this.dataTexture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat, THREE.FloatType);
+        this.dataTexture.magFilter = this.dataTexture.minFilter = THREE.NearestFilter;
+        this.dataTexture.needsUpdate = true;
+      },
+      createMaterial() {
+        this.material = new THREE.ShaderMaterial({
+          uniforms: {
+            time: { value: 0 },
+            resolution: { value: new THREE.Vector4(container.offsetWidth, container.offsetHeight, 1, 1) },
+            uTexture: { value: this.texture },
+            uDataTexture: { value: this.dataTexture }
+          },
+          vertexShader,
+          fragmentShader,
+          transparent: true,
+        });
+
+        const geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+        this.plane = new THREE.Mesh(geometry, this.material);
+        this.scene.add(this.plane);
+      },
+      updateDataTexture() {
+        if (!this.dataTexture) return;
+        const data = this.dataTexture.image.data;
+        for (let i = 0; i < data.length; i += 4) {
+          data[i] *= this.settings.relaxation;
+          data[i + 1] *= this.settings.relaxation;
+        }
+        const gridMouseX = this.size * this.mouse.x;
+        const gridMouseY = this.size * (1 - this.mouse.y);
+        const maxDist = this.size * this.settings.mouse;
+        const aspect = container.offsetHeight / container.offsetWidth;
+        for (let i = 0; i < this.size; i++) {
+          for (let j = 0; j < this.size; j++) {
+            const dx = gridMouseX - i;
+            const dy = gridMouseY - j;
+            const distance = (dx * dx) / aspect + (dy * dy);
+            const maxDistSq = maxDist * maxDist;
+            if (distance < maxDistSq) {
+              const index = 4 * (i + this.size * j);
+              let power = maxDist / Math.sqrt(distance || 1);
+              power = Math.max(0, Math.min(power, 10));
+              data[index] += this.settings.strength * 100 * this.mouse.vX * power;
+              data[index + 1] -= this.settings.strength * 100 * this.mouse.vY * power;
+            }
+          }
+        }
+        this.mouse.vX *= 0.9;
+        this.mouse.vY *= 0.9;
+        this.dataTexture.needsUpdate = true;
+      },
+      onResize() {
+        const w = container.offsetWidth;
+        const h = container.offsetHeight;
+        this.renderer.setSize(w, h);
+        if (this.material && this.material.uniforms && this.material.uniforms.resolution) {
+          const a1 = 1; const a2 = 1; // simplified aspect factors
+          this.material.uniforms.resolution.value.set(w, h, a1, a2);
+        }
+      },
+      render() {
+        this.time += 0.05;
+        this.updateDataTexture();
+        if (this.material && this.material.uniforms) this.material.uniforms.time.value = this.time;
+        this.renderer.render(this.scene, this.camera);
+        rafId = requestAnimationFrame(this.render.bind(this));
+      },
+      destroy() {
+        cancelAnimationFrame(rafId);
+        window.removeEventListener('resize', this.onResize.bind(this));
+        if (this.renderer) {
+          this.renderer.dispose();
+          if (this.renderer.domElement && this.renderer.domElement.parentNode) {
+            this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
+          }
+        }
+      }
+    };
+
+    sketch.init();
+
+    return () => {
+      sketch.destroy();
+    };
+  }, [heroBgRef]);
 
   // Close menu when clicking outside or pressing Escape (includes centered toggle)
   useEffect(() => {
@@ -575,6 +725,7 @@ export default function HeroSection() {
       >
         {/* Background image slider (horizontal wipe - GSAP driven) */}
         <div
+          ref={heroBgRef}
           aria-hidden="true"
           style={{
             position: 'fixed',
@@ -586,35 +737,7 @@ export default function HeroSection() {
             pointerEvents: 'none',
             overflow: 'hidden',
           }}
-        >
-          {sliderImages.map((src, i) => (
-            <div
-              key={i}
-              className="hero-slideshow-item"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                overflow: 'hidden',
-                willChange: 'transform',
-              }}
-            >
-              <img
-                src={src}
-                alt={`Hero slide ${i + 1}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                  transform: 'translateX(0%)',
-                }}
-              />
-            </div>
-          ))}
-        </div>
+        />
       </section>
     </>
   );
