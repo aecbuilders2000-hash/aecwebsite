@@ -113,6 +113,7 @@ export default function SubservicePage({ params }) {
   // Resolve subservice: try exact key first, then slug-match by title/subtitle/heroTitle
   let subKey = sub;
   let subData = mainData.subs?.[subKey];
+  // console.log(subData);
   if (!subData) {
     const allSubs = Object.entries(mainData.subs || {});
     const candidate = allSubs.find(([k, v]) => {
@@ -290,9 +291,9 @@ export default function SubservicePage({ params }) {
       {/* Render Process (dynamic) if present, then Key Offerings */}
       <Process steps={subData.process || []} />
 
-  <WhyCollective />
+      <WhyCollective />
 
-      <WhyCollectiveIsRightPartner />
+      <WhyCollectiveIsRightPartner title={subData.title} />
 
       <CollectiveAECFramework />
 

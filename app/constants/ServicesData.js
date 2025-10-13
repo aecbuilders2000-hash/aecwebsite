@@ -50,6 +50,24 @@ const SERVICES = {
         heroDescription: "Transform reality capture into precision. At Collective AEC, we convert laser scan data into intelligent, measurable BIM models for renovation and retrofit excellence.",
         sectionDescription: "We transform laser scan data into accurate, measurable BIM models ideal for renovation and retrofit projects. The deliverables include cleaned point clouds, geo-referenced models, and as-built BIM ready for coordination and verification.",
         description: "We transform laser scan data into accurate, measurable BIM models ideal for renovation and retrofit projects. The deliverables include cleaned point clouds, geo-referenced models, and as-built BIM ready for coordination and verification.",
+        keyOfferings: [
+          { id: 'scan-to-bim-services-ko-1', title: 'Reality Capture & Registration', text: 'High-resolution, georeferenced point clouds using terrestrial, mobile, or drone scanners.' },
+          { id: 'scan-to-bim-services-ko-2', title: 'Point Cloud Processing & Cleanup', text: 'Noise filtering, alignment, segmentation, and classification to ensure accuracy and usability of data.' },
+          { id: 'scan-to-bim-services-ko-3', title: 'As-Built BIM Modeling', text: 'Creation of native Revit models (Architectural, Structural, MEP) enriched with intelligent data for design and documentation.' },
+          { id: 'scan-to-bim-services-ko-4', title: 'LOD / LOI Custom Modeling', text: 'Support from LOD 100 to LOD 500, tailored as per client requirements and project complexity.' },
+          { id: 'scan-to-bim-services-ko-5', title: '2D Extraction & CAD Deliverables', text: 'Generation of precise 2D drawings—plans, sections, elevations—directly derived from BIM models.' },
+          { id: 'scan-to-bim-services-ko-6', title: 'Clash Analysis & Coordination', text: 'Detection and resolution of conflicts between scanned geometry and new design elements for seamless coordination.' },
+          { id: 'scan-to-bim-services-ko-7', title: 'Digital Twin & Facility Data Integration', text: 'Integration of asset metadata, COBie, or maintenance data to create intelligent digital twins for lifecycle management.' }
+        ],
+        process: [
+          { id: 'scan-to-bim-services-p-1', title: 'Discover & Plan', text: 'We begin by aligning scope, objectives, scan zones, accuracy targets, and deliverable formats.' },
+          { id: 'scan-to-bim-services-p-2', title: 'Scan & Capture', text: 'Field teams deploy LiDAR, terrestrial, or drone scanning systems to capture precise on-site data.' },
+          { id: 'scan-to-bim-services-p-3', title: 'Register & Validate', text: 'Multiple scan stations are registered into a cohesive point cloud, verified for accuracy and completeness.' },
+          { id: 'scan-to-bim-services-p-4', title: 'Classify & Segment', text: 'Scanned data is segmented into architectural, structural, and MEP elements for efficient modeling.' },
+          { id: 'scan-to-bim-services-p-5', title: 'Model in BIM', text: 'Point cloud data is transformed into intelligent, parametric Revit models reflecting true as-built conditions.' },
+          { id: 'scan-to-bim-services-p-6', title: 'Quality & Clash Checks', text: 'Rigorous QA ensures geometric precision and coordination between existing conditions and new design models.' },
+          { id: 'scan-to-bim-services-p-7', title: 'Deliver & Support', text: 'Final deliverables are shared in Revit, IFC, and CAD formats with ongoing support for coordination and updates.' }
+        ],
         features: [
           "Point cloud processing",
           "As-built modeling",
@@ -64,6 +82,26 @@ const SERVICES = {
         heroDescription: "Seamless multi-discipline coordination. At Collective AEC, we integrate architectural, structural, and MEP models into unified solutions, eliminating conflicts before they reach the field.",
         sectionDescription: "Federated model coordination with iterative clash detection cycles and concise coordination reports to reduce on-site conflicts. We run coordinated reviews, assign clear actions, and track resolutions to keep the construction programme on schedule. Our systematic approach ensures all disciplines work in harmony, minimizing rework and maximizing efficiency throughout the project lifecycle.",
         description: "Federated model coordination with iterative clash detection cycles and concise coordination reports to reduce on-site conflicts. We run coordinated reviews, assign clear actions, and track resolutions to keep the construction programme on schedule.",
+        keyOfferings: [
+          { id: 'bim-consulting-ko-1', title: 'BIM Advisory', text: 'Strategic guidance through the BIM lifecycle—from planning and strategy to execution, using best practices in creating common data environments and BIM Execution Plans.' },
+          { id: 'bim-consulting-ko-2', title: 'BIM Training', text: 'Specialized programs covering 3D modeling, 4D scheduling, 5D cost estimation, and 7D facility management to boost your team’s skills using tools like Revit and Navisworks.' },
+          { id: 'bim-consulting-ko-3', title: 'Strategic BIM Planning', text: 'Feasibility studies, proposals, and roadmap development to ensure your BIM strategy aligns with project goals and constraints.' },
+          { id: 'bim-consulting-ko-4', title: 'BIM Automation', text: 'Automation of repetitive tasks, improved documentation, and optimized workflows to reduce errors and speed up delivery.' },
+          { id: 'bim-consulting-ko-5', title: 'BIM Audit', text: 'Comprehensive evaluations of BIM workflows and models for standards compliance, constructability, and execution fidelity, delivering action-oriented insights.' },
+          { id: 'bim-consulting-ko-6', title: 'BIM Implementation', text: 'Hands-on support setting up workflows, tools, templates, and integrating BIM into project delivery to ensure practical adoption.' },
+          { id: 'bim-consulting-ko-7', title: 'BIM Execution Plan', text: 'Detailed roadmaps defining roles, responsibilities, deliverables, and workflows across the project lifecycle for clarity and accountability.' },
+          { id: 'bim-consulting-ko-8', title: 'Constructability Reviews', text: 'Assessing models, drawings, and specifications to identify and resolve build-real operation and execution issues early.' },
+          { id: 'bim-consulting-ko-9', title: 'BIM Management', text: 'Ongoing management of BIM standards, templates, model delivery, asset operation plans, training, and process governance.' }
+        ],
+
+        process: [
+          { id: 'bim-consulting-p-1', title: 'Understand', text: 'Dive deep into your goals, existing workflows, standards, and current challenges to align on scope.' },
+          { id: 'bim-consulting-p-2', title: 'Analyze', text: 'Review past projects and internal practices to identify gaps, risks, and improvement areas.' },
+          { id: 'bim-consulting-p-3', title: 'Outline', text: 'Design a bespoke BIM roadmap with optimized workflows, template standards, documentation protocols, roles, and deliverables.' },
+          { id: 'bim-consulting-p-4', title: 'Train', text: 'Provide training to your team on software, standards, and best practices to ensure consistent execution.' },
+          { id: 'bim-consulting-p-5', title: 'Test', text: 'Pilot or trial BIM workflows and templates in controlled settings to validate approach and make refinements.' },
+          { id: 'bim-consulting-p-6', title: 'Implement', text: 'Deploy the roadmap, tools, and processes in live projects, with ongoing support and monitoring to ensure adoption and performance.' }
+        ],
         features: [
           "Clash detection",
           "Federated modeling",
@@ -105,6 +143,19 @@ const SERVICES = {
         heroDescription: "Visualizing construction through time. At Collective AEC, we link project schedules to BIM models, creating dynamic 4D simulations that optimize sequencing, logistics, and site safety.",
         sectionDescription: "We link programme data to BIM to produce construction simulations, logistics plans and sequence visualisations. These 4D outputs help planners validate access, identify clashes over time, and optimise sequencing for safer, faster builds. Our 4D BIM services enable project teams to anticipate challenges, coordinate trades effectively, and communicate construction strategies with unprecedented clarity and precision.",
         description: "We link programme data to BIM to produce construction simulations, logistics plans and sequence visualisations. These 4D outputs help planners validate access, identify clashes over time, and optimise sequencing for safer, faster builds.",
+        keyOfferings: [
+          { id: '4d-scheduling-ko-1', title: 'Integrated Scheduling', text: 'Seamless integration of project management tools like Primavera with BIM tools such as Autodesk Revit and Navisworks to create precise construction simulations and phasing videos.' },
+          { id: '4d-scheduling-ko-2', title: 'Resource Optimization', text: 'Optimization of the entire supply chain and logistics, ensuring optimal resource allocation while mitigating risks.' },
+          { id: '4d-scheduling-ko-3', title: 'Sequencing Models', text: 'Development of precise sequencing models and phasing charts to aid in tracking resources and communicating progress to site engineers and consultants.' },
+          { id: '4d-scheduling-ko-4', title: 'Lean Construction Scheduling', text: 'Empowerment of general contractors and construction companies to adopt lean construction scheduling practices to stay profitable and reduce waste.' }
+        ],
+        process: [
+          { id: '4d-scheduling-p-1', title: 'Integration', text: 'Integrate project management tools with BIM software to create a comprehensive construction simulation.' },
+          { id: '4d-scheduling-p-2', title: 'Sequencing', text: 'Develop detailed sequencing models and phasing charts to visualize the construction process.' },
+          { id: '4d-scheduling-p-3', title: 'Resource Allocation', text: 'Optimize resource allocation and logistics to ensure efficient project execution.' },
+          { id: '4d-scheduling-p-4', title: 'Collaboration', text: 'Enhance collaboration among stakeholders through clear communication of progress and potential issues.' },
+          { id: '4d-scheduling-p-5', title: 'Monitoring', text: 'Monitor the construction process to identify and resolve conflicts, ensuring timely project completion.' }
+        ],
         features: [
           "Schedule linking",
           "4D visualisations",
@@ -119,6 +170,20 @@ const SERVICES = {
         heroDescription: "Precision measurement from intelligent models. At Collective AEC, we extract accurate quantities directly from BIM, delivering reliable data for cost estimation, procurement, and project planning.",
         sectionDescription: "Model-based quantity takeoffs that deliver reliable counts and measures for early estimates and procurement readiness. Outputs are provided in standard formats for cost planning and tendering to reduce manual measurement errors. Our automated extraction processes ensure consistency and accuracy while dramatically reducing the time required for quantity surveying and material scheduling.",
         description: "Model-based quantity takeoffs that deliver reliable counts and measures for early estimates and procurement readiness. Outputs are provided in standard formats for cost planning and tendering to reduce manual measurement errors.",
+        keyOfferings: [
+          { id: 'quantity-takeoff-ko-1', title: '5D BIM Integration', text: 'Seamless integration of cost data with 3D models using Revit and other 5D tools, enabling real-time cost estimation and adjustments.' },
+          { id: 'quantity-takeoff-ko-2', title: 'Automated Quantity Extraction', text: 'Automatic extraction of material quantities from BIM models, reducing manual errors and saving time.' },
+          { id: 'quantity-takeoff-ko-3', title: 'Detailed Cost Estimation', text: 'Comprehensive cost estimation based on accurate quantity takeoffs, facilitating informed decision-making.' },
+          { id: 'quantity-takeoff-ko-4', title: 'Design Change Impact Analysis', text: 'Assessment of how design changes affect material quantities and costs, aiding in proactive project management.' },
+          { id: 'quantity-takeoff-ko-5', title: 'Waste Reduction', text: 'Identification of potential material wastage through precise quantity takeoffs, promoting sustainability.' }
+        ],
+        process: [
+          { id: 'quantity-takeoff-p-1', title: 'Model Integration', text: 'Integrate architectural, structural, and MEP models into a unified BIM environment.' },
+          { id: 'quantity-takeoff-p-2', title: 'Quantity Extraction', text: 'Utilize BIM tools to extract accurate material quantities from the integrated models.' },
+          { id: 'quantity-takeoff-p-3', title: 'Cost Estimation', text: 'Apply unit costs to the extracted quantities to generate detailed cost estimates.' },
+          { id: 'quantity-takeoff-p-4', title: 'Design Analysis', text: 'Analyze the impact of design changes on material quantities and costs.' },
+          { id: 'quantity-takeoff-p-5', title: 'Reporting', text: 'Generate comprehensive reports detailing quantities, costs, and potential wastage.' }
+        ],
         features: [
           "Model-based quantities",
           "Format exports",
@@ -140,6 +205,18 @@ const SERVICES = {
         heroDescription: "Intelligent MEP systems through advanced BIM. At Collective AEC, we create detailed mechanical, electrical, and plumbing models that drive precision installation and seamless coordination.",
         sectionDescription: "Detailed MEP models developed for coordination, performance analysis and construction documentation. We model systems to fabrication level where required and ensure systems are tagged and scheduled for efficient installation. Our comprehensive approach includes coordinated routing, equipment placement, and system optimization to deliver constructible solutions that meet performance requirements while minimizing conflicts and installation challenges.",
         description: "Detailed MEP models developed for coordination, performance analysis and construction documentation. We model systems to fabrication level where required and ensure systems are tagged and scheduled for efficient installation.",
+        keyOfferings: [
+          { id: 'mep-bim-ko-1', title: 'MEP BIM Modeling', text: 'Creation of intelligent 3D models for mechanical, electrical, plumbing, and fire protection systems, serving as a single source of truth for the entire project.' },
+          { id: 'mep-bim-ko-2', title: 'Scan to BIM for Renovations', text: 'Conversion of laser scans of existing buildings into accurate BIM models, ensuring seamless integration of new MEP systems with existing structures.' },
+          { id: 'mep-bim-ko-3', title: 'Revit Family Creation', text: 'Development of custom Revit families for specific MEP components, ensuring models accurately reflect real-world products.' },
+          { id: 'mep-bim-ko-4', title: 'MEP Shop Drawings', text: 'Production of detailed shop drawings for MEP systems, facilitating accurate fabrication and installation.' }
+        ],
+        process: [
+          { id: 'mep-bim-p-1', title: 'Modeling', text: 'Develop intelligent 3D models for MEP systems using Revit, ensuring accuracy and coordination.' },
+          { id: 'mep-bim-p-2', title: 'Coordination', text: 'Integrate MEP models with architectural and structural models to identify and resolve clashes.' },
+          { id: 'mep-bim-p-3', title: 'Shop Drawing Creation', text: 'Generate detailed shop drawings from coordinated models for precise fabrication and installation.' },
+          { id: 'mep-bim-p-4', title: 'Quality Assurance', text: 'Conduct thorough quality checks to ensure models and drawings meet project standards and specifications.' }
+        ],
         features: ["Duct & pipe modeling", "MEP closets", "System tagging"],
       },
       "mep-bim-coordination": {

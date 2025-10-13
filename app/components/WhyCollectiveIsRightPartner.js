@@ -29,7 +29,8 @@ const frameworkSteps = [
   }
 ];
 
-const WhyCollectiveIsRightPartner = () => {
+const WhyCollectiveIsRightPartner = ({title}) => {
+  // console.log(title);
   const waveTimeouts = useRef([]);
   const lastHoveredIndex = useRef(-1);
   const containerRef = useRef(null);
@@ -146,7 +147,7 @@ const WhyCollectiveIsRightPartner = () => {
         {/* Title */}
         <div className="mb-4 text-center px-6 lg:mb-6">
           <h2 className='text-3xl' style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>
-            Why Collective AEC is the Right Partner for Your BIM Consulting
+            Why Collective AEC is the Right Partner for Your {title}
           </h2>
         </div>
 
