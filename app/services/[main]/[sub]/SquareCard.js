@@ -71,7 +71,7 @@ const SquareCard = () => {
                 activeTimeout.current = null;
             }
             // perform original click action
-            handleServiceClick();
+            handleServiceClick(index);
         } else {
             setActiveMobile(index);
             if (activeTimeout.current) clearTimeout(activeTimeout.current);
@@ -157,9 +157,27 @@ const SquareCard = () => {
     }, []);
 
     // Simple function to handle navigation to services section
-    const handleServiceClick = () => {
-        // Use anchor link to navigate to services section on home page
-        window.location.href = '/#services-section';
+    // If on homepage, scroll to the same vh positions used by OurSevices
+    // If not on homepage, navigate to a hash like /#services-card-N so OurSevices can handle it on mount
+    const handleServiceClick = (index = 0) => {
+        // vh mapping copied from OurSevices
+        const cardVhPositions = [400, 500, 600, 720, 850];
+
+        if (typeof window !== 'undefined' && window.location.pathname === '/') {
+            const targetVh = cardVhPositions[index] || 500;
+            const y = window.innerHeight * (targetVh / 100);
+            window.scrollTo({ top: y, behavior: 'smooth' });
+            return;
+        }
+
+        // Store desired index in sessionStorage so the homepage can read it and scroll.
+        try {
+            sessionStorage.setItem('servicesScrollTo', String(index));
+        } catch (e) {
+            // sessionStorage may be unavailable in some environments; ignore errors
+        }
+        // Navigate to the homepage (no hash so URL stays clean)
+        window.location.href = '/';
     };
 
     return (
@@ -205,7 +223,7 @@ const SquareCard = () => {
                                 flexShrink: 0,
                                 flexGrow: 0
                             }}
-                            onClick={handleServiceClick}
+                            onClick={() => handleServiceClick(index)}
                         >
                             <div className="relative h-full overflow-hidden">
                                 {/* <Image

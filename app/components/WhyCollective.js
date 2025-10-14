@@ -127,8 +127,9 @@ const WhyCollective = ({title}) => {
         return () => observer.disconnect();
     }, [hasAnimated]);
 
-    const paragraphLine1 = "Selecting the right BIM consulting partner defines how efficiently your vision becomes reality.";
-    const paragraphLine2 = "At Collective AEC, we merge design intelligence with advanced technology to deliver integrated BIM solutions that enhance precision, collaboration, and project performance from concept to completion.";
+    // default copy (falls back when subservice doesn't provide specific text)
+    const defaultParagraph1 = "Selecting the right BIM consulting partner defines how efficiently your vision becomes reality.";
+    const defaultParagraph2 = "At Collective AEC, we merge design intelligence with advanced technology to deliver integrated BIM solutions that enhance precision, collaboration, and project performance from concept to completion.";
 
     return (
         <section className="py-20 min-h-screen flex items-center justify-center bg-gray-50">
@@ -142,7 +143,7 @@ const WhyCollective = ({title}) => {
                         className="cursor-pointer mb-2"
                         onMouseMove={handleMouseMove}
                     >
-                        {paragraphLine1.split(" ").map((word, wordIndex) => (
+                        {( (typeof paragraph1 === 'string' ? paragraph1 : defaultParagraph1) ).split(" ").map((word, wordIndex) => (
                             <span
                                 key={wordIndex}
                                 style={{ display: "inline-block", marginRight: "0.4em" }}
@@ -166,7 +167,7 @@ const WhyCollective = ({title}) => {
                         className="cursor-pointer"
                         onMouseMove={handleMouseMove}
                     >
-                        {paragraphLine2.split(" ").map((word, wordIndex) => (
+                        {( (typeof paragraph2 === 'string' ? paragraph2 : defaultParagraph2) ).split(" ").map((word, wordIndex) => (
                             <span
                                 key={wordIndex}
                                 style={{ display: "inline-block", marginRight: "0.4em" }}

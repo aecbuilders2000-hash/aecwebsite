@@ -196,9 +196,9 @@ export default function SubservicePage({ params }) {
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left Content */}
-            <div className="space-y-8">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+            {/* Left Content (60%) */}
+            <div className="space-y-8 w-full lg:w-3/5">
               {/* Title */}
               <div>
                 <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bruno font-bold text-gray-900 leading-tight mb-4">
@@ -270,13 +270,14 @@ export default function SubservicePage({ params }) {
               </div>
             </div>
 
-            {/* Right Image */}
-            <div className="flex justify-center lg:justify-end">
+            {/* Right Image (40%) */}
+            <div className="flex justify-center lg:justify-end w-full lg:w-2/5">
               <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl">
                 <img
-                  src={subData.image || "https://i.postimg.cc/sxQ296Dc/IMG-20251009-WA0001.jpg"}
+                  src={"/Circle lines.png"}
                   alt={`${subData.title} Illustration`}
-                  className="w-full h-auto object-contain rounded-lg"
+                  className="w-full h-auto object-contain rounded-lg transform scale-105 lg:scale-110"
+                  style={{ transition: 'transform 220ms ease' }}
                   loading="lazy"
                 />
               </div>
@@ -285,13 +286,16 @@ export default function SubservicePage({ params }) {
         </div>
       </section>
 
-      {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
-      <KeyOfferings points={subData.keyOfferings || subData.points || []} />
+  {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
+  <KeyOfferings points={subData.keyOfferings || subData.points || []} title={subData.title} />
 
       {/* Render Process (dynamic) if present, then Key Offerings */}
-      <Process steps={subData.process || []} />
+      <Process
+        steps={subData.process || []}
+        title={subData.title}
+      />
 
-      <WhyCollective title={subData.title} />
+  <WhyCollective title={subData.title} paragraph1={subData.whyParagraph1} paragraph2={subData.whyParagraph2} />
 
       <WhyCollectiveIsRightPartner title={subData.title} />
 

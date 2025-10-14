@@ -156,6 +156,24 @@ export default function OurSevices() {
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
+  // On mount: if another page set a target in sessionStorage, scroll to it and clear the key
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const raw = sessionStorage.getItem('servicesScrollTo');
+      if (raw !== null) {
+        const idx = parseInt(raw, 10);
+        if (!Number.isNaN(idx)) {
+          // Slight delay for layout/animations to settle
+          setTimeout(() => scrollToService(idx), 120);
+        }
+        sessionStorage.removeItem('servicesScrollTo');
+      }
+    } catch (e) {
+      // ignore sessionStorage errors
+    }
+  }, []);
+
   return (
     <section
       id="services-overview-section"
@@ -166,7 +184,11 @@ export default function OurSevices() {
         width: "100vw",
         paddingLeft: "2.5vw",
         paddingRight: "2.5vw",
-      }}
+         backgroundImage: "url('/Abstract Wavy Lines_ EPS10.jpg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'right center',
+        backgroundSize: 'contain',
+        }}
     >
       {/* Ambient background effects */}
       <div className="absolute inset-0 opacity-30">

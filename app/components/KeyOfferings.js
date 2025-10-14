@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 
-export default function KeyOfferings({ points = [], steps = [] }) {
+export default function KeyOfferings({ points = [], steps = [], title = '' }) {
   // Accept either 'points' or 'steps' for compatibility
   const items = points && points.length ? points : (steps && steps.length ? steps : [
     { id: 'k-1', title: 'Design-Led Engineering', text: 'Buildable, beautiful solutions.' },
@@ -16,8 +16,11 @@ export default function KeyOfferings({ points = [], steps = [] }) {
       {/* Full-width container set to 95vw */}
       <div className="w-[95vw] max-w-none">
         <div className="text-center mb-8">
-          <h2 className="font-bruno-ace-sc text-3xl font-bold" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>KEY OFFERINGS</h2>
-          <p className="mt-3 text-gray-600">Core capabilities we bring to every engagement.</p>
+          <h2 className="font-bruno-ace-sc text-3xl font-bold" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{title ? `${title} — KEY OFFERINGS` : 'KEY OFFERINGS'}</h2>
+          <div className="mt-3 text-gray-600 max-w-3xl mx-auto">
+            <p className="">{title ? `What we offer for ${title}.` : 'Core capabilities we bring to every engagement.'}</p>
+            <p className="mt-2">{title ? 'Practical, buildable solutions focused on coordination, performance and delivery. We prioritise constructability, documentation and clear handoffs to contractors.' : 'Practical, buildable solutions focused on coordination, performance and delivery across projects.'}</p>
+          </div>
         </div>
 
         <div className="space-y-4">

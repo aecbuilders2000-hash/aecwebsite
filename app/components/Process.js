@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 
-export default function Process({ steps = [], points = [] }) {
+export default function Process({ steps = [], points = [], title = '' }) {
   // Use steps if provided, otherwise fallback to points or placeholder points
   const defaultPoints = [
     { id: 'p-1', title: 'Understand', desc: 'We begin by understanding the project goals, constraints and context.' },
@@ -16,29 +16,7 @@ export default function Process({ steps = [], points = [] }) {
   const sectionRef = useRef(null);
   const topCardsRef = useRef([]);
 
-  // Mobile tap-to-toggle behavior
-  const [activeMobile, setActiveMobile] = useState(null);
-  const activeTimeout = useRef(null);
-
-  const mobileCardClick = (index) => {
-    if (activeMobile === index) {
-      setActiveMobile(null);
-      if (activeTimeout.current) {
-        clearTimeout(activeTimeout.current);
-        activeTimeout.current = null;
-      }
-    } else {
-      setActiveMobile(index);
-      if (activeTimeout.current) clearTimeout(activeTimeout.current);
-      activeTimeout.current = setTimeout(() => setActiveMobile(null), 3000);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (activeTimeout.current) clearTimeout(activeTimeout.current);
-    };
-  }, []);
+  // Mobile uses static title+text (no toggle). Hover interactions are desktop-only.
 
   // GSAP reveal
   useEffect(() => {
@@ -53,38 +31,39 @@ export default function Process({ steps = [], points = [] }) {
   return (
     <section ref={sectionRef} className="relative bg-white text-gray-900 overflow-hidden min-h-screen">
       <div className="mx-auto max-w-7xl px-6 lg:px-12 pt-12 lg:pt-16">
-        {/* Title - centered at the top */}
+        {/* Title - centered at the top (dynamic when `title` prop is provided) */}
         <div className="w-full text-center mb-8">
-          <h2 className="font-bruno-ace-sc font-bold text-black leading-tight mx-auto" style={{ fontSize: 'clamp(1.5rem, 2.2vw, 2.5rem)', letterSpacing: '0.2em', fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>
-            PROCESS
+          <h2 className="font-bruno-ace-sc font-bold text-black leading-tight mx-auto" style={{ fontSize: 'clamp(1.5rem, 2.2vw, 2.5rem)', letterSpacing: '0.04em', fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>
+            {title ? `How we deliver ${title}` : 'PROCESS'}
           </h2>
-          <p className="mt-3 text-gray-600">Our approach to delivering projects.</p>
+          <div className="mt-3 text-gray-600">
+            <p>{title ? `We tailor our process to deliver ${title} with efficiency and clarity.` : 'We tailor our process to deliver projects with efficiency and clarity.'}</p>
+            <p className="mt-2">{title ? `From concept to completion — focused on outcomes, coordination and constructability for ${title}.` : 'From concept to completion — focused on outcomes, coordination and constructability.'}</p>
+          </div>
         </div>
 
         {/* Mobile stacked boxes */}
-        <div className="w-full md:hidden flex flex-col" style={{ gap: 'clamp(0.25rem, 1vw, 0.8rem)', height: '75vh' }}>
+        <div className="w-full md:hidden flex flex-col" style={{ gap: '0.8rem', maxHeight: '80vh', overflow: 'auto' }}>
           {items.map((item, index) => (
             <div
               key={item.id || index}
-              className="group relative w-full flex items-stretch text-center rounded-2xl overflow-hidden shadow-md bg-black text-white"
-              style={{ minHeight: '13vh' }}
-              onClick={() => mobileCardClick(index)}
+              className="relative w-full flex items-stretch text-left rounded-2xl overflow-hidden shadow-md bg-black text-white p-4"
+              style={{ minHeight: '12vh' }}
             >
-              {/* Black overlay with white text, inverts on hover or when activeMobile === index (for touch) */}
-              <div className={`absolute inset-0 z-10 backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-4 ${activeMobile === index ? 'bg-white text-black' : 'bg-black text-white'} group-hover:bg-white group-hover:text-black`}>
+              <div className="w-full">
                 <h3
-                  className="font-bruno-ace-sc font-bold"
+                  className="font-bruno-ace-sc font-bold mb-2"
                   style={{
-                    fontSize: "clamp(1rem, 2.6vw, 1.25rem)",
-                    lineHeight: 1.1,
+                    fontSize: "clamp(1rem, 2.6vw, 1.1rem)",
+                    lineHeight: 1.15,
                     fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                   }}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className="font-poppins mt-2"
-                  style={{ fontSize: "clamp(0.85rem, 1.8vw, 1rem)", fontFamily: 'var(--font-poppins), sans-serif' }}
+                  className="font-poppins text-white text-sm leading-relaxed"
+                  style={{ fontSize: "clamp(0.85rem, 1.8vw, 0.95rem)", fontFamily: 'var(--font-poppins), sans-serif' }}
                 >
                   {item.desc || item.text}
                 </p>
@@ -99,7 +78,7 @@ export default function Process({ steps = [], points = [] }) {
             <div
               key={item.id || index}
               ref={(el) => (topCardsRef.current[index] = el)}
-              className="group relative bg-black rounded-2xl overflow-hidden shadow-lg border border-gray-200/50 m-0"
+              className="group relative bg-black rounded-2xl overflow-hidden shadow-lg m-0"
               style={{
                 height: 'clamp(25vh, 35vh, 40vh)',
                 width: '17.5vw',
@@ -111,9 +90,10 @@ export default function Process({ steps = [], points = [] }) {
               }}
             >
               <div className="relative h-full overflow-hidden">
-                <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
+                {/* Title layer: always visible */}
+                <div className="absolute inset-0 bg-black flex items-center justify-center p-6">
                   <h3
-                    className="font-bruno-ace-sc font-bold text-white text-center mb-4"
+                    className="font-bruno-ace-sc font-bold text-white text-center"
                     style={{
                       fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                       fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)',
@@ -121,12 +101,19 @@ export default function Process({ steps = [], points = [] }) {
                   >
                     {item.title}
                   </h3>
-                  <p
-                    className="font-poppins text-white text-xs text-center leading-relaxed"
-                    style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
-                  >
-                    {item.desc || item.text}
-                  </p>
+                </div>
+
+                {/* Sliding description: hidden by translateY, slides up on group-hover */}
+                <div className="absolute inset-0 bg-black transform translate-y-full md:group-hover:translate-y-0 transition-transform duration-400 ease-[cubic-bezier(.2,.9,.2,1)] flex items-end p-6">
+                  <div className="w-full">
+                    <div className="border-t border-gray-700 mb-3" />
+                    <p
+                      className="font-poppins text-white text-sm leading-relaxed"
+                      style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
+                    >
+                      {item.desc || item.text}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
