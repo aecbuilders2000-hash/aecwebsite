@@ -1,5 +1,9 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function KeyOfferings({ points = [], steps = [], title = '' }) {
   // Accept either 'points' or 'steps' for compatibility
@@ -11,8 +15,32 @@ export default function KeyOfferings({ points = [], steps = [], title = '' }) {
     { id: 'k-5', title: 'Visualization', text: 'Photoreal visualizations and renders.' },
   ]);
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.ko-card');
+      gsap.set(cards, { opacity: 0, y: 30 });
+      cards.forEach((card) => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="min-h-screen bg-white py-12 flex justify-center">
+    <section ref={containerRef} className="min-h-screen bg-white py-12 flex justify-center">
       {/* Full-width container set to 95vw */}
       <div className="w-[95vw] max-w-none">
         <div className="text-center mb-8">
@@ -25,7 +53,7 @@ export default function KeyOfferings({ points = [], steps = [], title = '' }) {
 
         <div className="space-y-4">
           {items.map((s, i) => (
-            <div key={s.id || i} className="w-full rounded-lg border border-gray-200 overflow-hidden">
+            <div key={s.id || i} className="w-full rounded-lg border border-gray-200 overflow-hidden ko-card">
               <div className="w-full bg-black text-white p-6">
                 <h3 className="text-lg font-bruno-ace-sc font-bold text-left" style={{ fontFamily: 'var(--font-bruno-ace-sc), sans-serif' }}>{s.title}</h3>
                 {/* separator line */}

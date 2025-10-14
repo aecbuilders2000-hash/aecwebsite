@@ -1,6 +1,8 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Process({ steps = [], points = [], title = '' }) {
   // Use steps if provided, otherwise fallback to points or placeholder points
@@ -21,10 +23,23 @@ export default function Process({ steps = [], points = [], title = '' }) {
   // GSAP reveal
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(topCardsRef.current, { opacity: 0, y: 15, scale: 0.98 });
-      gsap.to(topCardsRef.current, { opacity: 1, y: 0, scale: 1, stagger: 0.06, duration: 0.45, ease: 'power2.out' });
+      const cards = topCardsRef.current;
+      gsap.set(cards, { opacity: 0, y: 30 });
+      cards.forEach((card) => {
+        if (!card) return;
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
