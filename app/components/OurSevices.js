@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -55,6 +55,7 @@ export default function OurSevices() {
   const textRef = useRef(null);
   const topCardsRef = useRef([]);
   const bottomCardsRef = useRef([]);
+  const [activeRotator, setActiveRotator] = useState(null);
 
   // Split services into top and bottom arrays
   const topServices = services.filter((service) => service.position === "top");
@@ -147,7 +148,7 @@ export default function OurSevices() {
   }, []);
 
   // Array of vh values for each card
-  const cardVhPositions = [400, 500, 600, 720, 850];
+  const cardVhPositions = [400, 500, 610, 740, 880];
 
   // Scroll to a fixed vh for each service card
   const scrollToService = (index) => {
@@ -184,11 +185,13 @@ export default function OurSevices() {
         width: "100vw",
         paddingLeft: "2.5vw",
         paddingRight: "2.5vw",
-         backgroundImage: "url('/Abstract Wavy Lines_ EPS10.jpg')",
+        backgroundColor: '#f3f4f6', /* tailwind gray-100 */
+        backgroundImage: "url('/Abstract Wavy Lines_ EPS10.jpg')",
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right center',
         backgroundSize: 'contain',
-        }}
+        backgroundBlendMode: 'multiply',
+      }}
     >
       {/* Ambient background effects */}
       <div className="absolute inset-0 opacity-30">
@@ -335,7 +338,7 @@ export default function OurSevices() {
             <div
               key={service.id}
               ref={(el) => (bottomCardsRef.current[index] = el)}
-              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
+              className="group relative rounded-2xl overflow-visible shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
               style={{
                 height: "clamp(25vh, 35vh, 40vh)",
                 width: "17.5vw",
@@ -345,37 +348,41 @@ export default function OurSevices() {
                 flexGrow: 0,
               }}
               onClick={() => scrollToService(index)}
+              onMouseEnter={() => setActiveRotator(index)}
             >
-              <div className="relative h-full overflow-hidden">
-                {/* <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                /> */}
-                {/* Curtain reveal text overlay */}
-                <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
-                  <h3
-                    className="font-bruno-ace-sc font-bold text-white text-center mb-4"
-                    style={{
-                      fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                      fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
-                    }}
-                  >
-                    {service.title}
-                  </h3>
-                  <p
-                    className="font-poppins text-white text-sm text-center mb-3"
-                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
-                  >
-                    {service.subtitle}
-                  </p>
-                  <p
-                    className="font-poppins text-white text-xs text-center leading-relaxed"
-                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
-                  >
-                    {service.description}
-                  </p>
+              {/* Rotating decorative box behind the card. Starts same size (invisible) and scales slightly while rotating. */}
+              <div
+                className={`rotator absolute -inset-0 rounded-2xl bg-black z-0 pointer-events-none ${activeRotator === index ? 'rotator-active' : ''}`}
+                onAnimationEnd={() => { if (activeRotator === index) setActiveRotator(null); }}
+              />
+
+              {/* Inner card (keeps overflow-hidden so rotator only shows when scaled) */}
+              <div className="relative h-full overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm z-10">
+                <div className="relative h-full">
+                  {/* Curtain reveal text overlay */}
+                  <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
+                    <h3
+                      className="font-bruno-ace-sc font-bold text-white text-center mb-4"
+                      style={{
+                        fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                        fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
+                      }}
+                    >
+                      {service.title}
+                    </h3>
+                    <p
+                      className="font-poppins text-white text-sm text-center mb-3"
+                      style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                    >
+                      {service.subtitle}
+                    </p>
+                    <p
+                      className="font-poppins text-white text-xs text-center leading-relaxed"
+                      style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                    >
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -385,3 +392,5 @@ export default function OurSevices() {
     </section>
   );
 }
+
+// Rotator styles are now provided globally in app/globals.css

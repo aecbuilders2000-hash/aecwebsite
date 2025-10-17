@@ -63,3 +63,12 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Rotator decorative animation (used by service cards) */
+.rotator{ inset:0; transform-origin:center center; opacity:0; transform: translateZ(0) scale(1) rotate(0deg); backface-visibility:hidden; will-change: transform, opacity; }
+.rotator-active{ animation: rotator-anim 0.8s cubic-bezier(0.0, 0.0, 0.2, 1) forwards; }
+@keyframes rotator-anim {
+  0% { opacity: 0; transform: translateZ(0) scale(1) rotate(0deg); }
+  30% { opacity: 1; transform: translateZ(0) scale(1.08) rotate(240deg); }
+  100% { opacity: 0.95; transform: translateZ(0) scale(1.02) rotate(360deg); }
+}
