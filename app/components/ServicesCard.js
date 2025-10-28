@@ -237,7 +237,8 @@ const CardServices = ({
                                 width: isMobile ? '100%' : '40vw',
                                 height: isMobile ? '55vw' : '30vw',
                                 overflow: 'hidden',
-                                borderRadius: '1.5rem'
+                                borderRadius: '1.5rem',
+                                background: 'transparent'
                             }}
                         >
                             <Image
@@ -248,8 +249,8 @@ const CardServices = ({
                                 style={{
                                     objectFit: isMobile ? 'contain' : 'cover',
                                     objectPosition: 'center center',
-                                    background: '#fff',
-                                    transform: 'translateY(0%)'
+                                    background: 'transparent',
+                                    transform: isMobile ? 'translateY(0%)' : 'translateY(-6%)'
                                 }}
                             />
                         </div>

@@ -122,7 +122,7 @@ const ContactForm = () => {
         mode: 'no-cors' // Required for Google Apps Script
       });
 
-      console.log('Form submission response:', response);
+      // console.log('Form submission response:', response);
       // Since we're using no-cors mode, we can't read the response
       // So we assume success if no error was thrown
       setStatus({

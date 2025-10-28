@@ -128,8 +128,8 @@ const CareerForm = () => {
       
       const text = await response.text();
       // console.log('🧪 Google Apps Script GET test response:', text);
-      console.log('🧪 Response status:', response.status);
-      console.log('🧪 Response ok:', response.ok);
+      // console.log('🧪 Response status:', response.status);
+      // console.log('🧪 Response ok:', response.ok);
       
       if (response.ok) {
         setStatus({ type: 'success', message: `✅ Google Apps Script is working! Response: ${text}` });
@@ -248,17 +248,17 @@ const CareerForm = () => {
       });
 
       // console.log('📨 Response received from Google Apps Script:', response);
-      console.log('📊 Response details:', {
-        status: response.status,
-        statusText: response.statusText,
-        type: response.type,
-        ok: response.ok,
-        redirected: response.redirected
-      });
+      // console.log('📊 Response details:', {
+      //   status: response.status,
+      //   statusText: response.statusText,
+      //   type: response.type,
+      //   ok: response.ok,
+      //   redirected: response.redirected
+      // });
 
       // Note: With no-cors mode, we can't read the response body
       // But we can assume success if no error was thrown
-      console.log('✅ Request sent successfully (no-cors mode)');
+      // console.log('✅ Request sent successfully (no-cors mode)');
       
       // Since we can't read the response in no-cors mode, 
       // we assume success if no error was thrown
