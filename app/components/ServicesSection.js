@@ -147,6 +147,14 @@ export default function ServicesSection() {
       });
     });
 
+    // Set initial state for image wrappers (start translated down off-screen)
+    const imageWraps = cards.map((card) => card.querySelector('.service-image-wrap'));
+    imageWraps.forEach((wrap, idx) => {
+      if (!wrap) return;
+      // Ensure the wrapper is positioned for transform animation
+      gsap.set(wrap, { yPercent: idx === 0 ? 0 : 100 });
+    });
+
     // Create timeline
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -169,6 +177,11 @@ export default function ServicesSection() {
         { y: 0, duration: 0.15, ease: "power2.out" },
         progress
       );
+      // Animate the image inside this card to slide up when this card becomes active
+      const imgWrap = cards[index].querySelector('.service-image-wrap');
+      if (imgWrap) {
+        tl.to(imgWrap, { yPercent: 0, duration: 0.6, ease: 'power4.out' }, progress);
+      }
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
         const depth = index - prevIndex;
         tl.to(

@@ -123,14 +123,32 @@ const CardServices = ({
         <section
             className="w-screen overflow-hidden bg-gray-100 box-border"
             style={{
+                position: 'relative',
                 minHeight: '100vh',
                 paddingTop: '5vh',
                 paddingLeft: '2.5vw',
                 paddingRight: '2.5vw'
             }}
         >
+            {/* Full-card blurred background using the same left image */}
+            <div
+                aria-hidden="true"
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center center',
+                    filter: 'blur(5px)',
+                    opacity: 0.28,
+                    transform: 'scale(1.06)',
+                    pointerEvents: 'none',
+                    zIndex: 0
+                }}
+            />
+
             {/* Main Content Row */}
-            <div className={containerClass} style={containerStyle}>
+            <div className={containerClass} style={{...containerStyle, position: 'relative', zIndex: 1}}>
                 {/* Left Column - 40% on desktop, full width on mobile */}
                 <div className="flex flex-col justify-start items-start relative" style={leftColumnStyle}>
                     {/* Service Name with Arrow - AFTER the image */}
@@ -211,7 +229,7 @@ const CardServices = ({
 
                         {/* Image */}
                         <div
-                            className="relative"
+                            className="service-image-wrap relative"
                             style={{
                                 marginLeft: 0,
                                 marginTop: isMobile ? '2vh' : '0vh',
@@ -230,7 +248,8 @@ const CardServices = ({
                                 style={{
                                     objectFit: isMobile ? 'contain' : 'cover',
                                     objectPosition: 'center center',
-                                    background: '#fff'
+                                    background: '#fff',
+                                    transform: 'translateY(0%)'
                                 }}
                             />
                         </div>
