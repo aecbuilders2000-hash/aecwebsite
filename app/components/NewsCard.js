@@ -1,8 +1,52 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default function NewsCard({ item }) {
+if (typeof window !== 'undefined' && !gsap.plugins.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+export default function NewsCard({ item, index = 0 }) {
+    const cardRef = useRef(null);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (!cardRef.current) return;
+
+        const direction = index % 2 === 0 ? -1 : 1; // even => from left (-1), odd => from right (1)
+
+        const ctx = gsap.context(() => {
+            // start further off-screen for a more visible slide
+            gsap.set(cardRef.current, { autoAlpha: 0, x: 80 * direction });
+
+            const st = ScrollTrigger.create({
+                trigger: cardRef.current,
+                start: 'top 90%', // reveal a bit later so the slide is visible
+                onEnter: () => {
+                    gsap.to(cardRef.current, { autoAlpha: 1, x: 0, duration: 1.05, delay: 0.12, ease: 'power3.out' });
+                },
+                // make it animate again if the user scrolls back up and then down
+                onEnterBack: () => {
+                    gsap.to(cardRef.current, { autoAlpha: 1, x: 0, duration: 0.95, delay: 0.08, ease: 'power3.out' });
+                },
+                onLeaveBack: () => {
+                    // reset slightly faster when scrolling up
+                    gsap.to(cardRef.current, { autoAlpha: 0, x: 80 * direction, duration: 0.6, ease: 'power2.in' });
+                },
+                once: false
+            });
+
+            return () => {
+                if (st) st.kill();
+            };
+        }, cardRef);
+
+        return () => ctx.revert();
+    }, [index]);
+
     return (
         <article
+            ref={cardRef}
             className="group relative flex flex-col rounded-3xl overflow-hidden shadow-[0_4px_24px_-6px_rgba(0,0,0,0.08)] bg-gray-100 backdrop-blur-md border border-black/5 p-5 sm:p-6 lg:p-7 hover:shadow-[0_6px_42px_-4px_rgba(0,0,0,0.14)] transition-shadow duration-400"
         >
             <div className="flex items-center justify-between mb-4">

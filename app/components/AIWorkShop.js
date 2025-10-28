@@ -1,15 +1,80 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (typeof window !== 'undefined' && !gsap.plugins.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger)
+}
 
 const AIWorkShop = () => {
+    const part1Ref = useRef(null)
+    const part1Left = useRef(null)
+    const part1Right = useRef(null)
+
+    const part2Ref = useRef(null)
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+
+        const ctx = gsap.context(() => {
+            // Part 1: left image from left, right text from right
+            if (part1Ref.current && part1Left.current && part1Right.current) {
+                gsap.set([part1Left.current, part1Right.current], { autoAlpha: 0 })
+                gsap.set(part1Left.current, { x: -80 })
+                gsap.set(part1Right.current, { x: 80 })
+
+                ScrollTrigger.create({
+                    trigger: part1Ref.current,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        gsap.to(part1Left.current, { x: 0, autoAlpha: 1, duration: 1.05, ease: 'power3.out' })
+                        gsap.to(part1Right.current, { x: 0, autoAlpha: 1, duration: 1.05, ease: 'power3.out', delay: 0.08 })
+                    },
+                    onEnterBack: () => {
+                        gsap.to(part1Left.current, { x: 0, autoAlpha: 1, duration: 0.95, ease: 'power3.out' })
+                        gsap.to(part1Right.current, { x: 0, autoAlpha: 1, duration: 0.95, ease: 'power3.out', delay: 0.06 })
+                    }
+                })
+            }
+
+            // Part 2: three images - alternate directions L, R, L
+            if (part2Ref.current) {
+                const cols = Array.from(part2Ref.current.querySelectorAll(':scope > div'))
+                cols.forEach((col, i) => {
+                    const dir = i % 2 === 0 ? -1 : 1
+                    gsap.set(col, { autoAlpha: 0, x: 80 * dir })
+                })
+
+                ScrollTrigger.create({
+                    trigger: part2Ref.current,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        cols.forEach((col, i) => {
+                            gsap.to(col, { x: 0, autoAlpha: 1, duration: 1.0, ease: 'power3.out', delay: i * 0.06 })
+                        })
+                    },
+                    onEnterBack: () => {
+                        cols.forEach((col, i) => {
+                            gsap.to(col, { x: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out', delay: i * 0.04 })
+                        })
+                    }
+                })
+            }
+        })
+
+        return () => ctx.revert()
+    }, [])
+
     return (
         <>
             <article
+                ref={part1Ref}
                 className="group relative flex flex-col rounded-3xl overflow-hidden shadow-[0_4px_24px_-6px_rgba(0,0,0,0.08)] bg-gray-100 backdrop-blur-md border border-black/5 p-5 sm:p-6 lg:p-7 hover:shadow-[0_6px_42px_-4px_rgba(0,0,0,0.14)] transition-shadow duration-400"
             >
 
                 {/* part1 */}
                 <div className="flex flex-col lg:flex-row gap-8 mb-4">
-                    <div className='w-full lg:w-1/3 h-fit flex-shrink-0'>
+                    <div ref={part1Left} className='w-full lg:w-1/3 h-fit flex-shrink-0'>
                         <span
                             className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium"
                             style={{ fontFamily: 'Bruno Ace SC, sans-serif' }}
@@ -25,7 +90,7 @@ const AIWorkShop = () => {
                             />
                         </div>
                     </div>
-                    <div className='w-full md:flex-1 px-4 sm:px-6 md:px-8 lg:px-12 text-black'>
+                    <div ref={part1Right} className='w-full md:flex-1 px-4 sm:px-6 md:px-8 lg:px-12 text-black'>
                         <h2 className='font-bold text-xl mb-8'>
                             AI in Architecture Workshop
                             <span className='text-neutral-500'>
@@ -60,7 +125,7 @@ const AIWorkShop = () => {
                 </span>
 
                 {/* 3 Images Layout: 35% - 30% - 35% */}
-                <div className="flex flex-col md:flex-row gap-2 mx-auto w-[95%]">
+                <div ref={part2Ref} className="flex flex-col md:flex-row gap-2 mx-auto w-[95%]">
                     {/* First Image - 35% width */}
                     <div className='w-full md:w-[35%] flex-shrink-0'>
                         <div className="shadow-md w-full overflow-hidden h-full md:h-[400px] lg:h-[500px]">

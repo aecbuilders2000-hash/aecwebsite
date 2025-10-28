@@ -92,8 +92,8 @@ export default function NewsSection({ items }) {
                 <AIWorkShop />
                 {/* News Grid - Vertical Layout */}
                 <div className="grid grid-cols-1 gap-8 mt-8 md:mt-10 md:gap-10">
-                    {list.map((item) => (
-                        <NewsCard key={item.id} item={item} />
+                    {list.map((item, idx) => (
+                        <NewsCard key={item.id} item={item} index={idx} />
                     ))}
                 </div>
             </div>
