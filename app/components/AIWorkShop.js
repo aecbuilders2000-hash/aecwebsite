@@ -35,10 +35,10 @@ const AIWorkShop = () => {
 
                         <div className="space-y-4 text-md xl:text-lg text-justify text-neutral-700 leading-relaxed" style={{ fontFamily: 'Century Gothic, sans-serif' }}>
                             <p>
-                                Our founder, <strong>Ar. Kenil Savaliya</strong>, was invited by P P Savani University (PPSU) to conduct a workshop on "AI in Architecture & Interior Design." The session focused on the growing influence of Artificial Intelligence in the fields of architecture and interior design, emphasizing how it enhances creativity, efficiency, and innovation in the design process.
+                                Our founder, <strong>Ar. Kenil Savaliya</strong>, was invited by P P Savani University (PPSU) to conduct a workshop on &quot;AI in Architecture & Interior Design.&quot; The session focused on the growing influence of Artificial Intelligence in the fields of architecture and interior design, emphasizing how it enhances creativity, efficiency, and innovation in the design process.
                             </p>
                             <p>
-                                Ar. Kenil Savaliya shared insights into our firm's work on computational design and AI integration in real-world projects, showcasing methods to optimize workflow and improve design outcomes.
+                                Ar. Kenil Savaliya shared insights into our firm&apos;s work on computational design and AI integration in real-world projects, showcasing methods to optimize workflow and improve design outcomes.
                             </p>
                             <p>
                                 Through interactive discussions and demonstrations, participants explored practical applications of AI tools for design visualization, space planning, and material selection. The workshop offered students a valuable perspective on how emerging technologies are shaping the future of architectural and interior design practices.
