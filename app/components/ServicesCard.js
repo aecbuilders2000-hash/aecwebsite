@@ -10,7 +10,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CardServices = ({
     introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
-    imageUrl = "/SanBridge.png",
+    // leftImage is the main left-side image, bgImage is the blurred background image
+    leftImage = "/SanBridge.png",
+    bgImage = null,
     serviceName = "ARCHITECTURAL",
     pageNumber = "001/007",
     services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"],
@@ -130,22 +132,22 @@ const CardServices = ({
                 paddingRight: '2.5vw'
             }}
         >
-            {/* Full-card blurred background using the same left image */}
-            <div
-                aria-hidden="true"
-                style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: `url(${imageUrl})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    filter: 'blur(5px)',
-                    opacity: 0.28,
-                    transform: 'scale(1.06)',
-                    pointerEvents: 'none',
-                    zIndex: 0
-                }}
-            />
+            {/* Full-card blurred background (uses bgImage when provided, otherwise falls back to leftImage) */}
+            {(bgImage || leftImage) && (
+                <div
+                    aria-hidden="true"
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        // Wrap URL in quotes and encode to handle spaces/special chars in filenames
+                        backgroundImage: `url("${encodeURI(bgImage || leftImage)}")`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center center',
+                        pointerEvents: 'none',
+                        zIndex: 0
+                    }}
+                />
+            )}
 
             {/* Main Content Row */}
             <div className={containerClass} style={{...containerStyle, position: 'relative', zIndex: 1}}>
@@ -242,7 +244,7 @@ const CardServices = ({
                             }}
                         >
                             <Image
-                                src={imageUrl}
+                                src={leftImage || "/SanBridge.png"}
                                 alt="Architecture Service"
                                 fill
                                 sizes={isMobile ? '100vw' : '40vw'}
