@@ -116,7 +116,6 @@ const AIWorkShop = () => {
             <article
                 className="group mt-8 md:mt-10 relative flex flex-col rounded-3xl overflow-hidden shadow-[0_4px_24px_-6px_rgba(0,0,0,0.08)] bg-gray-100 backdrop-blur-md border border-black/5 p-5 sm:p-6 lg:p-7 hover:shadow-[0_6px_42px_-4px_rgba(0,0,0,0.14)] transition-shadow duration-400"
             >
-
                 <span
                     className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium mb-6"
                     style={{ fontFamily: 'Bruno Ace SC, sans-serif' }}
@@ -132,7 +131,7 @@ const AIWorkShop = () => {
                             <img
                                 src="https://i.postimg.cc/63LLtGxH/news.webp"
                                 alt="AI Workshop Image 1"
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
@@ -141,9 +140,9 @@ const AIWorkShop = () => {
                     <div className='w-full md:w-[30%] flex-shrink-0'>
                         <div className="shadow-md w-full overflow-hidden h-full md:h-[400px] lg:h-[500px]">
                             <img
-                                src="https://i.postimg.cc/65WZkkv1/news.webp"
+                                src="https://i.postimg.cc/0jN7jngq/workshop2.png"
                                 alt="AI Workshop Image 2"
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
@@ -154,7 +153,7 @@ const AIWorkShop = () => {
                             <img
                                 src="https://i.postimg.cc/65WZkkv1/news.webp"
                                 alt="AI Workshop Image 3"
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
