@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function CustomCursor() {
@@ -7,8 +7,28 @@ export default function CustomCursor() {
   const mousePos = useRef({ x: 0, y: 0 });
   const lastMousePos = useRef({ x: 0, y: 0 });
   const velocity = useRef(0);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
+    // Check if screen is large (≥1024px)
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Listen for resize
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Only run cursor logic on large screens
+    if (!isLargeScreen) return;
     const cursor = cursorRef.current;
     if (!cursor) return;
 
@@ -30,7 +50,7 @@ export default function CustomCursor() {
     const handleMouseMove = (e) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
-      
+
       // console.log('Mouse position:', e.clientX, e.clientY); // Debug log
 
       // Show cursor when mouse moves (removed conditional)
@@ -49,15 +69,15 @@ export default function CustomCursor() {
       const deltaX = mousePos.current.x - lastMousePos.current.x;
       const deltaY = mousePos.current.y - lastMousePos.current.y;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      
+
       // Smooth velocity calculation - Fixed scaling
       velocity.current = velocity.current * 0.8 + distance * 0.1;
-      
+
       // Clamp velocity for reasonable scaling - Responsive range
       const clampedVelocity = Math.min(Math.max(velocity.current, 0), window.innerWidth * 0.02);
-      
-  // Scale based on velocity: slow = normal (1), fast = large (3.2)
-  const targetScale = 1 + (clampedVelocity / (window.innerWidth * 0.02)) * 2.2;
+
+      // Scale based on velocity: slow = normal (1), fast = large (3.2)
+      const targetScale = 1 + (clampedVelocity / (window.innerWidth * 0.02)) * 2.2;
 
       // Update cursor position with lag using GSAP - Responsive positioning
       gsap.to(cursor, {
@@ -94,7 +114,7 @@ export default function CustomCursor() {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
-    
+
     // Start animation loop
     updateCursor();
 
@@ -107,7 +127,10 @@ export default function CustomCursor() {
         cancelAnimationFrame(animationId);
       }
     };
-  }, []);
+  }, [isLargeScreen]);
+
+  // Don't render cursor on small screens
+  if (!isLargeScreen) return null;
 
   return (
     <div
