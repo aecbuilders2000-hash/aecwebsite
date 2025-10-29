@@ -172,7 +172,9 @@ const CardServices = ({
                                 transformStyle: 'preserve-3d',
                                 perspective: '1000px',
                                 display: 'inline-block',
-                                whiteSpace: 'nowrap'
+                                whiteSpace: 'nowrap',
+                                position: 'relative',
+                                zIndex: 2
                             }}
                         >
                             {serviceName.split('').map((letter, index) => (
@@ -218,31 +220,36 @@ const CardServices = ({
                     {/* Intro Text + Image: On mobile these sit side-by-side (each half width). On desktop they stack (text then image). */}
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start', marginTop: isMobile ? '2vh' : '0' }}>
                         <p
-                            className="relative font-poppins leading-relaxed text-gray-500 m-0 text-left"
+                            className="relative font-poppins leading-relaxed text-gray-600 m-0 text-left"
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 marginTop: isMobile ? '0' : '2vh',
                                 fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
-                                width: isMobile ? '100%' : '30vw'
+                                width: isMobile ? '100%' : '30vw',
+                                position: 'relative',
+                                zIndex: 2
                             }}
                         >
                             {introText}
                         </p>
-
-                        {/* Image */}
                         <div
-                            className="service-image-wrap relative"
+                            className="service-image-wrap"
                             style={{
+                                // On desktop position fixed so the image starts at the top of the viewport
+                                position: isMobile ? 'relative' : 'fixed',
+                                top: isMobile ? undefined : 0,
+                                left: isMobile ? undefined : '0vw',
                                 marginLeft: 0,
                                 marginTop: isMobile ? '2vh' : '0vh',
-                                top: isMobile ? '1.5vh' : '0vh',
-                                width: isMobile ? '100%' : '40vw',
-                                height: isMobile ? '55vw' : '30vw',
+                                width: isMobile ? '100%' : '54vw',
+                                height: isMobile ? '55vw' : '100vh',
                                 overflow: 'hidden',
-                                borderRadius: '1.5rem',
-                                background: 'transparent'
+                                background: 'transparent',
+                                zIndex: 0,
+                                pointerEvents: 'none'
                             }}
                         >
+                        
                             <Image
                                 src={leftImage || "/SanBridge.png"}
                                 alt="Architecture Service"
@@ -252,7 +259,7 @@ const CardServices = ({
                                     objectFit: isMobile ? 'contain' : 'cover',
                                     objectPosition: 'center center',
                                     background: 'transparent',
-                                    transform: isMobile ? 'translateY(0%)' : 'translateY(-6%)'
+                                    transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
                                 }}
                             />
                         </div>
