@@ -16,8 +16,10 @@ const CardServices = ({
     serviceName = "ARCHITECTURAL",
     pageNumber = "001/007",
     services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"],
-    bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
-    , mainSlug: mainSlugProp = null
+    bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.",
+    // allow overriding the intro text color via Tailwind class (keeps existing default)
+    introTextColor = 'text-gray-700',
+    mainSlug: mainSlugProp = null
 }) => {
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
@@ -169,6 +171,9 @@ const CardServices = ({
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)',
                                 letterSpacing: '0.3em',
+                                // subtle black outline to improve contrast over images
+                                WebkitTextStroke: '0.45px #000',
+                                textStroke: '0.45px #000',
                                 transformStyle: 'preserve-3d',
                                 perspective: '1000px',
                                 display: 'inline-block',
@@ -194,7 +199,7 @@ const CardServices = ({
                         {/* Arrow Circle */}
                         <button
                             className="flex items-center justify-center cursor-pointer bg-transparent group"
-                            style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center' }}
+                            style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center', zIndex: '2' }}
                         >
                             <div
                                 className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
@@ -220,14 +225,17 @@ const CardServices = ({
                     {/* Intro Text + Image: On mobile these sit side-by-side (each half width). On desktop they stack (text then image). */}
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start', marginTop: isMobile ? '2vh' : '0' }}>
                         <p
-                            className="relative font-poppins leading-relaxed text-gray-600 m-0 text-left"
+                            className={`relative font-poppins leading-relaxed m-0 text-left ${introTextColor}`}
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 marginTop: isMobile ? '0' : '2vh',
                                 fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
                                 width: isMobile ? '100%' : '30vw',
                                 position: 'relative',
-                                zIndex: 2
+                                zIndex: 2,
+                                // subtle black outline for legibility over imagery
+                                WebkitTextStroke: '0.35px #000',
+                                textStroke: '0.35px #000'
                             }}
                         >
                             {introText}
