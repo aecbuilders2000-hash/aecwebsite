@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const CardServices = ({
     introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
     // leftImage is the main left-side image, bgImage is the blurred background image
-    leftImage = "/SanBridge.png",
+    leftImage = null,
     bgImage = null,
     serviceName = "ARCHITECTURAL",
     pageNumber = "001/007",
@@ -29,6 +29,9 @@ const CardServices = ({
     // const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
+
+    // detect 3D visualization service so we can invert some visuals
+    const is3d = (mainSlugProp && String(mainSlugProp).toLowerCase().includes('3d')) || (serviceName && String(serviceName).toLowerCase().includes('3d'));
 
     useEffect(() => {
         // Mobile detection so we can apply mobile-only layout without changing desktop
@@ -166,20 +169,21 @@ const CardServices = ({
                     >
                         <span
                             ref={titleRef}
-                            className="font-bruno-ace-sc font-bold text-black leading-tight"
+                            className="font-bruno-ace-sc font-bold leading-tight"
                             style={{
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)',
                                 letterSpacing: '0.3em',
-                                // subtle black outline to improve contrast over images
-                                WebkitTextStroke: '0.45px #000',
-                                textStroke: '0.45px #000',
                                 transformStyle: 'preserve-3d',
                                 perspective: '1000px',
                                 display: 'inline-block',
                                 whiteSpace: 'nowrap',
                                 position: 'relative',
-                                zIndex: 2
+                                zIndex: 2,
+                                // invert title color for 3D visualization
+                                color: is3d ? '#fff' : undefined,
+                                // directional offset outline using textShadow for an "offset" outline (only for 3D)
+                                textShadow: is3d ? '2px 2px 0 #000' : undefined
                             }}
                         >
                             {serviceName.split('').map((letter, index) => (
@@ -202,15 +206,21 @@ const CardServices = ({
                             style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center', zIndex: '2' }}
                         >
                             <div
-                                className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
-                                style={{ width: 'clamp(35px, 10vw, 60px)', height: 'clamp(35px, 10vw, 60px)' }}
+                                className="rounded-full flex items-center justify-center flex-shrink-0"
+                                style={{
+                                    width: 'clamp(35px, 10vw, 60px)',
+                                    height: 'clamp(35px, 10vw, 60px)',
+                                    // invert circle background for 3D visualization
+                                    background: is3d ? '#fff' : '#000'
+                                }}
                             >
                                 <svg
-                                    className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
+                                    className="transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
                                     width="36"
                                     height="36"
                                     viewBox="0 0 24 24"
                                     fill="none"
+                                    stroke={is3d ? '#000' : '#fff'}
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -233,44 +243,48 @@ const CardServices = ({
                                 width: isMobile ? '100%' : '30vw',
                                 position: 'relative',
                                 zIndex: 2,
-                                // subtle black outline for legibility over imagery
-                                WebkitTextStroke: '0.35px #000',
-                                textStroke: '0.35px #000'
+                                // directional offset outline using textShadow for an "offset" outline (only for 3D)
+                                textShadow: is3d ? '2px 2px 0 #000' : undefined,
+                                // force intro color to white for 3D visualization (overrides introTextColor)
+                                color: is3d ? '#fff' : undefined
                             }}
                         >
                             {introText}
                         </p>
-                        <div
-                            className="service-image-wrap"
-                            style={{
-                                // On desktop position fixed so the image starts at the top of the viewport
-                                position: isMobile ? 'relative' : 'fixed',
-                                top: isMobile ? undefined : 0,
-                                left: isMobile ? undefined : '0vw',
-                                marginLeft: 0,
-                                marginTop: isMobile ? '2vh' : '0vh',
-                                width: isMobile ? '100%' : '54vw',
-                                height: isMobile ? '55vw' : '100vh',
-                                overflow: 'hidden',
-                                background: 'transparent',
-                                zIndex: 0,
-                                pointerEvents: 'none'
-                            }}
-                        >
-                        
-                            <Image
-                                src={leftImage || "/SanBridge.png"}
-                                alt="Architecture Service"
-                                fill
-                                sizes={isMobile ? '100vw' : '40vw'}
+                        {leftImage ? (
+                            <div
+                                className="service-image-wrap"
                                 style={{
-                                    objectFit: isMobile ? 'contain' : 'cover',
-                                    objectPosition: 'center center',
+                                    // Use fixed positioning on mobile too so the image fills the viewport
+                                    // and does not affect other elements' layout.
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    marginLeft: 0,
+                                    marginTop: 0,
+                                    width: '100vw',
+                                    height: '100vh',
+                                    overflow: 'hidden',
                                     background: 'transparent',
-                                    transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
+                                    zIndex: 0,
+                                    pointerEvents: 'none'
                                 }}
-                            />
-                        </div>
+                            >
+                                <Image
+                                    src={leftImage}
+                                    alt={serviceName ? serviceName + " image" : "service image"}
+                                    fill
+                                    sizes={isMobile ? '100vw' : '40vw'}
+                                    style={{
+                                        // On mobile we want the image to cover the full viewport
+                                        objectFit: 'cover',
+                                        objectPosition: 'center center',
+                                        background: 'transparent',
+                                        transform: 'translateY(0%)'
+                                    }}
+                                />
+                            </div>
+                        ) : null}
                     </div>
 
                 </div>

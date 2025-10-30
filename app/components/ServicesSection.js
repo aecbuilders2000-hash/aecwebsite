@@ -114,8 +114,8 @@ const services = [
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
         introTextColor="text-gray-100"
-        leftImage="/3D VIZ REAL (1).jpg"
-        bgImage="/BIM REAL 3.jpg"
+        // leftImage="/3D VIZ REAL (1).jpg"
+        bgImage="/3D VIZ REAL (1).jpg"
         serviceName="3D VISUALIZATION"
         mainSlug="3d-visualization"
         pageNumber="005/005"
