@@ -49,12 +49,13 @@ const services = [
   },
 ];
 
-export default function ServicesOverview() {
+export default function OurSevices() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const textRef = useRef(null);
   const topCardsRef = useRef([]);
   const bottomCardsRef = useRef([]);
+  const [activeRotator, setActiveRotator] = useState(null);
 
   // Split services into top and bottom arrays
   const topServices = services.filter((service) => service.position === "top");
@@ -147,7 +148,7 @@ export default function ServicesOverview() {
   }, []);
 
   // Array of vh values for each card
-  const cardVhPositions = [400, 500, 600, 720, 850];
+  const cardVhPositions = [400, 500, 610, 740, 880];
 
   // Scroll to a fixed vh for each service card
   const scrollToService = (index) => {
@@ -156,39 +157,29 @@ export default function ServicesOverview() {
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
-  // Mobile tap-to-toggle state: first tap toggles invert, second tap triggers scroll
-  const [activeMobile, setActiveMobile] = useState(null);
-  const activeTimeout = useRef(null);
-
-  const mobileCardClick = (index) => {
-    if (activeMobile === index) {
-      // second tap: perform navigation/scroll
-      setActiveMobile(null);
-      if (activeTimeout.current) {
-        clearTimeout(activeTimeout.current);
-        activeTimeout.current = null;
-      }
-      scrollToService(index);
-    } else {
-      // first tap: toggle active state to show invert
-      setActiveMobile(index);
-      if (activeTimeout.current) clearTimeout(activeTimeout.current);
-      activeTimeout.current = setTimeout(() => setActiveMobile(null), 3000);
-    }
-  };
-
-  // cleanup timer on unmount
+  // On mount: if another page set a target in sessionStorage, scroll to it and clear the key
   useEffect(() => {
-    return () => {
-      if (activeTimeout.current) clearTimeout(activeTimeout.current);
-    };
+    if (typeof window === 'undefined') return;
+    try {
+      const raw = sessionStorage.getItem('servicesScrollTo');
+      if (raw !== null) {
+        const idx = parseInt(raw, 10);
+        if (!Number.isNaN(idx)) {
+          // Slight delay for layout/animations to settle
+          setTimeout(() => scrollToService(idx), 120);
+        }
+        sessionStorage.removeItem('servicesScrollTo');
+      }
+    } catch (e) {
+      // ignore sessionStorage errors
+    }
   }, []);
 
   return (
     <section
       id="services-overview-section"
       ref={sectionRef}
-      className="relative bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 overflow-hidden"
+      className="relative text-gray-900 bg-gray-100 overflow-hidden"
       style={{
         height: "100vh",
         width: "100vw",
@@ -197,57 +188,46 @@ export default function ServicesOverview() {
       }}
     >
       {/* Ambient background effects */}
-      <div className="absolute inset-0 opacity-30">
+      {/* <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl animate-pulse"></div>
         <div
           className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         ></div>
-      </div>
+      </div> */}
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between">
         {/* Top Section */}
         <div
-          className="flex flex-col md:flex-row justify-between items-start"
-          style={{ paddingTop: "12vh", height: "55vh" }}
+          className="flex flex-col items-center justify-center"
+          style={{ paddingTop: "8vh", height: "55vh" }}
         >
-          {/* Left: Title and Description - full width on mobile */}
-          <div className="w-full md:w-3/5 pr-8 flex flex-col justify-start h-full">
+          {/* Centered Title and Description container (max width) */}
+          <div className="w-full max-w-3xl flex flex-col items-center justify-center h-full">
             <h2
               ref={titleRef}
-              className="font-bruno-ace-sc font-bold text-black leading-tight mb-6"
+              className="font-bruno-ace-sc font-bold text-black leading-tight mb-6 text-center"
               style={{
                 fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                 fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)",
                 letterSpacing: "0.3em",
                 transformStyle: "preserve-3d",
                 perspective: "1000px",
+                whiteSpace: 'nowrap'
               }}
             >
-              {"OUR SERVICES".split(" ").map((word, wordIndex) => (
-                <div
-                  key={wordIndex}
-                  className="word"
+              {"OUR SERVICES".split("").map((letter, letterIndex) => (
+                <span
+                  key={letterIndex}
+                  className="letter"
                   style={{
-                    display: wordIndex === 0 ? "block" : "block",
-                    overflow: "hidden",
-                    height: "1.2em",
-                    marginBottom: wordIndex < 1 ? "0.1em" : "0",
+                    display: "inline-block",
+                    transformStyle: "preserve-3d",
+                    lineHeight: 1
                   }}
                 >
-                  {word.split("").map((letter, letterIndex) => (
-                    <span
-                      key={letterIndex}
-                      className="letter"
-                      style={{
-                        display: "inline-block",
-                        transformStyle: "preserve-3d",
-                      }}
-                    >
-                      {letter}
-                    </span>
-                  ))}
-                </div>
+                  {letter === ' ' ? '\u00A0' : letter}
+                </span>
               ))}
             </h2>
 
@@ -265,11 +245,11 @@ export default function ServicesOverview() {
             </p> */}
 
             <p
-              className="font-poppins text-gray-700 leading-relaxed"
+              className="font-poppins text-gray-700 leading-relaxed text-center"
               style={{
                 fontFamily: "var(--font-poppins), sans-serif",
                 fontSize: "clamp(0.73rem, 1.47vw, 1.13rem)",
-                maxWidth: "90%",
+                maxWidth: "66ch",
               }}
             >
               From design conceptualization to construction documentation, we
@@ -288,12 +268,19 @@ export default function ServicesOverview() {
           {bottomServices.map((service, index) => (
             <div
               key={service.id}
-              className="group relative w-full flex items-stretch text-center rounded-2xl overflow-hidden shadow-md bg-black text-white"
+              className="w-full flex items-stretch text-center bg-black text-white rounded-2xl overflow-hidden shadow-md"
               style={{ minHeight: "13vh" }}
-              onClick={() => mobileCardClick(index)}
+              onClick={() => scrollToService(index)}
             >
-              {/* Black overlay with white text, inverts on hover or when activeMobile === index (for touch) */}
-              <div className={`absolute inset-0 z-10 backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-4 ${activeMobile === index ? 'bg-white text-black' : 'bg-black text-white'} group-hover:bg-white group-hover:text-black`}>
+              {/* Image - left (40%) */}
+              {/* <div className="relative w-2/5" style={{ minHeight: 'auto' }}>
+                <Image src={service.image} alt={service.title} fill className="object-cover" />
+              </div> */}
+              {/* Text - right (60%) */}
+              <div
+                className="w-full p-4 flex flex-col justify-center"
+                style={{ padding: "clamp(0.5rem, 1.6vw, 0.9rem)" }}
+              >
                 <h3
                   className="font-bruno-ace-sc font-bold"
                   style={{
@@ -334,7 +321,7 @@ export default function ServicesOverview() {
             <div
               key={service.id}
               ref={(el) => (bottomCardsRef.current[index] = el)}
-              className="group relative bg-black backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
+              className="group relative rounded-2xl overflow-visible shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50"
               style={{
                 height: "clamp(25vh, 35vh, 40vh)",
                 width: "17.5vw",
@@ -344,37 +331,41 @@ export default function ServicesOverview() {
                 flexGrow: 0,
               }}
               onClick={() => scrollToService(index)}
+              onMouseEnter={() => setActiveRotator(index)}
             >
-              <div className="relative h-full overflow-hidden">
-                {/* <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                /> */}
-                {/* Curtain reveal text overlay */}
-                <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
-                  <h3
-                    className="font-bruno-ace-sc font-bold text-white text-center mb-4"
-                    style={{
-                      fontFamily: "var(--font-bruno-ace-sc), sans-serif",
-                      fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
-                    }}
-                  >
-                    {service.title}
-                  </h3>
-                  <p
-                    className="font-poppins text-white text-sm text-center mb-3"
-                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
-                  >
-                    {service.subtitle}
-                  </p>
-                  <p
-                    className="font-poppins text-white text-xs text-center leading-relaxed"
-                    style={{ fontFamily: "var(--font-poppins), sans-serif" }}
-                  >
-                    {service.description}
-                  </p>
+              {/* Rotating decorative box behind the card. Starts same size (invisible) and scales slightly while rotating. */}
+              <div
+                className={`rotator absolute -inset-0 rounded-2xl bg-black z-0 pointer-events-none ${activeRotator === index ? 'rotator-active' : ''}`}
+                onAnimationEnd={() => { if (activeRotator === index) setActiveRotator(null); }}
+              />
+
+              {/* Inner card (keeps overflow-hidden so rotator only shows when scaled) */}
+              <div className="relative h-full overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm z-10">
+                <div className="relative h-full">
+                  {/* Curtain reveal text overlay */}
+                  <div className="absolute inset-0 bg-black group-hover:invert backdrop-blur-sm transition-all duration-500 flex flex-col justify-center items-center p-6">
+                    <h3
+                      className="font-bruno-ace-sc font-bold text-white text-center mb-4"
+                      style={{
+                        fontFamily: "var(--font-bruno-ace-sc), sans-serif",
+                        fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
+                      }}
+                    >
+                      {service.title}
+                    </h3>
+                    <p
+                      className="font-poppins text-white text-sm text-center mb-3"
+                      style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                    >
+                      {service.subtitle}
+                    </p>
+                    <p
+                      className="font-poppins text-white text-xs text-center leading-relaxed"
+                      style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+                    >
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -384,3 +375,5 @@ export default function ServicesOverview() {
     </section>
   );
 }
+
+// Rotator styles are now provided globally in app/globals.css

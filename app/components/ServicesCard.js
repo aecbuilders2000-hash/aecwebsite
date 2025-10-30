@@ -10,11 +10,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CardServices = ({
     introText = "Beyond sales, our expertise extends to tiling, screed work, interior plastering, and façade construction.",
-    imageUrl = "/SanBridge.png",
+    // leftImage is the main left-side image, bgImage is the blurred background image
+    leftImage = null,
+    bgImage = null,
     serviceName = "ARCHITECTURAL",
     pageNumber = "001/007",
     services = ["Revit", "AutoCAD", "ArchiCAD", "BIM modeling"],
-    bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience."
+    bottomText = "Your brand's compass. It defines purpose, sharpens positioning, and ensures every decision you make resonates with your audience.",
+    // allow overriding the intro text color via Tailwind class (keeps existing default)
+    introTextColor = 'text-gray-700',
+    mainSlug: mainSlugProp = null
 }) => {
 
     const [selected, setSelected] = useState(services[1]); // Default to second service
@@ -24,6 +29,9 @@ const CardServices = ({
     // const [arrowHovered, setArrowHovered] = useState(false);
     const titleRef = useRef(null);
     const cardRef = useRef(null); // Add ref for the entire card
+
+    // detect 3D visualization service so we can invert some visuals
+    const is3d = (mainSlugProp && String(mainSlugProp).toLowerCase().includes('3d')) || (serviceName && String(serviceName).toLowerCase().includes('3d'));
 
     useEffect(() => {
         // Mobile detection so we can apply mobile-only layout without changing desktop
@@ -122,14 +130,32 @@ const CardServices = ({
         <section
             className="w-screen overflow-hidden bg-gray-100 box-border"
             style={{
+                position: 'relative',
                 minHeight: '100vh',
                 paddingTop: '5vh',
                 paddingLeft: '2.5vw',
                 paddingRight: '2.5vw'
             }}
         >
+            {/* Full-card blurred background (uses bgImage when provided, otherwise falls back to leftImage) */}
+            {(bgImage || leftImage) && (
+                <div
+                    aria-hidden="true"
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        // Wrap URL in quotes and encode to handle spaces/special chars in filenames
+                        backgroundImage: `url("${encodeURI(bgImage || leftImage)}")`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center center',
+                        pointerEvents: 'none',
+                        zIndex: 0
+                    }}
+                />
+            )}
+
             {/* Main Content Row */}
-            <div className={containerClass} style={containerStyle}>
+            <div className={containerClass} style={{...containerStyle, position: 'relative', zIndex: 1}}>
                 {/* Left Column - 40% on desktop, full width on mobile */}
                 <div className="flex flex-col justify-start items-start relative" style={leftColumnStyle}>
                     {/* Service Name with Arrow - AFTER the image */}
@@ -143,7 +169,7 @@ const CardServices = ({
                     >
                         <span
                             ref={titleRef}
-                            className="font-bruno-ace-sc font-bold text-black leading-tight"
+                            className="font-bruno-ace-sc font-bold leading-tight"
                             style={{
                                 fontFamily: 'var(--font-bruno-ace-sc), sans-serif',
                                 fontSize: 'clamp(1.28rem, 2.7vw, 2.13rem)',
@@ -151,7 +177,13 @@ const CardServices = ({
                                 transformStyle: 'preserve-3d',
                                 perspective: '1000px',
                                 display: 'inline-block',
-                                whiteSpace: 'nowrap'
+                                whiteSpace: 'nowrap',
+                                position: 'relative',
+                                zIndex: 2,
+                                // invert title color for 3D visualization
+                                color: is3d ? '#fff' : undefined,
+                                // directional offset outline using textShadow for an "offset" outline (only for 3D)
+                                textShadow: is3d ? '2px 2px 0 #000' : undefined
                             }}
                         >
                             {serviceName.split('').map((letter, index) => (
@@ -171,18 +203,24 @@ const CardServices = ({
                         {/* Arrow Circle */}
                         <button
                             className="flex items-center justify-center cursor-pointer bg-transparent group"
-                            style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center' }}
+                            style={{ padding: 0, border: 'none', background: 'none', alignSelf: 'center', zIndex: '2' }}
                         >
                             <div
-                                className="bg-black rounded-full flex items-center justify-center flex-shrink-0"
-                                style={{ width: 'clamp(35px, 10vw, 60px)', height: 'clamp(35px, 10vw, 60px)' }}
+                                className="rounded-full flex items-center justify-center flex-shrink-0"
+                                style={{
+                                    width: 'clamp(35px, 10vw, 60px)',
+                                    height: 'clamp(35px, 10vw, 60px)',
+                                    // invert circle background for 3D visualization
+                                    background: is3d ? '#fff' : '#000'
+                                }}
                             >
                                 <svg
-                                    className="stroke-white transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
+                                    className="transform transition-transform duration-300 ease-in-out rotate-0 group-hover:-rotate-45"
                                     width="36"
                                     height="36"
                                     viewBox="0 0 24 24"
                                     fill="none"
+                                    stroke={is3d ? '#000' : '#fff'}
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -197,42 +235,54 @@ const CardServices = ({
                     {/* Intro Text + Image: On mobile these sit side-by-side (each half width). On desktop they stack (text then image). */}
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start', marginTop: isMobile ? '2vh' : '0' }}>
                         <p
-                            className="relative font-poppins leading-relaxed text-gray-500 m-0 text-left"
+                            className={`relative font-poppins leading-relaxed m-0 text-left ${introTextColor}`}
                             style={{
                                 fontFamily: 'var(--font-poppins), sans-serif',
                                 marginTop: isMobile ? '0' : '2vh',
                                 fontSize: 'clamp(0.73rem, 1.47vw, 1.13rem)',
-                                width: isMobile ? '100%' : '30vw'
+                                width: isMobile ? '100%' : '30vw',
+                                position: 'relative',
+                                zIndex: 2,
+                                // directional offset outline using textShadow for an "offset" outline (only for 3D)
+                                textShadow: is3d ? '2px 2px 0 #000' : undefined,
+                                // force intro color to white for 3D visualization (overrides introTextColor)
+                                color: is3d ? '#fff' : undefined
                             }}
                         >
                             {introText}
                         </p>
-
-                        {/* Image */}
-                        <div
-                            className="relative"
-                            style={{
-                                marginLeft: 0,
-                                marginTop: isMobile ? '2vh' : '0vh',
-                                top: isMobile ? '1.5vh' : '8vh',
-                                width: isMobile ? '100%' : '30vw',
-                                height: isMobile ? '45vw' : '20vw',
-                                overflow: 'hidden',
-                                borderRadius: '1.5rem'
-                            }}
-                        >
-                            {/* <Image
-                                src={imageUrl}
-                                alt="Architecture Service"
-                                fill
-                                sizes={isMobile ? '100vw' : '18.75vw'}
+                        {leftImage ? (
+                            <div
+                                className="service-image-wrap"
                                 style={{
-                                    objectFit: isMobile ? 'contain' : 'cover',
-                                    objectPosition: 'center center',
-                                    background: '#fff'
+                                    // On desktop position fixed so the image starts at the top of the viewport
+                                    position: isMobile ? 'fixed' : 'fixed',
+                                    top: isMobile ? 0 : 0,
+                                    left: isMobile ? 0 : '0',
+                                    marginLeft: 0,
+                                    marginTop: isMobile ? '0vh' : '0vh',
+                                    width: isMobile ? '100vw' : '54vw',
+                                    height: isMobile ? '100vh' : '100vh',
+                                    overflow: 'hidden',
+                                    background: 'transparent',
+                                    zIndex: 0,
+                                    pointerEvents: 'none'
                                 }}
-                            /> */}
-                        </div>
+                            >
+                                <Image
+                                    src={leftImage}
+                                    alt={serviceName ? serviceName + " image" : "service image"}
+                                    fill
+                                    sizes={isMobile ? '100vw' : '40vw'}
+                                    style={{
+                                        objectFit: isMobile ? 'cover' : 'cover',
+                                        objectPosition: 'center center',
+                                        background: 'transparent',
+                                        transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
+                                    }}
+                                />
+                            </div>
+                        ) : null}
                     </div>
 
                 </div>
@@ -292,20 +342,21 @@ const CardServices = ({
                                         }}
                                         onMouseEnter={() => setHoveredIndex(index)}
                                         onMouseLeave={() => setHoveredIndex(null)}
-                                                                            onClick={() => {
-                                                                                // compute slugs and navigate to nested page
-                                                                                const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                                                                                const mainSlug = toSlug(serviceName);
-                                                                                const subSlug = toSlug(option);
+                                        onClick={() => {
+                                            // compute slugs and navigate to nested page
+                                            const toSlug = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                                            // Use explicit mainSlug if provided (matches ServicesData.js keys), otherwise fall back to slugifying the serviceName
+                                            const mainSlug = mainSlugProp || toSlug(serviceName);
+                                            const subSlug = toSlug(option);
 
-                                                                                // Use Next.js App Router for client navigation when available
-                                                                                if (typeof window !== 'undefined' && router && typeof router.push === 'function') {
-                                                                                    router.push(`/services/${mainSlug}/${subSlug}`);
-                                                                                } else {
-                                                                                    // Fallback to toggling selection for non-client environments
-                                                                                    setSelected(selected === option ? null : option);
-                                                                                }
-                                                                            }}
+                                            // Use Next.js App Router for client navigation when available
+                                            if (typeof window !== 'undefined' && router && typeof router.push === 'function') {
+                                                router.push(`/services/${mainSlug}/${subSlug}`);
+                                            } else {
+                                                // Fallback to toggling selection for non-client environments
+                                                setSelected(selected === option ? null : option);
+                                            }
+                                        }}
                                     >
                                         {/* Bouncy Black Ball - appears on hover */}
                                         <div

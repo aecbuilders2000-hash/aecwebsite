@@ -12,11 +12,13 @@ const services = [
     description: "Advanced Building Information Modeling solutions",
     color: "#744210",
     accent: "#f6e05e",
-    content: (
+      content: (
       <CardServices
         introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
-        imageUrl="https://i.postimg.cc/pLRdCNV7/BIMService.png"
+        leftImage="/BIM REAL 2.png"
+        bgImage="/BIM REAL 3.jpg"
         serviceName="BIM SERVICES"
+        mainSlug="bim"
         pageNumber="001/005"
         services={[
           "BIM Consulting Services",
@@ -35,11 +37,13 @@ const services = [
     description: "Integrated mechanical, electrical, and plumbing solutions",
     color: "#2c5282",
     accent: "#ed8936",
-    content: (
+      content: (
       <CardServices
         introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
-        imageUrl="https://i.postimg.cc/sxmY2YTD/MEPService.png"
+        leftImage="/MEP 2.png"
+        bgImage="/MEP 3.jpg"
         serviceName="MEP"
+        mainSlug="mep"
         pageNumber="002/005"
         services={[
           "MEP BIM Services",
@@ -58,11 +62,13 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-    content: (
+      content: (
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
-        imageUrl="/Architecture Service.png"
+        leftImage="/ARCHI 2.png"
+        bgImage="/ARCHI 3.jpg"
         serviceName="ARCHITECTURAL"
+        mainSlug="architectural"
         pageNumber="003/005"
         services={[
           "Architectural Design Services",
@@ -79,11 +85,13 @@ const services = [
     description: "Robust structural engineering and detailing",
     color: "#1a202c",
     accent: "#38b2ac",
-    content: (
+      content: (
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
-        imageUrl="/Structure Service.png"
+        leftImage="/STR REAL 2.png"
+        bgImage="/STR REAL 3.jpg"
         serviceName="STRUCTURAL"
+        mainSlug="structural"
         pageNumber="004/005"
         services={[
           "Structural Steel Detailing",
@@ -102,11 +110,14 @@ const services = [
     description: "Photorealistic renders and virtual experiences",
     color: "#276749",
     accent: "#68d391",
-    content: (
+      content: (
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
-        imageUrl="https://i.postimg.cc/8CnPTjdQ/3d-Visualiser.png"
+        introTextColor="text-gray-100"
+        // leftImage="/3D VIZ REAL (1).jpg"
+        bgImage="/3D VIZ REAL (1).jpg"
         serviceName="3D VISUALIZATION"
+        mainSlug="3d-visualization"
         pageNumber="005/005"
         services={[
           "3D Modeling",
@@ -142,6 +153,14 @@ export default function ServicesSection() {
       });
     });
 
+    // Set initial state for image wrappers (start translated down off-screen)
+    const imageWraps = cards.map((card) => card.querySelector('.service-image-wrap'));
+    imageWraps.forEach((wrap, idx) => {
+      if (!wrap) return;
+      // Ensure the wrapper is positioned for transform animation
+      gsap.set(wrap, { yPercent: idx === 0 ? 0 : 100 });
+    });
+
     // Create timeline
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -164,6 +183,11 @@ export default function ServicesSection() {
         { y: 0, duration: 0.15, ease: "power2.out" },
         progress
       );
+      // Animate the image inside this card to slide up when this card becomes active
+      const imgWrap = cards[index].querySelector('.service-image-wrap');
+      if (imgWrap) {
+        tl.to(imgWrap, { yPercent: 0, duration: 0.6, ease: 'power4.out' }, progress);
+      }
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
         const depth = index - prevIndex;
         tl.to(

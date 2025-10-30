@@ -88,7 +88,7 @@ const ClientsMarquee = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black py-20 md:py-32 overflow-hidden"
+      className="relative bg-black py-20 overflow-hidden"
     >
       <div className="text-center mb-16 md:mb-24 px-4">
         <h2

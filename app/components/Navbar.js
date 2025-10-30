@@ -154,23 +154,23 @@ function NavbarInner() {
       <div
         className="fixed flex items-center justify-between z-[1001]"
         style={{
-          top: isMobile ? '1.6vh' : '1.2vh',
-          left: '50%', transform: 'translateX(-50%)', width: 'calc(100% - 2.5vw)', gap: '5vw',
+          top: 0,
+          left: 0, transform: 'none', width: '100%', gap: '5vw',
           background: isMobile ? 'rgba(255,255,255,0.36)' : 'rgba(255,255,255,0.18)',
           boxShadow: isMobile ? '0 10px 58px rgba(0,0,0,0.10)' : '0 6px 44px rgba(0,0,0,0.10)',
           backdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)', WebkitBackdropFilter: isMobile ? 'blur(20px)' : 'blur(16px)',
           borderBottom: isMobile ? '1px solid rgba(0,0,0,0.06)' : '1px solid rgba(255,255,255,0.12)',
           paddingLeft: '1.6vw', paddingRight: 0,
-          paddingTop: isMobile ? '0.02rem' : undefined, paddingBottom: isMobile ? '0.02rem' : undefined,
-          minHeight: isMobile ? 'clamp(1.8rem, 4vh, 2.4rem)' : undefined,
-          borderRadius: '9999px', position: 'fixed',
+          paddingTop: isMobile ? '0.4rem' : '0.3rem', paddingBottom: isMobile ? '0.4rem' : '0.3rem',
+          minHeight: isMobile ? '7vh' : '6vh',
+          borderRadius: 0, position: 'fixed',
         }}
       >
   <div style={{marginLeft: isMobile ? '0.5rem' : '1rem'}} className="flex items-center justify-center">
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
-            style={{ width: isMobile ? '14vw' : '4.2vw', maxWidth: '90px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
+            style={{ width: isMobile ? '18vw' : '5.6vw', maxWidth: isMobile ? '140px' : '160px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
             onClick={() => { router.push('/'); if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </div>

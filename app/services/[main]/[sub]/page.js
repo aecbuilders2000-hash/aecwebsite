@@ -1,19 +1,142 @@
+"use client";
+import { useRef } from 'react';
 import SERVICES from '../../../constants/ServicesData';
 import Image from 'next/image';
 import Link from 'next/link';
 import ArrowButton from '../../../ui/ArrowButton';
-import Services2 from '../../../components/Services2.js';
+import SquareCard from './SquareCard.js';
+import WhyCollective from '../../../components/WhyCollective.js';
+import Process from '../../../components/Process.js';
+import KeyOfferings from '../../../components/KeyOfferings';
+import CollectiveAECFramework from '../../../components/CollectiveAECFramework.js';
+import SubServicesHero from './SubServicesHero.js';
+import gsap from 'gsap';
+import { use } from 'react';
+import WhyCollectiveIsRightPartner from '../../../components/WhyCollectiveIsRightPartner.js';
+import ContactForm from '../../../contact-us/ContactUsForm.js';
+import ClientsMarquee from '../../../components/ClientsSection.js';
 
-export default async function SubservicePage({ params }) {
-  const { main, sub } = await params;
-  const mainData = SERVICES[main];
+export default function SubservicePage({ params }) {
+  const resolvedParams = use(params);
+  const { main, sub } = resolvedParams;
+
+  const waveTimeouts = useRef([]);
+  const lastHoveredIndex = useRef(-1);
+
+  const createWaveEffect = (
+    centerIndex,
+    allLetters,
+    mouseX,
+    mouseY,
+    containerRect
+  ) => {
+    waveTimeouts.current.forEach((timeout) => clearTimeout(timeout));
+    waveTimeouts.current = [];
+
+    const maxDistance = 120;
+    const maxDelay = 150;
+
+    allLetters.forEach((letter, index) => {
+      const letterRect = letter.getBoundingClientRect();
+      const letterCenterX =
+        letterRect.left + letterRect.width / 2 - containerRect.left;
+      const letterCenterY =
+        letterRect.top + letterRect.height / 2 - containerRect.top;
+
+      const deltaX = mouseX - letterCenterX;
+      const deltaY = mouseY - letterCenterY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance <= maxDistance) {
+        const delay = (distance / maxDistance) * maxDelay;
+        const intensity = 1 - distance / maxDistance;
+
+        const timeout = setTimeout(() => {
+          gsap.to(letter, {
+            y: -25 * intensity,
+            scale: 1.1 + 0.4 * intensity,
+            rotation: (Math.random() - 0.5) * 8 * intensity,
+            duration: 0.4,
+            ease: "back.out(2.5)",
+          });
+
+          gsap.to(letter, {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.8,
+            delay: 0.1,
+            ease: "elastic.out(1, 0.4)",
+          });
+        }, delay);
+
+        waveTimeouts.current.push(timeout);
+      }
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const allLetters = Array.from(
+      e.currentTarget.querySelectorAll(".bounce-letter")
+    );
+
+    if (Date.now() - (lastHoveredIndex.current || 0) > 50) {
+      lastHoveredIndex.current = Date.now();
+      createWaveEffect(0, allLetters, mouseX, mouseY, rect);
+    }
+  };
+
+  // Resolve main and sub with fallbacks to tolerate small slug changes (e.g. "bim-services" vs "bim")
+  const slugify = (s) => String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  let mainKey = main;
+  let mainData = SERVICES[mainKey];
+  if (!mainData) {
+    // Try removing common suffixes or matching the first token
+    const alt = main.replace(/-services?$/i, '');
+    if (SERVICES[alt]) mainKey = alt;
+    else {
+      // Try to match by slugifying the top-level titles
+      const found = Object.keys(SERVICES).find((k) => slugify(SERVICES[k].title) === slugify(main));
+      if (found) mainKey = found;
+    }
+    mainData = SERVICES[mainKey];
+  }
   if (!mainData) return <div style={{ padding: '2rem' }}>Service not found</div>;
-  const subData = mainData.subs?.[sub];
+
+  // Resolve subservice: try exact key first, then slug-match by title/subtitle/heroTitle
+  let subKey = sub;
+  let subData = mainData.subs?.[subKey];
+  // console.log(subData);
+  if (!subData) {
+    const allSubs = Object.entries(mainData.subs || {});
+    const candidate = allSubs.find(([k, v]) => {
+      const s = slugify(k);
+      if (s === slugify(sub)) return true;
+      if (slugify(v.title) === slugify(sub)) return true;
+      if (v.subtitle && slugify(v.subtitle) === slugify(sub)) return true;
+      if (v.heroTitle && slugify(v.heroTitle) === slugify(sub)) return true;
+      return false;
+    });
+    if (candidate) {
+      subKey = candidate[0];
+      subData = candidate[1];
+    }
+  }
   if (!subData) return <div style={{ padding: '2rem' }}>Subservice not found</div>;
 
+  const sectionDescription = subData?.sectionDescription || subData?.description || "Service description";
+  const trustText = "Trusted by 300+ Leading Architectural and Engineering Companies";
+
   return (
-    <main className='text-black min-h-screen pt-12 pb-8 px-4 sm:px-6'>
-      <div className='w-full px-4 max-w-7xl mx-auto'>
+    <main className='text-black min-h-screen pt-12 pb-8'>
+      {/* <div className='w-full px-4 max-w-7xl mx-auto'>
         <section className='grid grid-cols-1 gap-8 lg:gap-12'>
           <header className='text-center lg:text-left'>
             <h1
@@ -67,15 +190,129 @@ export default async function SubservicePage({ params }) {
             </div>
           </div>
         </section>
-      </div>
+      </div> */}
 
-      <Services2 />
+      <SubServicesHero subData={subData} mainData={mainData} />
 
-      <div className='flex justify-center mt-12'>
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+            {/* Left Content (60%) */}
+            <div className="space-y-8 w-full lg:w-3/5">
+              {/* Title */}
+              <div>
+                <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bruno font-bold text-gray-900 leading-tight mb-4">
+                  {subData.title}
+                </h2>
+                <div className="w-24 h-1 bg-black"></div>
+              </div>
+
+              {/* Description */}
+              <div
+                className="text-gray-700 text-base lg:text-lg leading-relaxed cursor-pointer"
+                onMouseMove={handleMouseMove}
+              >
+                {sectionDescription.split(" ").map((word, wordIndex) => (
+                  <span
+                    key={wordIndex}
+                    style={{ display: "inline-block", marginRight: "0.4em" }}
+                  >
+                    {word.split("").map((letter, letterIndex) => (
+                      <span
+                        key={`${wordIndex}-${letterIndex}`}
+                        className="bounce-letter"
+                        style={{
+                          display: "inline-block",
+                          transformOrigin: "center bottom",
+                        }}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+
+              {/* Trust Statement */}
+              <div className="pt-4">
+                <div
+                  className="text-gray-900 text-lg lg:text-xl font-medium cursor-pointer"
+                  onMouseMove={handleMouseMove}
+                >
+                  {trustText.split(" ").map((word, wordIndex) => {
+                    // Check if word contains "300+"
+                    const isBold = word.includes("300+");
+                    return (
+                      <span
+                        key={wordIndex}
+                        style={{
+                          display: "inline-block",
+                          marginRight: "0.4em",
+                          fontWeight: isBold ? "bold" : "medium"
+                        }}
+                      >
+                        {word.split("").map((letter, letterIndex) => (
+                          <span
+                            key={`${wordIndex}-${letterIndex}`}
+                            className="bounce-letter"
+                            style={{
+                              display: "inline-block",
+                              transformOrigin: "center bottom",
+                            }}
+                          >
+                            {letter}
+                          </span>
+                        ))}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Image (40%) */}
+            <div className="flex justify-center lg:justify-end w-full lg:w-2/5">
+              <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl">
+                <img
+                  src={"/Circle lines.png"}
+                  alt={`${subData.title} Illustration`}
+                  className="w-full h-auto object-contain rounded-lg transform scale-105 lg:scale-110"
+                  style={{ transition: 'transform 220ms ease' }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
+  <KeyOfferings points={subData.keyOfferings || subData.points || []} title={subData.title} />
+
+      {/* Render Process (dynamic) if present, then Key Offerings */}
+      <Process
+        steps={subData.process || []}
+        title={subData.title}
+      />
+
+  <WhyCollective title={subData.title} paragraph1={subData.whyParagraph1} paragraph2={subData.whyParagraph2} />
+
+      <WhyCollectiveIsRightPartner title={subData.title} />
+
+      <CollectiveAECFramework />
+
+      <SquareCard />
+
+      <div className='flex justify-center my-12'>
         <Link className='no-underline' href="/#contact-us-section" style={{ textDecoration: 'none' }}>
           <ArrowButton label="Contact us" />
         </Link>
       </div>
+
+      <ClientsMarquee />
+
+      <ContactForm />
+
     </main>
   );
 }
