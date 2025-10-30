@@ -255,15 +255,14 @@ const CardServices = ({
                             <div
                                 className="service-image-wrap"
                                 style={{
-                                    // Use fixed positioning on mobile too so the image fills the viewport
-                                    // and does not affect other elements' layout.
-                                    position: 'fixed',
-                                    top: 0,
-                                    left: 0,
+                                    // On desktop position fixed so the image starts at the top of the viewport
+                                    position: isMobile ? 'fixed' : 'fixed',
+                                    top: isMobile ? 0 : 0,
+                                    left: isMobile ? 0 : '0',
                                     marginLeft: 0,
-                                    marginTop: 0,
-                                    width: '100vw',
-                                    height: '100vh',
+                                    marginTop: isMobile ? '0vh' : '0vh',
+                                    width: isMobile ? '100vw' : '54vw',
+                                    height: isMobile ? '100vh' : '100vh',
                                     overflow: 'hidden',
                                     background: 'transparent',
                                     zIndex: 0,
@@ -276,11 +275,10 @@ const CardServices = ({
                                     fill
                                     sizes={isMobile ? '100vw' : '40vw'}
                                     style={{
-                                        // On mobile we want the image to cover the full viewport
-                                        objectFit: 'cover',
+                                        objectFit: isMobile ? 'cover' : 'cover',
                                         objectPosition: 'center center',
                                         background: 'transparent',
-                                        transform: 'translateY(0%)'
+                                        transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
                                     }}
                                 />
                             </div>

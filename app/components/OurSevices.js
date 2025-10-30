@@ -179,72 +179,55 @@ export default function OurSevices() {
     <section
       id="services-overview-section"
       ref={sectionRef}
-      className="relative bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 overflow-hidden"
+      className="relative text-gray-900 bg-gray-100 overflow-hidden"
       style={{
         height: "100vh",
         width: "100vw",
         paddingLeft: "2.5vw",
         paddingRight: "2.5vw",
-        backgroundColor: '#f3f4f6', /* tailwind gray-100 */
-        backgroundImage: "url('/Abstract Wavy Lines_ EPS10.jpg')",
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'right center',
-        backgroundSize: 'contain',
-        backgroundBlendMode: 'multiply',
       }}
     >
       {/* Ambient background effects */}
-      <div className="absolute inset-0 opacity-30">
+      {/* <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 right-20 w-96 h-96 bg-blue-200 rounded-full blur-3xl animate-pulse"></div>
         <div
           className="absolute bottom-20 left-20 w-80 h-80 bg-purple-200 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         ></div>
-      </div>
+      </div> */}
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between">
         {/* Top Section */}
         <div
-          className="flex flex-col md:flex-row justify-between items-start"
-          style={{ paddingTop: "12vh", height: "55vh" }}
+          className="flex flex-col items-center justify-center"
+          style={{ paddingTop: "8vh", height: "55vh" }}
         >
-          {/* Left: Title and Description - full width on mobile */}
-          <div className="w-full md:w-3/5 pr-8 flex flex-col justify-start h-full">
+          {/* Centered Title and Description container (max width) */}
+          <div className="w-full max-w-3xl flex flex-col items-center justify-center h-full">
             <h2
               ref={titleRef}
-              className="font-bruno-ace-sc font-bold text-black leading-tight mb-6"
+              className="font-bruno-ace-sc font-bold text-black leading-tight mb-6 text-center"
               style={{
                 fontFamily: "var(--font-bruno-ace-sc), sans-serif",
                 fontSize: "clamp(1.7rem, 3.3vw, 3.3rem)",
                 letterSpacing: "0.3em",
                 transformStyle: "preserve-3d",
                 perspective: "1000px",
+                whiteSpace: 'nowrap'
               }}
             >
-              {"OUR SERVICES".split(" ").map((word, wordIndex) => (
-                <div
-                  key={wordIndex}
-                  className="word"
+              {"OUR SERVICES".split("").map((letter, letterIndex) => (
+                <span
+                  key={letterIndex}
+                  className="letter"
                   style={{
-                    display: wordIndex === 0 ? "block" : "block",
-                    overflow: "hidden",
-                    height: "1.2em",
-                    marginBottom: wordIndex < 1 ? "0.1em" : "0",
+                    display: "inline-block",
+                    transformStyle: "preserve-3d",
+                    lineHeight: 1
                   }}
                 >
-                  {word.split("").map((letter, letterIndex) => (
-                    <span
-                      key={letterIndex}
-                      className="letter"
-                      style={{
-                        display: "inline-block",
-                        transformStyle: "preserve-3d",
-                      }}
-                    >
-                      {letter}
-                    </span>
-                  ))}
-                </div>
+                  {letter === ' ' ? '\u00A0' : letter}
+                </span>
               ))}
             </h2>
 
@@ -262,11 +245,11 @@ export default function OurSevices() {
             </p> */}
 
             <p
-              className="font-poppins text-gray-700 leading-relaxed"
+              className="font-poppins text-gray-700 leading-relaxed text-center"
               style={{
                 fontFamily: "var(--font-poppins), sans-serif",
                 fontSize: "clamp(0.73rem, 1.47vw, 1.13rem)",
-                maxWidth: "90%",
+                maxWidth: "66ch",
               }}
             >
               From design conceptualization to construction documentation, we

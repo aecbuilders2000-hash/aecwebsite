@@ -131,7 +131,7 @@ const AIWorkShop = () => {
                             <img
                                 src="https://i.postimg.cc/63LLtGxH/news.webp"
                                 alt="AI Workshop Image 1"
-                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
@@ -142,7 +142,7 @@ const AIWorkShop = () => {
                             <img
                                 src="https://i.postimg.cc/0jN7jngq/workshop2.png"
                                 alt="AI Workshop Image 2"
-                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
@@ -151,9 +151,9 @@ const AIWorkShop = () => {
                     <div className='w-full md:w-[35%] flex-shrink-0'>
                         <div className="shadow-md w-full overflow-hidden h-full md:h-[400px] lg:h-[500px]">
                             <img
-                                src="https://i.postimg.cc/65WZkkv1/news.webp"
+                                src="/NEWS 3.png"
                                 alt="AI Workshop Image 3"
-                                className="w-full h-full object-center transition-transform duration-500 hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                             />
                         </div>
                     </div>
