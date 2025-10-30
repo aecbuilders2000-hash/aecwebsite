@@ -142,7 +142,7 @@ function NavbarInner() {
   }, [isMenuOpen]);
 
   const navItems = [
-  { href: '#content-section-details', label: 'About Us', onClick: (e) => { e.preventDefault(); try { sessionStorage.setItem('scrollToId', 'content-section-details'); } catch (err) {} router.push('/'); setIsMenuOpen(false); } },
+    { href: '#content-section-details', label: 'About Us', onClick: (e) => { e.preventDefault(); try { sessionStorage.setItem('scrollToId', 'content-section-details'); } catch (err) { } router.push('/'); setIsMenuOpen(false); } },
     { href: '#services-overview-section', label: 'Our Services' },
     { href: '#projects-section', label: 'Projects' },
     { href: '/news', label: 'News' },
@@ -166,7 +166,7 @@ function NavbarInner() {
           borderRadius: 0, position: 'fixed',
         }}
       >
-  <div style={{marginLeft: isMobile ? '0.5rem' : '1rem'}} className="flex items-center justify-center">
+        <div style={{ marginLeft: isMobile ? '0.5rem' : '1rem' }} className="flex items-center justify-center">
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
@@ -187,10 +187,10 @@ function NavbarInner() {
               if (pathname === '/' || pathname === '') {
                 const contactSection = document.getElementById('contact-us-section');
                 if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  try { sessionStorage.setItem('scrollToId', 'contact-us-section'); } catch (err) {}
-                  router.push('/');
-                }
+              } else {
+                try { sessionStorage.setItem('scrollToId', 'contact-us-section'); } catch (err) { }
+                router.push('/');
+              }
             }}
           />
         </div>

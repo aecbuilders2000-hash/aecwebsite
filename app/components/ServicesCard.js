@@ -155,7 +155,7 @@ const CardServices = ({
             )}
 
             {/* Main Content Row */}
-            <div className={containerClass} style={{...containerStyle, position: 'relative', zIndex: 1}}>
+            <div className={containerClass} style={{ ...containerStyle, position: 'relative', zIndex: 1 }}>
                 {/* Left Column - 40% on desktop, full width on mobile */}
                 <div className="flex flex-col justify-start items-start relative" style={leftColumnStyle}>
                     {/* Service Name with Arrow - AFTER the image */}

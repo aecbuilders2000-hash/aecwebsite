@@ -48,12 +48,12 @@ export default function SplashLoader({ onComplete }) {
 
       {/* Main content container */}
       <div className="relative z-10 flex flex-col items-center">
-        
+
         {/* Logo container with animations */}
         <div className="relative" style={{ marginBottom: '4rem' }}>
           {/* Logo */}
           <div className="relative overflow-hidden">
-            <img 
+            <img
               src="https://collectiveaec.com/wp-content/uploads/2025/01/logo-light.png"
               alt="Logo"
               className="w-auto object-contain transition-all duration-1000 ease-out"
@@ -67,18 +67,18 @@ export default function SplashLoader({ onComplete }) {
                 setTimeout(() => setProgress(prev => Math.max(prev, 10)), 500);
               }}
             />
-            
+
             {/* Logo reveal animation */}
-            <div 
+            <div
               className="absolute inset-0 bg-black transition-transform duration-1200 ease-out"
               style={{
                 transform: `translateY(${progress > 5 ? '-100%' : '0%'})`,
               }}
             />
           </div>
-          
+
           {/* Subtle glow effect */}
-          <div 
+          <div
             className="absolute inset-0 bg-white blur-3xl transition-opacity duration-1000"
             style={{
               opacity: progress > 5 ? 0.1 : 0,
@@ -87,7 +87,7 @@ export default function SplashLoader({ onComplete }) {
         </div>
 
         {/* Loading text */}
-        <div 
+        <div
           className="text-center transition-all duration-800 ease-out"
           style={{
             marginBottom: '3rem',
@@ -96,10 +96,10 @@ export default function SplashLoader({ onComplete }) {
           }}
         >
           <h2 className="text-white text-sm font-light uppercase tracking-wider m-0" style={{ letterSpacing: '0.3em' }}>
-            {progress < 20 ? 'Initializing' : 
-             progress < 50 ? 'Loading Experience' : 
-             progress < 80 ? 'Preparing Content' : 
-             progress < 95 ? 'Almost Ready' : 'Welcome'}
+            {progress < 20 ? 'Initializing' :
+              progress < 50 ? 'Loading Experience' :
+                progress < 80 ? 'Preparing Content' :
+                  progress < 95 ? 'Almost Ready' : 'Welcome'}
           </h2>
         </div>
 
@@ -107,18 +107,18 @@ export default function SplashLoader({ onComplete }) {
         <div className="relative" style={{ width: '20rem' }}>
           {/* Background line */}
           <div className="w-full bg-white opacity-20" style={{ height: '1px' }} />
-          
+
           {/* Progress line */}
-          <div 
+          <div
             className="absolute top-0 left-0 bg-white transition-all duration-500 ease-out shadow-md shadow-white/30"
             style={{
               height: '1px',
               width: `${progress}%`,
             }}
           />
-          
+
           {/* Progress dot */}
-          <div 
+          <div
             className="absolute top-0 w-1 h-1 bg-white rounded-full transition-all duration-500 ease-out -translate-x-1/2 -translate-y-1/2 shadow-md shadow-white/60"
             style={{
               left: `${progress}%`,
@@ -127,7 +127,7 @@ export default function SplashLoader({ onComplete }) {
         </div>
 
         {/* Progress percentage */}
-        <div 
+        <div
           className="text-white text-xs font-light tracking-wider transition-opacity duration-500"
           style={{
             marginTop: '1.5rem',

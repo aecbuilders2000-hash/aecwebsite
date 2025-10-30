@@ -61,7 +61,7 @@ export default function useScrollOnLoad() {
         const waitRaf = () => new Promise((res) => requestAnimationFrame(() => res()));
         try {
           if (gsapLib && ScrollToPlugin) {
-            try { gsapLib.registerPlugin(ScrollToPlugin); } catch (e) {}
+            try { gsapLib.registerPlugin(ScrollToPlugin); } catch (e) { }
 
             // If ScrollTrigger is available, refresh to ensure layout is final
             try {
@@ -69,7 +69,7 @@ export default function useScrollOnLoad() {
               if (globalST && typeof globalST.refresh === 'function') {
                 globalST.refresh();
               }
-            } catch (e) {}
+            } catch (e) { }
 
             // Wait a couple of frames so any layout changes caused by refresh/pinning settle
             await waitRaf();
@@ -122,7 +122,7 @@ export default function useScrollOnLoad() {
                   if (diff > Math.max(6, Math.round(window.innerHeight * 0.01))) {
                     try {
                       gsapLib.to(window, { duration: 0.6, scrollTo: { y: topVal }, ease: 'power2.out' });
-                    } catch (e) {}
+                    } catch (e) { }
                   }
                   resolve();
                 }
@@ -156,15 +156,15 @@ export default function useScrollOnLoad() {
         } catch (err) {
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         } finally {
-          try { sessionStorage.removeItem('scrollToId'); } catch (e) {}
-          try { sessionStorage.removeItem('scrollToContact'); } catch (e) {}
+          try { sessionStorage.removeItem('scrollToId'); } catch (e) { }
+          try { sessionStorage.removeItem('scrollToContact'); } catch (e) { }
           // Remove hash from URL to keep the address clean (if present)
           try {
             if (typeof window !== 'undefined' && window.location && window.location.hash) {
               const clean = window.location.pathname + (window.location.search || '');
               history.replaceState(null, '', clean);
             }
-          } catch (e) {}
+          } catch (e) { }
         }
       };
 
@@ -180,8 +180,8 @@ export default function useScrollOnLoad() {
         setTimeout(pollAndScroll, 150);
       } else {
         // Give up politely and remove the key
-        try { sessionStorage.removeItem('scrollToId'); } catch (e) {}
-        try { sessionStorage.removeItem('scrollToContact'); } catch (e) {}
+        try { sessionStorage.removeItem('scrollToId'); } catch (e) { }
+        try { sessionStorage.removeItem('scrollToContact'); } catch (e) { }
       }
     };
 

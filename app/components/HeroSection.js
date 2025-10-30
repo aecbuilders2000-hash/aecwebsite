@@ -68,11 +68,11 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
       style={{
         fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
         fontWeight: 600,
-  fontSize: "clamp(0.45rem, 0.9vw, 0.9rem)",
+        fontSize: "clamp(0.45rem, 0.9vw, 0.9rem)",
         color: "#000",
         textDecoration: "none",
         letterSpacing: "0.1em",
-  marginRight: "0.3vw",
+        marginRight: "0.3vw",
         transition: "color 0.2s",
         display: "inline-flex",
         alignItems: "center",
@@ -109,7 +109,7 @@ export default function HeroSection() {
   const logoRef = useRef(null);
   const topLeftTextRef = useRef(null);
   const navRef = useRef(null);
-  
+
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);

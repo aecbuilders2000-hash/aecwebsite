@@ -14,12 +14,12 @@ const parseTarget = (str) => {
     return digits ? parseInt(digits, 10) : 0;
 }
 
-const WhyCollective = ({title}) => {
+const WhyCollective = ({ title }) => {
     const containerRef = useRef(null);
     const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0));
     const [hasAnimated, setHasAnimated] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    
+
     const waveTimeouts = useRef([]);
     const lastHoveredIndex = useRef(-1);
 
@@ -139,11 +139,11 @@ const WhyCollective = ({title}) => {
                 </h2>
 
                 <div className="max-w-4xl mx-auto text-gray-600 mb-40 text-base lg:text-lg">
-                    <div 
+                    <div
                         className="cursor-pointer mb-2"
                         onMouseMove={handleMouseMove}
                     >
-                        {( (typeof paragraph1 === 'string' ? paragraph1 : defaultParagraph1) ).split(" ").map((word, wordIndex) => (
+                        {((typeof paragraph1 === 'string' ? paragraph1 : defaultParagraph1)).split(" ").map((word, wordIndex) => (
                             <span
                                 key={wordIndex}
                                 style={{ display: "inline-block", marginRight: "0.4em" }}
@@ -163,11 +163,11 @@ const WhyCollective = ({title}) => {
                             </span>
                         ))}
                     </div>
-                    <div 
+                    <div
                         className="cursor-pointer"
                         onMouseMove={handleMouseMove}
                     >
-                        {( (typeof paragraph2 === 'string' ? paragraph2 : defaultParagraph2) ).split(" ").map((word, wordIndex) => (
+                        {((typeof paragraph2 === 'string' ? paragraph2 : defaultParagraph2)).split(" ").map((word, wordIndex) => (
                             <span
                                 key={wordIndex}
                                 style={{ display: "inline-block", marginRight: "0.4em" }}

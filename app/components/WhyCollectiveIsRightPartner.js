@@ -29,7 +29,7 @@ const frameworkSteps = [
   }
 ];
 
-const WhyCollectiveIsRightPartner = ({title}) => {
+const WhyCollectiveIsRightPartner = ({ title }) => {
   // console.log(title);
   const waveTimeouts = useRef([]);
   const lastHoveredIndex = useRef(-1);
@@ -48,7 +48,7 @@ const WhyCollectiveIsRightPartner = ({title}) => {
     const maxDistance = 120;
     const maxDelay = 150;
 
-  allLetters.forEach((letter) => {
+    allLetters.forEach((letter) => {
       const letterRect = letter.getBoundingClientRect();
       const letterCenterX =
         letterRect.left + letterRect.width / 2 - containerRect.left;

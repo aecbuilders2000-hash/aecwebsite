@@ -282,13 +282,13 @@ const LiquidButton = class LiquidButton {
 }
 
 // Base Liquid Button Component matching your original CSS exactly
-function LiquidButtonComponent({ 
-  text, 
-  href, 
+function LiquidButtonComponent({
+  text,
+  href,
   className = "",
   style = {},
   onClick,
-  ...props 
+  ...props
 }) {
   const buttonRef = useRef(null);
 
@@ -360,42 +360,42 @@ function LiquidButtonComponent({
 // Three specific button variants from your HTML examples
 export function SmallButton(props) {
   return (
-    <LiquidButtonComponent 
-      style={{ 
-        fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', 
-        padding: 'clamp(0.35rem, 0.75vw, 0.44rem) clamp(1.1rem, 2.2vw, 1.25rem)', 
+    <LiquidButtonComponent
+      style={{
+        fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+        padding: 'clamp(0.35rem, 0.75vw, 0.44rem) clamp(1.1rem, 2.2vw, 1.25rem)',
         margin: 'clamp(0.75rem, 1.5vw, 0.94rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
-      {...props} 
+      {...props}
     />
   );
 }
 
 export function MediumButton(props) {
   return (
-    <LiquidButtonComponent 
-      style={{ 
-        fontSize: 'clamp(0.875rem, 1.75vw, 1rem)', 
-        padding: 'clamp(0.38rem, 0.8vw, 0.47rem) clamp(1.2rem, 2.4vw, 1.4rem)', 
+    <LiquidButtonComponent
+      style={{
+        fontSize: 'clamp(0.875rem, 1.75vw, 1rem)',
+        padding: 'clamp(0.38rem, 0.8vw, 0.47rem) clamp(1.2rem, 2.4vw, 1.4rem)',
         margin: 'clamp(1rem, 2vw, 1.25rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
-      {...props} 
+      {...props}
     />
   );
 }
 
 export function LargeButton(props) {
   return (
-    <LiquidButtonComponent 
-      style={{ 
-        fontSize: 'clamp(1.125rem, 2.25vw, 1.25rem)', 
-        padding: 'clamp(0.45rem, 0.9vw, 0.55rem) clamp(1.4rem, 2.8vw, 1.6rem)', 
+    <LiquidButtonComponent
+      style={{
+        fontSize: 'clamp(1.125rem, 2.25vw, 1.25rem)',
+        padding: 'clamp(0.45rem, 0.9vw, 0.55rem) clamp(1.4rem, 2.8vw, 1.6rem)',
         margin: 'clamp(1.5rem, 3vw, 1.9rem)',
         fontFamily: "'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
       }}
-      {...props} 
+      {...props}
     />
   );
 }

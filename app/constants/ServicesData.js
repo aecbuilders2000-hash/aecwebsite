@@ -757,7 +757,7 @@ Object.keys(SERVICES).forEach((mainKey) => {
     sub.heroTitle = sub.heroTitle || sub.title || '';
     sub.heroDescription = sub.heroDescription || sub.subtitle || '';
     sub.sectionDescription = sub.sectionDescription || sub.description || '';
-    
+
     // Ensure why paragraphs have a default
     sub.whyParagraph1 = sub.whyParagraph1 || 'Default intro paragraph.';
     sub.whyParagraph2 = sub.whyParagraph2 || 'Default detailed paragraph.';

@@ -12,7 +12,7 @@ const services = [
     description: "Advanced Building Information Modeling solutions",
     color: "#744210",
     accent: "#f6e05e",
-      content: (
+    content: (
       <CardServices
         introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
         leftImage="/BIM REAL 2.png"
@@ -37,7 +37,7 @@ const services = [
     description: "Integrated mechanical, electrical, and plumbing solutions",
     color: "#2c5282",
     accent: "#ed8936",
-      content: (
+    content: (
       <CardServices
         introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
         leftImage="/MEP 2.png"
@@ -62,7 +62,7 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-      content: (
+    content: (
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
         leftImage="/ARCHI 2.png"
@@ -85,7 +85,7 @@ const services = [
     description: "Robust structural engineering and detailing",
     color: "#1a202c",
     accent: "#38b2ac",
-      content: (
+    content: (
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
         leftImage="/STR REAL 2.png"
@@ -110,7 +110,7 @@ const services = [
     description: "Photorealistic renders and virtual experiences",
     color: "#276749",
     accent: "#68d391",
-      content: (
+    content: (
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
         introTextColor="text-gray-100"

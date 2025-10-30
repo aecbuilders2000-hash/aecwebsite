@@ -1,7 +1,7 @@
 'use client';
 import React from 'react'
 
-const Button = ({text, fontFamily, className = "", style = {}, onClick = () => {}}) => {
+const Button = ({ text, fontFamily, className = "", style = {}, onClick = () => { } }) => {
   return (
     <button
       className={`flex items-center justify-between bg-white border-none rounded-full cursor-pointer font-century-gothic transition-all duration-300 ease-in-out shadow-lg ${className}`}
@@ -18,7 +18,7 @@ const Button = ({text, fontFamily, className = "", style = {}, onClick = () => {
         const textSpan = e.target.querySelector('.button-text');
         const circle = e.target.querySelector('.arrow-circle');
         const arrow = e.target.querySelector('.arrow-icon');
-        
+
         if (textSpan) {
           textSpan.style.color = '#fff';
           textSpan.style.backgroundColor = 'transparent';
@@ -34,9 +34,9 @@ const Button = ({text, fontFamily, className = "", style = {}, onClick = () => {
         const textSpan = e.target.querySelector('.button-text');
         const circle = e.target.querySelector('.arrow-circle');
         const arrow = e.target.querySelector('.arrow-icon');
-        
+
         if (textSpan) textSpan.style.color = '#000';
-        if (circle){
+        if (circle) {
           circle.style.backgroundColor = '#000';
         }
         if (arrow) {
@@ -56,7 +56,7 @@ const Button = ({text, fontFamily, className = "", style = {}, onClick = () => {
       >
         {text}
       </span>
-      
+
       {/* Circle inside the button */}
       <div
         className="arrow-circle bg-black rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-in-out"
@@ -65,14 +65,14 @@ const Button = ({text, fontFamily, className = "", style = {}, onClick = () => {
           height: 'clamp(20px, 6vw, 36px)',
         }}
       >
-        <svg 
+        <svg
           className="arrow-icon stroke-white transition-all duration-300 ease-in-out"
-          width="16" 
-          height="16" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
           strokeLinejoin="round"
           style={{
             transform: 'rotate(-45deg)', // Top-right diagonal initially

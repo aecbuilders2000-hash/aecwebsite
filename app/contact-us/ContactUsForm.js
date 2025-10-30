@@ -96,15 +96,15 @@ const ContactForm = () => {
     }
     setSubmitting(true);
     setStatus({ type: '', message: '' });
-    
+
     try {
       // Get Google Script URL from environment variable
       const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_CONTACT_GOOGLE_SCRIPT_URL;
-      
+
       if (!GOOGLE_SCRIPT_URL) {
         throw new Error('Google Script URL not configured');
       }
-      
+
       const payload = {
         name: formData.name,
         email: formData.email,
@@ -130,9 +130,9 @@ const ContactForm = () => {
         message: '🎉 Thank you for reaching out! Your message has been successfully submitted. Our team will review your inquiry and get back to you within 24-48 hours. We appreciate your interest in Collective AEC!'
       });
       setCooldownRemaining(10); // start 10s cooldown only on success
-  setFormData({ name: '', email: '', phone: '', message: '' });
-  setErrors({ name: '', email: '', phone: '' });
-      
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      setErrors({ name: '', email: '', phone: '' });
+
     } catch (err) {
       console.error('Form submission error:', err);
       setStatus({
@@ -161,16 +161,15 @@ const ContactForm = () => {
           <div className="w-full h-px bg-gray-700" />
         </div>
 
-  <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-12 text-black" noValidate>
           {status.message && (
             <div
-              className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${
-                status.type === 'success'
+              className={`rounded-md border px-4 py-3 text-sm md:text-base font-medium tracking-normal transition-colors ${status.type === 'success'
                   ? 'bg-green-50 border-green-300 text-green-800'
                   : status.type === 'error'
-                  ? 'bg-red-50 border-red-300 text-red-800'
-                  : 'hidden'
-              }`}
+                    ? 'bg-red-50 border-red-300 text-red-800'
+                    : 'hidden'
+                }`}
               role={status.type === 'error' ? 'alert' : 'status'}
               aria-live="polite"
             >
@@ -275,9 +274,9 @@ const ContactForm = () => {
                 <p className="mt-2 text-xs md:text-sm text-red-600" id="phone-error">{errors.phone}</p>
               ) : (
                 <p id="phone-help" className="mt-2 text-xs md:text-sm text-gray-600 tracking-wide">
-                {formData.phone
-                  ? `${formData.phone.length}/${maxLocalDigits} digits (local).`
-                  : `Up to ${maxLocalDigits} digits (local part) allowed. Total including country code must not exceed 15.`}
+                  {formData.phone
+                    ? `${formData.phone.length}/${maxLocalDigits} digits (local).`
+                    : `Up to ${maxLocalDigits} digits (local part) allowed. Total including country code must not exceed 15.`}
                 </p>
               )}
             </div>
@@ -302,8 +301,8 @@ const ContactForm = () => {
                   submitting
                     ? 'Sending…'
                     : cooldownRemaining > 0
-                    ? `Please wait (${cooldownRemaining}s)`
-                    : 'Submit'
+                      ? `Please wait (${cooldownRemaining}s)`
+                      : 'Submit'
                 }
                 type="submit"
                 disabled={submitting || cooldownRemaining > 0}

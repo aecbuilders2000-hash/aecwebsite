@@ -72,7 +72,7 @@ const AudioManager = () => {
         )}
         {/* Equalizer / dancing audio logo */}
         <span className="relative flex items-end gap-[3px] h-6 w-8">
-          {[0,1,2,3].map(i => (
+          {[0, 1, 2, 3].map(i => (
             <span
               key={i}
               className={`inline-block w-[5px] rounded-sm bg-current transition-all duration-500

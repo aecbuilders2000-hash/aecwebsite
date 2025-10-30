@@ -12,7 +12,7 @@ export default function RippleSimulation() {
     const simRes = 1024;
     const width = window.innerWidth;
     const height = window.innerHeight * 2.0;
-    const offset=0.0;
+    const offset = 0.0;
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
@@ -208,7 +208,7 @@ export default function RippleSimulation() {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
     };
-  },[]);
+  }, []);
 
   return (
     <div

@@ -286,8 +286,8 @@ export default function SubservicePage({ params }) {
         </div>
       </section>
 
-  {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
-  <KeyOfferings points={subData.keyOfferings || subData.points || []} title={subData.title} />
+      {/* Pass dynamic points if present on subData (supports subData.keyOfferings or subData.points) */}
+      <KeyOfferings points={subData.keyOfferings || subData.points || []} title={subData.title} />
 
       {/* Render Process (dynamic) if present, then Key Offerings */}
       <Process
@@ -295,7 +295,7 @@ export default function SubservicePage({ params }) {
         title={subData.title}
       />
 
-  <WhyCollective title={subData.title} paragraph1={subData.whyParagraph1} paragraph2={subData.whyParagraph2} />
+      <WhyCollective title={subData.title} paragraph1={subData.whyParagraph1} paragraph2={subData.whyParagraph2} />
 
       <WhyCollectiveIsRightPartner title={subData.title} />
 
