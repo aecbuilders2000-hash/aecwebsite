@@ -170,7 +170,7 @@ function NavbarInner() {
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
-            style={{ width: isMobile ? '18vw' : '5.6vw', maxWidth: isMobile ? '140px' : '160px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
+            style={{ width: isMobile ? '22vw' : '8vw', maxWidth: isMobile ? '180px' : '220px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
             onClick={() => { router.push('/'); if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </div>
