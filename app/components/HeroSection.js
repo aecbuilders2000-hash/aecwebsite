@@ -68,11 +68,11 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
       style={{
         fontFamily: "var(--font-century-gothic), Century Gothic, sans-serif",
         fontWeight: 600,
-        fontSize: "clamp(0.45rem, 0.9vw, 0.9rem)",
+  fontSize: "clamp(0.45rem, 0.9vw, 0.9rem)",
         color: "#000",
         textDecoration: "none",
         letterSpacing: "0.1em",
-        marginRight: "0.3vw",
+  marginRight: "0.3vw",
         transition: "color 0.2s",
         display: "inline-flex",
         alignItems: "center",
@@ -109,7 +109,7 @@ export default function HeroSection() {
   const logoRef = useRef(null);
   const topLeftTextRef = useRef(null);
   const navRef = useRef(null);
-
+  
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -507,7 +507,7 @@ export default function HeroSection() {
                   window.scrollTo({ top, behavior: "smooth" });
                 },
               },
-              { href: "#services-overview-section", label: "Our Services" },
+              { href: "#services-overview-section", label: "Our Services", onClick: (e) => { e.preventDefault(); const top = window.innerHeight * 3.25; window.scrollTo({ top, behavior: 'smooth' }); } },
               { href: "#projects-section", label: "Projects" },
               { href: "/news", label: "News" },
               { href: "/careers", label: "Careers" },

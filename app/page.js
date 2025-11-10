@@ -34,7 +34,7 @@ export default function Home() {
         </h2>
       </section>
       {/* <CardServices /> */}
-      <OurServices />
+      {/* <OurServices /> */}
       <ServicesSection />
       <ClientsSection />
       <ProjectsSection />

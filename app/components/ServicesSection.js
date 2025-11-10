@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CardServices from "./ServicesCard";
+import OurSevices from "./OurSevices";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,10 +13,35 @@ const services = [
     description: "Advanced Building Information Modeling solutions",
     color: "#744210",
     accent: "#f6e05e",
-    content: (
+      content: (
       <CardServices
         introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
-        leftImage="/BIM REAL 2.png"
+        leftImage="/BIM REAL.png"
+        bgImage="/BIM REAL 3.jpg"
+        serviceName="BIM SERVICES"
+        mainSlug="bim"
+        pageNumber="001/005"
+        services={[
+          "BIM Consulting Services",
+          "Scan to BIM",
+          "BIM Coordination",
+          "BIM Clash Detection",
+          "4D BIM Services",
+          "Quantity Takeoff",
+        ]}
+        bottomText="Our BIM services empower your project with advanced coordination, clash detection, and data-driven decision making."
+      />
+    ),
+  },
+  {
+    title: "BIM Services",
+    description: "Advanced Building Information Modeling solutions",
+    color: "#744210",
+    accent: "#f6e05e",
+      content: (
+      <CardServices
+        introText="Comprehensive BIM services leveraging cutting-edge technology for enhanced project coordination, clash detection, and lifecycle management."
+        leftImage="/BIM REAL.png"
         bgImage="/BIM REAL 3.jpg"
         serviceName="BIM SERVICES"
         mainSlug="bim"
@@ -37,10 +63,10 @@ const services = [
     description: "Integrated mechanical, electrical, and plumbing solutions",
     color: "#2c5282",
     accent: "#ed8936",
-    content: (
+      content: (
       <CardServices
         introText="Complete MEP design and coordination services ensuring seamless integration of building systems through advanced BIM technology."
-        leftImage="/MEP 2.png"
+        leftImage="/MEP REAL.png"
         bgImage="/MEP 3.jpg"
         serviceName="MEP"
         mainSlug="mep"
@@ -62,10 +88,10 @@ const services = [
     description: "Innovative and sustainable architectural solutions",
     color: "#1a1a1a",
     accent: "#ff6b35",
-    content: (
+      content: (
       <CardServices
         introText="Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality."
-        leftImage="/ARCHI 2.png"
+        leftImage="/ARCHI REAL.png"
         bgImage="/ARCHI 3.jpg"
         serviceName="ARCHITECTURAL"
         mainSlug="architectural"
@@ -85,10 +111,10 @@ const services = [
     description: "Robust structural engineering and detailing",
     color: "#1a202c",
     accent: "#38b2ac",
-    content: (
+      content: (
       <CardServices
         introText="Specialized structural engineering services providing detailed steel and rebar solutions for safe, efficient construction projects."
-        leftImage="/STR REAL 2.png"
+        leftImage="/STR REAL.png"
         bgImage="/STR REAL 3.jpg"
         serviceName="STRUCTURAL"
         mainSlug="structural"
@@ -110,7 +136,7 @@ const services = [
     description: "Photorealistic renders and virtual experiences",
     color: "#276749",
     accent: "#68d391",
-    content: (
+      content: (
       <CardServices
         introText="Stunning 3D visualizations and renderings that bring your designs to life, helping clients visualize spaces before construction begins."
         introTextColor="text-gray-100"
@@ -230,7 +256,11 @@ export default function ServicesSection() {
             ref={(el) => (cardRefs.current[index] = el)}
             className="absolute top-0 left-0 w-full h-screen"
           >
-            {service.content}
+            {index === 0 ? (
+              <OurSevices />
+            ) : (
+              service.content
+            )}
           </div>
         ) : (
           <div

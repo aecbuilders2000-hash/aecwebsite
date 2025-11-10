@@ -42,9 +42,9 @@ function WaveNavLink({ href, text, onClick, style: userStyle = {} }) {
     }
     if (href.startsWith('#')) {
       e.preventDefault();
-      // If we're already on home, smooth scroll; else navigate to home with hash
+      // If we're already on home, smooth scroll; else navigate to home and use sessionStorage
+      const targetId = href.replace('#', '');
       if (pathname === '/' || pathname === '') {
-        const targetId = href.replace('#', '');
         const target = document.getElementById(targetId);
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       } else {
@@ -142,7 +142,7 @@ function NavbarInner() {
   }, [isMenuOpen]);
 
   const navItems = [
-    { href: '#content-section-details', label: 'About Us', onClick: (e) => { e.preventDefault(); try { sessionStorage.setItem('scrollToId', 'content-section-details'); } catch (err) { } router.push('/'); setIsMenuOpen(false); } },
+  { href: '#content-section-details', label: 'About Us', onClick: (e) => { e.preventDefault(); try { sessionStorage.setItem('scrollToId', 'content-section-details'); } catch (err) {} router.push('/'); setIsMenuOpen(false); } },
     { href: '#services-overview-section', label: 'Our Services' },
     { href: '#projects-section', label: 'Projects' },
     { href: '/news', label: 'News' },
@@ -166,11 +166,11 @@ function NavbarInner() {
           borderRadius: 0, position: 'fixed',
         }}
       >
-        <div style={{ marginLeft: isMobile ? '0.5rem' : '1rem' }} className="flex items-center justify-center">
+  <div style={{marginLeft: isMobile ? '0.5rem' : '1rem'}} className="flex items-center justify-center">
           <img
             src="/COLLECTIVE AEC LOGO landscape.png"
             alt="Collective AEC Logo"
-            style={{ width: isMobile ? '22vw' : '8vw', maxWidth: isMobile ? '180px' : '220px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
+            style={{ width: isMobile ? '22vw' : '8.5vw', maxWidth: isMobile ? '180px' : '220px', height: 'auto', zIndex: 1002, cursor: 'pointer', userSelect: 'none' }}
             onClick={() => { router.push('/'); if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </div>
@@ -187,10 +187,10 @@ function NavbarInner() {
               if (pathname === '/' || pathname === '') {
                 const contactSection = document.getElementById('contact-us-section');
                 if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                try { sessionStorage.setItem('scrollToId', 'contact-us-section'); } catch (err) { }
-                router.push('/');
-              }
+                } else {
+                  try { sessionStorage.setItem('scrollToId', 'contact-us-section'); } catch (err) {}
+                  router.push('/');
+                }
             }}
           />
         </div>

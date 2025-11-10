@@ -55,7 +55,6 @@ export default function OurSevices() {
   const textRef = useRef(null);
   const topCardsRef = useRef([]);
   const bottomCardsRef = useRef([]);
-  const [activeRotator, setActiveRotator] = useState(null);
 
   // Split services into top and bottom arrays
   const topServices = services.filter((service) => service.position === "top");
@@ -148,7 +147,7 @@ export default function OurSevices() {
   }, []);
 
   // Array of vh values for each card
-  const cardVhPositions = [400, 500, 610, 740, 880];
+  const cardVhPositions = [400, 500, 610, 720, 880];
 
   // Scroll to a fixed vh for each service card
   const scrollToService = (index) => {
@@ -161,6 +160,7 @@ export default function OurSevices() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
+      // legacy index-based key
       const raw = sessionStorage.getItem('servicesScrollTo');
       if (raw !== null) {
         const idx = parseInt(raw, 10);
@@ -169,6 +169,32 @@ export default function OurSevices() {
           setTimeout(() => scrollToService(idx), 120);
         }
         sessionStorage.removeItem('servicesScrollTo');
+      }
+
+      // vh-based key set by footer when navigating from other pages
+      const rawVh = sessionStorage.getItem('servicesScrollToVh');
+      if (rawVh !== null) {
+        const vh = parseFloat(rawVh);
+        if (!Number.isNaN(vh)) {
+          setTimeout(() => {
+            const y = Math.round(window.innerHeight * (vh / 100));
+            window.scrollTo({ top: y - 40, behavior: 'smooth' });
+          }, 140);
+        }
+        sessionStorage.removeItem('servicesScrollToVh');
+      }
+
+      // simple flag to scroll to the top of the services section
+      const wantTop = sessionStorage.getItem('servicesScrollToTop');
+      if (wantTop === '1') {
+        setTimeout(() => {
+          const el = document.getElementById('services-overview-section') || document.getElementById('services-section');
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 40;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }, 140);
+        sessionStorage.removeItem('servicesScrollToTop');
       }
     } catch (e) {
       // ignore sessionStorage errors
@@ -179,13 +205,18 @@ export default function OurSevices() {
     <section
       id="services-overview-section"
       ref={sectionRef}
-      className="relative text-gray-900 bg-gray-100 overflow-hidden"
-      style={{
-        height: "100vh",
-        width: "100vw",
-        paddingLeft: "2.5vw",
-        paddingRight: "2.5vw",
-      }}
+      className="relative text-gray-900 overflow-hidden"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          paddingLeft: "2.5vw",
+          paddingRight: "2.5vw",
+          backgroundColor: '#f3f4f6',
+          backgroundImage: "url('/ServicesBg.png')",
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          backgroundSize: 'cover'
+        }}
     >
       {/* Ambient background effects */}
       {/* <div className="absolute inset-0 opacity-30">
@@ -331,13 +362,9 @@ export default function OurSevices() {
                 flexGrow: 0,
               }}
               onClick={() => scrollToService(index)}
-              onMouseEnter={() => setActiveRotator(index)}
+            
             >
-              {/* Rotating decorative box behind the card. Starts same size (invisible) and scales slightly while rotating. */}
-              <div
-                className={`rotator absolute -inset-0 rounded-2xl bg-black z-0 pointer-events-none ${activeRotator === index ? 'rotator-active' : ''}`}
-                onAnimationEnd={() => { if (activeRotator === index) setActiveRotator(null); }}
-              />
+              {/* Decorative background removed: keeping only white hover transition */}
 
               {/* Inner card (keeps overflow-hidden so rotator only shows when scaled) */}
               <div className="relative h-full overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm z-10">
