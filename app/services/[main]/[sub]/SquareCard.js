@@ -61,7 +61,6 @@ const SquareCard = () => {
 
     // mobile tap-to-toggle state
     const [activeMobile, setActiveMobile] = useState(null);
-    const [activeRotator, setActiveRotator] = useState(null);
     const activeTimeout = useRef(null);
 
     const mobileCardClick = (index) => {
@@ -225,11 +224,8 @@ const SquareCard = () => {
                                 flexGrow: 0
                             }}
                             onClick={() => handleServiceClick(index)}
-                            onMouseEnter={() => setActiveRotator(index)}
                         >
-                            {/* Rotator behind card */}
-                            <div className={`rotator absolute -inset-0 rounded-2xl bg-black z-0 pointer-events-none ${activeRotator === index ? 'rotator-active' : ''}`} onAnimationEnd={() => { if (activeRotator === index) setActiveRotator(null); }} />
-
+                            {/* Rotator removed: keep only the hover white transition overlay */}
                             <div className="relative h-full overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm z-10">
                                 <div className="relative h-full">
                                     {/* Curtain reveal text overlay */}
