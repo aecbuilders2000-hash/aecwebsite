@@ -7,7 +7,8 @@ const CareerForm = () => {
     name: '',
     email: '',
     phone: '',
-    experience: '0'
+    experience: '0',
+    expertise: ''
   });
   const [resumeFile, setResumeFile] = useState(null);
   const [fileError, setFileError] = useState('');
@@ -222,6 +223,7 @@ const CareerForm = () => {
         phone: phoneForSheet,
         country: selectedCountry.label,
         experience: formData.experience,
+        expertise: formData.expertise,
         resumeFile: fileBase64,
         fileName: resumeFile.name,
         fileType: resumeFile.type
@@ -270,8 +272,8 @@ const CareerForm = () => {
       });
       setCooldownRemaining(10); // 10s cooldown after success
 
-      // Reset form
-      setFormData({ name: '', email: '', phone: '', experience: '0' });
+  // Reset form
+  setFormData({ name: '', email: '', phone: '', experience: '0', expertise: '' });
       setResumeFile(null);
       // Clear file input
       const fileInput = document.querySelector('input[type="file"]');
@@ -463,7 +465,31 @@ const CareerForm = () => {
             </div>
           </div>
 
-          {/* Row 3: Resume + Submit */}
+          {/* Row 3: Area of Expertise */}
+          <div className="flex w-full">
+            <div className="flex-1 w-full">
+              <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Area of Expertise:</label>
+              <select
+                name="expertise"
+                value={formData.expertise}
+                onChange={handleInputChange}
+                className="w-full text-black bg-transparent border-b-2 border-gray-300 pb-2 text-base md:text-lg focus:border-black outline-none transition-colors"
+              >
+                <option value="">Select an area</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Structural Engineering">Structural Engineering</option>
+                <option value="MEP Engineering">MEP Engineering</option>
+                <option value="BIM / VDC">BIM / VDC</option>
+                <option value="Project Management">Project Management</option>
+                <option value="Design">Design</option>
+                <option value="Construction Management">Construction Management</option>
+                <option value="Quantity Surveying">Quantity Surveying</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 4: Resume + Submit */}
           <div className="flex flex-col lg:flex-row w-full gap-8 md:gap-16 items-start">
             <div className="flex-1 w-full">
               <label className="block text-black text-xl md:text-2xl mb-3 md:mb-4 font-bold">Resume (PDF / DOCX):</label>
