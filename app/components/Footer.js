@@ -292,7 +292,7 @@ const Footer = () => {
                     <p className='m-0'>&copy; 2025 Collective AEC. All rights reserved.</p>
                     <span className='text-gray-600'>|</span>
                     <a 
-                        href="/privacy" 
+                        href="/privacy-policy" 
                         className='text-gray-400 hover:text-white transition-colors'
                     >
                         Privacy Policy
