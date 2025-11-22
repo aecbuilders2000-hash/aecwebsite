@@ -288,7 +288,16 @@ const Footer = () => {
             </div>
 
             <div className='mt-2 pt-3 border-t border-neutral-800 flex flex-col-reverse gap-2 md:flex-row items-center justify-between text-xs tracking-widest text-gray-500'>
-                <p className='m-0'>&copy; 2025 Collective AEC. All rights reserved.</p>
+                <div className='flex items-center gap-4'>
+                    <p className='m-0'>&copy; 2025 Collective AEC. All rights reserved.</p>
+                    <span className='text-gray-600'>|</span>
+                    <a 
+                        href="/privacy" 
+                        className='text-gray-400 hover:text-white transition-colors'
+                    >
+                        Privacy Policy
+                    </a>
+                </div>
                 <div>
                     <h4 className='text-xs text-center tracking-[0.25em] text-gray-400 mb-2 uppercase'>Follow Us</h4>
                     <div className='flex space-x-4 items-center justify-center text-xl'>

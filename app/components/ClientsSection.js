@@ -72,13 +72,13 @@ const ClientsMarquee = () => {
 
   const ClientLogo = ({ src, alt }) => (
     <div className="flex items-center px-10 py-3 hover:scale-105 transition-transform duration-200">
-      <div className="relative w-36 h-16 md:w-48 md:h-20 lg:w-56 lg:h-24 opacity-90 hover:opacity-100 transition-opacity duration-200">
+      <div className="relative w-36 h-16 md:w-48 md:h-20 lg:w-56 lg:h-24 opacity-90 hover:opacity-100 transition-opacity duration-200 overflow-hidden">
         <Image
           src={src}
           alt={alt || 'Client logo'}
           fill
           sizes="(max-width:768px) 150px, (max-width:1024px) 200px, 240px"
-          style={{ objectFit: 'contain' }}
+          style={{ objectFit: 'contain', transform: 'scale(1.05)', transformOrigin: 'left' }}
           draggable={false}
         />
       </div>
