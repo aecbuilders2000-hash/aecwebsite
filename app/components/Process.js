@@ -48,42 +48,13 @@ export default function Process({ steps = [], points = [], title = '' }) {
       ref={sectionRef}
       className="relative text-gray-900 overflow-hidden min-h-screen"
       style={{
-        backgroundImage: `url('/Abstract Wavy Lines_ EPS10.jpg')`,
-        backgroundSize: 'contain',
+        backgroundImage: `url('/BG4.jpg')`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundBlendMode: 'multiply'
       }}
     >
-      {/* Diagonal rotated background image (keeps the image diagonal while preserving existing background as fallback) */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          pointerEvents: 'none',
-          zIndex: 0,
-          overflow: 'hidden'
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            width: '140%',
-            height: '180%',
-            transform: 'rotate(90deg)',
-            backgroundImage: `url('/Abstract Wavy Lines_ EPS10.jpg')`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundBlendMode: 'multiply',
-          }}
-        />
-      </div>
-
       <div className="mx-auto max-w-7xl px-6 lg:px-12 pt-12 lg:pt-16 relative z-10">
         {/* Title - centered at the top (dynamic when `title` prop is provided) */}
         <div className="w-full text-center mb-8">

@@ -344,7 +344,7 @@ const SERVICES = {
   },
   architectural: {
     title: "Architectural Design",
-    image: "https://i.postimg.cc/vZ2GLJ7w/Architecture-BG.jpg",
+    image: "/ArchitectureBG.jpg",
     description: "Comprehensive architectural design services from concept to construction documentation, creating innovative spaces that balance aesthetics with functionality.",
     subs: {
       "architectural-design-services": {

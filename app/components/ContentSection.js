@@ -235,13 +235,17 @@ export default function ContentSection() {
       {/* Top Rectangle */}
       <div
         ref={topRectRef}
-        className="absolute top-0 left-0 flex items-end overflow-hidden z-20 bg-gray-100"
+        className="absolute top-0 left-0 flex items-end overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
           // borderBottomWidth: "0.5vw",
           paddingLeft: "2.5vw", // 2.5% from left
           paddingBottom: "2.5vh", // 2.5vh from the split line
+          backgroundImage: "url('/ServicesBg.png')",
+          backgroundPosition: "center top",
+          backgroundSize: "100% 200%",
+          backgroundRepeat: "no-repeat"
         }}
       >
         <span
@@ -260,7 +264,7 @@ export default function ContentSection() {
       {/* Bottom Rectangle */}
       <div
         ref={bottomRectRef}
-        className="absolute left-0 bottom-0 flex items-start overflow-hidden z-20 bg-gray-100"
+        className="absolute right-0 bottom-0 flex items-start overflow-hidden z-20"
         style={{
           width: "100vw",
           height: "50vh",
@@ -268,6 +272,10 @@ export default function ContentSection() {
           paddingRight: "3.75vw", // 2.5vw + 1.25vw to align with navbar
           paddingTop: "2.5vh", // 2.5vh from the split line
           justifyContent: "flex-end", // Right align content
+          backgroundImage: "url('/ServicesBg.png')",
+          backgroundPosition: "center bottom",
+          backgroundSize: "100% 200%",
+          backgroundRepeat: "no-repeat"
         }}
       >
         <span
