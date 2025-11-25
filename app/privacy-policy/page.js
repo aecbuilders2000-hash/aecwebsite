@@ -271,7 +271,7 @@ export default function PrivacyPolicy() {
                                 letterSpacing: "0.15em"
                             }}
                         >
-                            9. CHILDREN'S PRIVACY
+                            9. CHILDREN&apos;S PRIVACY
                         </h2>
                         <p>We do not knowingly collect information from individuals under 16 years of age.</p>
                     </section>
@@ -287,7 +287,7 @@ export default function PrivacyPolicy() {
                         >
                             10. CHANGES TO THIS PRIVACY POLICY
                         </h2>
-                        <p>We may update this Privacy Policy periodically. Any changes will be posted on this page with an updated "Last Updated" date.</p>
+                        <p>We may update this Privacy Policy periodically. Any changes will be posted on this page with an updated &quot;Last Updated&quot; date.</p>
                     </section>
 
                     <section className="mt-12">

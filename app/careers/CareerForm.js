@@ -109,41 +109,6 @@ const CareerForm = () => {
     });
   };
 
-  // Test function to check if Google Apps Script is responding
-  const testGoogleScript = async () => {
-    // console.log('🧪 Testing Google Apps Script connection...');
-    try {
-      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_CAREER_GOOGLE_SCRIPT_URL;
-      // console.log('🧪 Testing Google Apps Script URL:', GOOGLE_SCRIPT_URL);
-
-      if (!GOOGLE_SCRIPT_URL) {
-        console.error('❌ No Google Apps Script URL configured!');
-        setStatus({ type: 'error', message: 'Google Apps Script URL not configured' });
-        return;
-      }
-
-      // Test with a simple GET request
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'GET'
-      });
-
-      const text = await response.text();
-      // console.log('🧪 Google Apps Script GET test response:', text);
-      // console.log('🧪 Response status:', response.status);
-      // console.log('🧪 Response ok:', response.ok);
-
-      if (response.ok) {
-        setStatus({ type: 'success', message: `✅ Google Apps Script is working! Response: ${text}` });
-      } else {
-        setStatus({ type: 'error', message: `❌ Google Apps Script test failed. Status: ${response.status}` });
-      }
-
-    } catch (error) {
-      console.error('🧪 Google Apps Script test failed:', error);
-      setStatus({ type: 'error', message: `❌ Google Apps Script test failed: ${error.message}` });
-    }
-  };
-
   const handleSubmit = async (e) => {
     // console.log('🚀 handleSubmit function called!', e);
     // console.log('🚀 Event listeners on form:', e.target.getEventListeners ? e.target.getEventListeners() : 'Cannot check listeners');
@@ -240,7 +205,7 @@ const CareerForm = () => {
       // });
 
       // console.log('🚀 Sending request to Google Apps Script...');
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -519,7 +484,7 @@ const CareerForm = () => {
                   type="submit"
                   disabled={submitting || cooldownRemaining > 0}
                   style={{ opacity: submitting || cooldownRemaining > 0 ? 0.6 : 1 }}
-                  onClick={(e) => {
+                  onClick={() => {
                     // console.log('🎯 ArrowButton clicked, will trigger form submission');
                     // Let the form handle the submission, don't prevent default here
                   }}

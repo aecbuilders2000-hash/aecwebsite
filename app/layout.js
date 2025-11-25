@@ -6,7 +6,6 @@ import AudioManager from "./components/AudioManager";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import LayoutWrapper from "./components/LayoutWrapper";
-import ShaderWrapper from "./ui/ShaderWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -2,12 +2,10 @@
 import React from "react";
 import HeroSection from "./components/HeroSection";
 import useScrollOnLoad from './hooks/useScrollOnLoad';
-import { useLenis } from "../lib/lenis";
 import ServicesSection from "./components/ServicesSection";
 import ProjectsSection from "./components/ProjectsSection";
 import ClientsSection from "./components/ClientsSection";
 import ContentSection from "./components/ContentSection";
-import OurServices from "./components/OurSevices";
 import ContactUs from "./contact-us/ContactUsForm";
 import TestinomialSection from "./components/TestinomialSection";
 

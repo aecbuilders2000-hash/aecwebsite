@@ -41,7 +41,7 @@ const jobOpenings = [
     {
         id: 'bim-manager',
         position: 'BIM Manager',
-        description: 'Leads the firm\'s BIM strategy, sets standards, manages infrastructure, and provides training and quality control for BIM models.',
+        description: 'Leads the firm&apos;s BIM strategy, sets standards, manages infrastructure, and provides training and quality control for BIM models.',
         skills: 'Revit, Navisworks, BIM 360, Dynamo, Project Management Software',
         experience: '7-10+ Years'
     },
@@ -80,7 +80,7 @@ const CareerPage = () => {
                         maxWidth: "70ch"
                     }}
                 >
-                    Join our team of architects, designers, and innovators. We're looking for passionate professionals who want to shape the future of AEC industry.
+                    Join our team of architects, designers, and innovators. We&apos;re looking for passionate professionals who want to shape the future of AEC industry.
                 </p>
 
                 {/* Tabs */}
