@@ -242,7 +242,7 @@ export default function ContentSection() {
           // borderBottomWidth: "0.5vw",
           paddingLeft: "2.5vw", // 2.5% from left
           paddingBottom: "2.5vh", // 2.5vh from the split line
-          backgroundImage: "url('/ServicesBG.png')",
+          backgroundImage: "url('/ServicesBG2.png')",
           backgroundPosition: "center top",
           backgroundSize: "100% 200%",
           backgroundRepeat: "no-repeat"
@@ -272,7 +272,7 @@ export default function ContentSection() {
           paddingRight: "3.75vw", // 2.5vw + 1.25vw to align with navbar
           paddingTop: "2.5vh", // 2.5vh from the split line
           justifyContent: "flex-end", // Right align content
-          backgroundImage: "url('/ServicesBG.png')",
+          backgroundImage: "url('/ServicesBG2.png')",
           backgroundPosition: "center bottom",
           backgroundSize: "100% 200%",
           backgroundRepeat: "no-repeat"

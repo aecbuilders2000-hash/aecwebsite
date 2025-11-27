@@ -212,7 +212,7 @@ export default function OurSevices() {
           paddingLeft: "2.5vw",
           paddingRight: "2.5vw",
           backgroundColor: '#f3f4f6',
-          backgroundImage: "url('/ServicesBG.png')",
+          backgroundImage: "url('/ServicesBG2.png')",
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
           backgroundSize: 'cover'
