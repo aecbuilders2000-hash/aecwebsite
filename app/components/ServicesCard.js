@@ -132,7 +132,7 @@ const CardServices = ({
             style={{
                 position: 'relative',
                 minHeight: '100vh',
-                paddingTop: '5vh',
+                paddingTop: '0',
                 paddingLeft: '2.5vw',
                 paddingRight: '2.5vw'
             }}
@@ -255,14 +255,13 @@ const CardServices = ({
                             <div
                                 className="service-image-wrap"
                                 style={{
-                                    // On desktop position fixed so the image starts at the top of the viewport
-                                    position: isMobile ? 'fixed' : 'fixed',
-                                    top: isMobile ? 0 : 0,
-                                    left: isMobile ? 0 : '0',
-                                    marginLeft: 0,
-                                    marginTop: isMobile ? '0vh' : '0vh',
-                                    width: isMobile ? '100vw' : '54vw',
-                                    height: isMobile ? '100vh' : '100vh',
+                                    position: 'fixed',
+                                    top: '0 !important',
+                                    left: 0,
+                                    margin: 0,
+                                    padding: 0,
+                                    width: isMobile ? '100vw' : (leftImage === '/BIM REAL.png' ? '40vw' : '54vw'),
+                                    height: isMobile ? '100vh' : (leftImage === '/BIM REAL.png' ? '90vh' : '100vh'),
                                     overflow: 'visible',
                                     background: 'transparent',
                                     zIndex: 0,
@@ -275,8 +274,8 @@ const CardServices = ({
                                     fill
                                     sizes={isMobile ? '100vw' : '40vw'}
                                     style={{
-                                        objectFit: isMobile ? 'cover' : 'cover',
-                                        objectPosition: 'center center',
+                                        objectFit: isMobile ? 'cover' : ((leftImage === '/BIM REAL.png' || leftImage === '/3D VIZ REAL (1).jpg') ? 'cover' : 'contain'),
+                                        objectPosition: leftImage === '/BIM REAL.png' ? 'center 15%' : 'center center',
                                         background: 'transparent',
                                         transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
                                     }}
