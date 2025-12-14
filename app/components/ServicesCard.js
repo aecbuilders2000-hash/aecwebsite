@@ -260,8 +260,8 @@ const CardServices = ({
                                     left: 0,
                                     margin: 0,
                                     padding: 0,
-                                    width: isMobile ? '100vw' : (leftImage === '/BIM REAL.png' ? '40vw' : '54vw'),
-                                    height: isMobile ? '100vh' : (leftImage === '/BIM REAL.png' ? '90vh' : '100vh'),
+                                    width: isMobile ? '100vw' : (leftImage === '/BIM REAL.png' ? '50vw' : '54vw'),
+                                    height: isMobile ? '100vh' : (leftImage === '/BIM REAL.png' ? '200vh' : '100vh'),
                                     overflow: 'visible',
                                     background: 'transparent',
                                     zIndex: 0,
@@ -274,8 +274,8 @@ const CardServices = ({
                                     fill
                                     sizes={isMobile ? '100vw' : '40vw'}
                                     style={{
-                                        objectFit: isMobile ? 'cover' : ((leftImage === '/BIM REAL.png' || leftImage === '/3D VIZ REAL (1).jpg') ? 'cover' : 'contain'),
-                                        objectPosition: leftImage === '/BIM REAL.png' ? 'center 15%' : 'center center',
+                                        objectFit: isMobile ? 'cover' : (leftImage === '/3D VIZ REAL (1).jpg' ? 'cover' : 'contain'),
+                                        objectPosition: leftImage === '/BIM REAL.png' ? 'center bottom' : 'center center',
                                         background: 'transparent',
                                         transform: isMobile ? 'translateY(0%)' : 'translateY(0%)'
                                     }}

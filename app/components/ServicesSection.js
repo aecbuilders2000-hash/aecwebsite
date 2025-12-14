@@ -166,6 +166,9 @@ export default function ServicesSection() {
     const cards = cardRefs.current;
     if (!cards.length) return;
 
+    // Mobile detection
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
     // Set initial positions
     cards.forEach((card, index) => {
       gsap.set(card, {
@@ -184,7 +187,8 @@ export default function ServicesSection() {
     imageWraps.forEach((wrap, idx) => {
       if (!wrap) return;
       // Ensure the wrapper is positioned for transform animation
-      gsap.set(wrap, { yPercent: idx === 0 ? 0 : 100 });
+      // BIM REAL (index 1) starts much lower on desktop only
+      gsap.set(wrap, { yPercent: idx === 0 ? 0 : (idx === 1 && !isMobile ? 100 : 100) });
     });
 
     // Create timeline
@@ -212,7 +216,12 @@ export default function ServicesSection() {
       // Animate the image inside this card to slide up when this card becomes active
       const imgWrap = cards[index].querySelector('.service-image-wrap');
       if (imgWrap) {
-        tl.to(imgWrap, { yPercent: 0, duration: 0.6, ease: 'power4.out' }, progress);
+        // BIM REAL (index 1) gets special animation on desktop only
+        if (index === 1 && !isMobile) {
+          tl.to(imgWrap, { yPercent: -120, duration: 1, ease: 'power4.out' }, progress);
+        } else {
+          tl.to(imgWrap, { yPercent: 0, duration: 0.6, ease: 'power4.out' }, progress);
+        }
       }
       for (let prevIndex = 0; prevIndex < index; prevIndex++) {
         const depth = index - prevIndex;
