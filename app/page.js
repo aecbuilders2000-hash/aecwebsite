@@ -31,8 +31,6 @@ export default function Home() {
           {/* Buffer Section */}
         </h2>
       </section>
-      {/* <CardServices /> */}
-      {/* <OurServices /> */}
       <ServicesSection />
       <ClientsSection />
       <ProjectsSection />
